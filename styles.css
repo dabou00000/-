@@ -653,6 +653,7 @@ body {
     justify-content: space-between;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     pointer-events: auto;
+    user-select: none;
     position: relative;
     overflow: hidden;
 }
@@ -2763,7 +2764,7 @@ input:checked + .toggle-slider:before {
 .cart-item-controls-pos {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .quantity-controls-horizontal-pos {
@@ -2826,11 +2827,364 @@ input:checked + .toggle-slider:before {
 
 .cart-empty-horizontal-pos {
     text-align: center;
-    color: rgba(255,255,255,0.8);
-    font-style: italic;
-    padding: 30px;
+    color: #7f8c8d;
+    padding: 40px 20px;
     font-size: 16px;
     font-weight: 500;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    border: 2px dashed #dee2e6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-empty-horizontal-pos i {
+    font-size: 48px;
+    color: #adb5bd;
+    margin-bottom: 10px;
+}
+
+.cart-empty-horizontal-pos span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.cart-empty-horizontal-pos small {
+    font-size: 14px;
+    color: #adb5bd;
+}
+
+/* CSS متجاوب للشاشات الصغيرة */
+@media (max-width: 768px) {
+    /* تحسين الشريط العلوي */
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .header-cash-status {
+        order: -1;
+        width: 100%;
+    }
+    
+    .cash-indicator {
+        justify-content: center;
+        font-size: 14px;
+    }
+    
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    /* تحسين القائمة الجانبية */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+    }
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    .nav-item {
+        padding: 15px;
+        margin: 5px 0;
+        border-radius: 10px;
+        text-align: center;
+    }
+    
+    /* تحسين المحتوى الرئيسي */
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+    
+    /* تحسين نقطة البيع */
+    .pos-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .pos-left {
+        width: 100%;
+    }
+    
+    .pos-right {
+        width: 100%;
+    }
+    
+    .search-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-section input {
+        width: 100%;
+        font-size: 16px; /* منع التكبير على iOS */
+    }
+    
+    .search-section button {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    /* تحسين شبكة المنتجات */
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .product-card {
+        min-height: 100px;
+        padding: 12px;
+    }
+    
+    .product-card h4 {
+        font-size: 14px;
+    }
+    
+    .product-card .price {
+        font-size: 16px;
+    }
+    
+    /* تحسين العربة */
+    .cart-section {
+        padding: 15px;
+    }
+    
+    .cart-items-horizontal-pos {
+        flex-direction: column;
+        gap: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    .cart-item-horizontal-pos {
+        min-width: 100%;
+        padding: 12px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .cart-item-info-pos {
+        width: 100%;
+    }
+    
+    .cart-item-controls-pos {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    /* تحسين أزرار التحكم */
+    .quantity-btn-horizontal-pos {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .remove-btn-horizontal-pos {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .quantity-horizontal-pos {
+        font-size: 18px;
+        min-width: 40px;
+    }
+    
+    /* تحسين قسم الدفع */
+    .payment-section {
+        padding: 15px;
+    }
+    
+    .payment-section select,
+    .payment-section input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .pay-btn,
+    .clear-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+        margin: 5px 0;
+    }
+    
+    /* تحسين النوافذ المنبثقة */
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    /* تحسين الجداول */
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    .data-table {
+        min-width: 600px;
+    }
+    
+    /* تحسين الإحصائيات */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    /* تحسين النماذج */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+    
+    /* تحسين الأزرار */
+    .add-btn,
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        margin: 5px 0;
+    }
+    
+    /* تحسين شريط العملة */
+    .currency-selector {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .currency-selector select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+    
+    /* تحسين رسائل عدم وجود منتجات */
+    .no-products-message {
+        padding: 40px 15px;
+        margin: 10px;
+    }
+    
+    .no-products-message i {
+        font-size: 36px;
+    }
+    
+    .no-products-message h3 {
+        font-size: 18px;
+    }
+    
+    .no-products-message p {
+        font-size: 14px;
+    }
+}
+
+/* تحسينات إضافية للشاشات الصغيرة جداً */
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 8px;
+        padding: 8px;
+    }
+    
+    .product-card {
+        min-height: 80px;
+        padding: 8px;
+    }
+    
+    .product-card h4 {
+        font-size: 12px;
+    }
+    
+    .product-card .price {
+        font-size: 14px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header-content {
+        padding: 5px;
+    }
+    
+    .main-content {
+        padding: 5px;
+    }
+    
+    .cart-section {
+        padding: 10px;
+    }
+    
+    .payment-section {
+        padding: 10px;
+    }
+}
+
+/* تحسينات اللمس */
+@media (hover: none) and (pointer: coarse) {
+    .product-card:hover,
+    .cart-item-horizontal-pos:hover,
+    .quantity-btn-horizontal-pos:hover,
+    .remove-btn-horizontal-pos:hover {
+        transform: none;
+    }
+    
+    .product-card:active,
+    .cart-item-horizontal-pos:active {
+        transform: scale(0.98);
+    }
+    
+    .quantity-btn-horizontal-pos:active,
+    .remove-btn-horizontal-pos:active {
+        transform: scale(0.9);
+    }
 }
 
 /* أنماط إدارة النقدية والصندوق */

@@ -161,7 +161,7 @@ let suppliers = loadFromStorage('suppliers', [
 let cart = [];
 let settings = loadFromStorage('settings', {
     exchangeRate: 89500,
-    taxRate: 11,
+    taxRate: 0, // إزالة الضريبة
     storeName: 'متجري الإلكتروني',
     storeAddress: 'بيروت، لبنان',
     storePhone: '01-234567',
@@ -605,19 +605,22 @@ function loadPOS() {
     
     if (searchInput) {
         searchInput.addEventListener('input', function() {
-            displayProducts();
+            const searchTerm = this.value.trim();
+            displayProducts(searchTerm);
         });
         
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                displayProducts();
+                const searchTerm = this.value.trim();
+                displayProducts(searchTerm);
             }
         });
     }
     
     if (searchBtn) {
         searchBtn.addEventListener('click', function() {
-            displayProducts();
+            const searchTerm = document.getElementById('productSearch').value.trim();
+            displayProducts(searchTerm);
         });
     }
     
@@ -887,8 +890,15 @@ function displayChangeDetails(changeResult, totalDue, amountPaid, paymentCurrenc
 }
 
 function displayProducts(searchTerm = '') {
+    console.log('displayProducts تم استدعاؤها بمصطلح البحث:', searchTerm); // للتشخيص
+    
     const container = document.getElementById('productsGrid');
     const currency = document.getElementById('currency').value;
+    
+    if (!container) {
+        console.log('لم يتم العثور على productsGrid container');
+        return;
+    }
     
     container.innerHTML = '';
     
@@ -909,6 +919,9 @@ function displayProducts(searchTerm = '') {
         product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.barcode.includes(searchTerm)
     );
+    
+    console.log('عدد المنتجات المفلترة:', filteredProducts.length); // للتشخيص
+    console.log('المنتجات المفلترة:', filteredProducts); // للتشخيص
     
     // إذا لم توجد نتائج
     if (filteredProducts.length === 0) {
@@ -966,34 +979,52 @@ function displayProducts(searchTerm = '') {
         `;
         
         // إضافة event listener مباشر
-        productCard.addEventListener('click', function(e) {
+        productCard.onclick = function(e) {
             e.preventDefault();
             e.stopPropagation();
+            console.log('تم النقر على المنتج:', product.name); // للتأكد من أن النقر يعمل
             addToCart(product);
             showMessage(`تم إضافة ${product.name} إلى العربة`, 'success');
-        });
+        };
         
         // إضافة تأثير hover
-        productCard.addEventListener('mouseenter', function() {
+        productCard.onmouseenter = function() {
             this.style.transform = 'translateY(-2px)';
             this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-        });
+        };
         
-        productCard.addEventListener('mouseleave', function() {
+        productCard.onmouseleave = function() {
             this.style.transform = 'translateY(0)';
             this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-        });
+        };
         
         container.appendChild(productCard);
+    });
+    
+    // إضافة event delegation كطريقة بديلة
+    container.addEventListener('click', function(e) {
+        const productCard = e.target.closest('.product-card');
+        if (productCard) {
+            const productId = parseInt(productCard.dataset.id);
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                console.log('تم النقر على المنتج عبر delegation:', product.name);
+                addToCart(product);
+                showMessage(`تم إضافة ${product.name} إلى العربة`, 'success');
+            }
+        }
     });
 }
 
 function addToCart(product) {
+    console.log('محاولة إضافة المنتج:', product.name); // للتشخيص
+    
     const existingItem = cart.find(item => item.id === product.id);
     
     if (existingItem) {
         if (existingItem.quantity < product.stock) {
             existingItem.quantity++;
+            console.log('تم زيادة الكمية للمنتج الموجود:', product.name);
         } else {
             showMessage('الكمية المطلوبة غير متوفرة', 'error');
             return;
@@ -1004,6 +1035,7 @@ function addToCart(product) {
             quantity: 1,
             selectedPriceType: currentPriceType  // حفظ نوع السعر المختار
         });
+        console.log('تم إضافة منتج جديد للعربة:', product.name);
     }
     
     // تحديث العربة والحسابات
@@ -1030,11 +1062,14 @@ function addToCart(product) {
 }
 
 function updateCart() {
+    console.log('تحديث العربة، عدد العناصر:', cart.length); // للتشخيص
+    
     const container = document.getElementById('cartItems');
     const horizontalContainer = document.getElementById('cartItemsHorizontalPos');
     const currency = document.getElementById('currency').value;
     
     if (!container) {
+        console.log('لم يتم العثور على container للعربة');
         return;
     }
     
@@ -1046,7 +1081,6 @@ function updateCart() {
             horizontalContainer.innerHTML = '<div class="cart-empty-horizontal-pos">🛒 العربة فارغة - انقر على المنتجات لإضافتها</div>';
         }
         document.getElementById('subtotal').textContent = formatCurrency(0, currency);
-        document.getElementById('tax').textContent = formatCurrency(0, currency);
         document.getElementById('finalTotal').textContent = formatCurrency(0, currency);
         
         // تحديث الملخص الأفقي
@@ -1099,11 +1133,10 @@ function updateCart() {
     // تحديث الملخص الأفقي
     updateHorizontalCartSummary(totalItems, subtotal);
     
-    const tax = subtotal * (settings.taxRate / 100);
-    const finalTotal = subtotal + tax;
+    // بدون ضريبة - المجموع النهائي = المجموع الفرعي
+    const finalTotal = subtotal;
     
     document.getElementById('subtotal').textContent = formatCurrency(subtotal, currency);
-    document.getElementById('tax').textContent = formatCurrency(tax, currency);
     document.getElementById('finalTotal').textContent = formatCurrency(finalTotal, currency);
     
     // حساب الباقي تلقائياً إذا كان هناك مبلغ مدفوع
@@ -1369,8 +1402,8 @@ document.getElementById('processPayment').addEventListener('click', function() {
         }
     });
     
-    const tax = total * (settings.taxRate / 100);
-    const finalTotal = total + tax;
+    // بدون ضريبة - المجموع النهائي = المجموع الفرعي
+    const finalTotal = total;
     
     // إنشاء فاتورة جديدة
     let customerName = 'عميل عادي';
@@ -2266,7 +2299,7 @@ function showInvoice(sale) {
         price: 'Price',
         total: 'Total',
         subtotal: 'Subtotal',
-        tax: 'Tax (11%)',
+        tax: 'Tax',
         grand_total: 'Grand Total',
         cash_details: 'Cash Details',
         paid: 'Paid',
@@ -2284,7 +2317,7 @@ function showInvoice(sale) {
         price: 'السعر',
         total: 'المجموع',
         subtotal: 'المجموع الفرعي',
-        tax: 'الضريبة (11%)',
+        tax: 'الضريبة',
         grand_total: 'المجموع النهائي',
         cash_details: 'تفاصيل الدفع النقدي',
         paid: 'المبلغ المدفوع',
@@ -2293,8 +2326,9 @@ function showInvoice(sale) {
         phone: 'هاتف'
     };
 
-    const subtotal = sale.amount / 1.11;
-    const tax = sale.amount - subtotal;
+    // بدون ضريبة - المجموع الفرعي = المجموع النهائي
+    const subtotal = sale.amount;
+    const tax = 0;
     
     const invoiceHTML = `
         <div class="invoice-header">
@@ -2336,10 +2370,6 @@ function showInvoice(sale) {
             <div class="summary-row">
                 <span>${t.subtotal}:</span>
                 <span>${formatCurrency(subtotal)}</span>
-            </div>
-            <div class="summary-row">
-                <span>${t.tax}:</span>
-                <span>${formatCurrency(tax)}</span>
             </div>
             <div class="summary-row total">
                 <span>${t.grand_total}:</span>
@@ -2634,7 +2664,7 @@ function loadSettings() {
     document.getElementById('storeAddress').value = settings.storeAddress;
     document.getElementById('storePhone').value = settings.storePhone;
     document.getElementById('exchangeRateInput').value = settings.exchangeRate;
-    document.getElementById('taxRate').value = settings.taxRate;
+    // تم إزالة إعدادات الضريبة
     document.getElementById('lowStockThreshold').value = settings.lowStockThreshold || 10;
     document.getElementById('lowStockAlertCheckbox').checked = settings.lowStockAlert !== false;
     
@@ -2672,16 +2702,7 @@ document.getElementById('updateExchangeRate').addEventListener('click', function
     }
 });
 
-// تحديث معدل الضريبة
-document.getElementById('updateTaxRate').addEventListener('click', function() {
-    const newRate = parseFloat(document.getElementById('taxRate').value);
-    if (newRate >= 0 && newRate <= 100) {
-        settings.taxRate = newRate;
-        showMessage('تم تحديث معدل الضريبة بنجاح');
-    } else {
-        showMessage('يرجى إدخال معدل ضريبة صحيح (0-100)', 'error');
-    }
-});
+// تم إزالة إعدادات الضريبة
 
 // إدارة النوافذ المنبثقة
 function showModal(modalId) {
@@ -3151,12 +3172,17 @@ function displayFilteredSales(filteredSales) {
 }
 
 // دعم البحث بالباركود
-document.getElementById('productSearch').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        const searchTerm = this.value.trim();
-        if (searchTerm) {
-            searchByBarcode(searchTerm);
-        }
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('productSearch');
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.trim();
+                if (searchTerm) {
+                    searchByBarcode(searchTerm);
+                }
+            }
+        });
     }
 });
 
@@ -3265,6 +3291,7 @@ function updateHorizontalCartSummary(totalItems, totalAmount) {
         totalAmountElement.textContent = formatCurrency(totalAmount, currency);
     }
 }
+
 
 // عرض المنتجات في التصميم الجديد
 function displayProductsNew() {
@@ -4050,7 +4077,7 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             search_placeholder: 'ابحث عن منتج بالاسم أو الباركود...',
             cart_title: 'العربة',
             subtotal: 'المجموع الفرعي:',
-            tax_11: 'الضريبة (11%):',
+            tax_11: 'الضريبة:',
             total_final: 'المجموع النهائي:',
             payment_method: 'طريقة الدفع:',
             payment_cash: 'دفع كامل (نقدي)',
@@ -4124,9 +4151,7 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             base_currency: 'العملة الأساسية',
             exchange_rate_label: 'سعر صرف الليرة اللبنانية',
             save_exchange_rate: 'حفظ سعر الصرف',
-            tax_settings: 'إعدادات الضريبة',
-            default_tax_rate: 'معدل الضريبة الافتراضي (%)',
-            save_tax_rate: 'حفظ معدل الضريبة',
+            // تم إزالة إعدادات الضريبة
             data_mgmt: 'إدارة البيانات',
             export_data: 'تصدير البيانات',
             import_data: 'استيراد البيانات',
@@ -4175,7 +4200,7 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             search_placeholder: 'Search by name or barcode...',
             cart_title: 'Cart',
             subtotal: 'Subtotal:',
-            tax_11: 'Tax (11%):',
+            tax_11: 'Tax:',
             total_final: 'Total:',
             payment_method: 'Payment Method:',
             payment_cash: 'Full payment (Cash)',
@@ -4249,9 +4274,7 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             base_currency: 'Base Currency',
             exchange_rate_label: 'LBP Exchange Rate',
             save_exchange_rate: 'Save Exchange Rate',
-            tax_settings: 'Tax Settings',
-            default_tax_rate: 'Default Tax Rate (%)',
-            save_tax_rate: 'Save Tax Rate',
+            // تم إزالة إعدادات الضريبة
             data_mgmt: 'Data Management',
             export_data: 'Export Data',
             import_data: 'Import Data',
@@ -4496,8 +4519,8 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
         const settingsHeader = document.querySelector('#settings .page-header h2');
         if (settingsHeader) { const icon = settingsHeader.querySelector('i'); settingsHeader.textContent = ' ' + t.settings_title; if (icon) settingsHeader.prepend(icon); }
         const sections = document.querySelectorAll('#settings .settings-section');
-        if (sections && sections.length >= 5) {
-            const sectionTitles = [t.store_info, t.currency_settings, t.tax_settings, t.data_mgmt, t.cash_mgmt];
+        if (sections && sections.length >= 4) {
+            const sectionTitles = [t.store_info, t.currency_settings, t.data_mgmt, t.cash_mgmt];
             sections.forEach((sec, i) => {
                 const h3 = sec.querySelector('h3');
                 if (h3) { const icon = h3.querySelector('i'); h3.textContent = ' ' + sectionTitles[i]; if (icon) h3.prepend(icon); }
@@ -4518,11 +4541,7 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
         }
         const saveExBtn = document.getElementById('updateExchangeRate');
         if (saveExBtn) { const icon = saveExBtn.querySelector('i'); saveExBtn.textContent = t.save_exchange_rate; if (icon) saveExBtn.prepend(icon); }
-        // Tax settings
-        const taxLabel = document.querySelector('#settings .settings-section:nth-of-type(3) .form-group label');
-        if (taxLabel) taxLabel.textContent = t.default_tax_rate;
-        const saveTaxBtn = document.getElementById('updateTaxRate');
-        if (saveTaxBtn) { const icon = saveTaxBtn.querySelector('i'); saveTaxBtn.textContent = t.save_tax_rate; if (icon) saveTaxBtn.prepend(icon); }
+        // تم إزالة إعدادات الضريبة
         // Data management
         const exportBtn = document.getElementById('exportDataBtn');
         if (exportBtn) { const icon = exportBtn.querySelector('i'); exportBtn.textContent = t.export_data; if (icon) exportBtn.prepend(icon); }
@@ -4570,3 +4589,123 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
         }
     });
 })();
+
+// تحسينات الموبايل
+function setupMobileOptimizations() {
+    // منع التكبير على iOS
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    }
+    
+    // تحسين القائمة الجانبية للموبايل
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('overlay');
+    
+    if (menuToggle && sidebar) {
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
+        });
+    }
+    
+    // إغلاق القائمة عند النقر على overlay
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    }
+    
+    // إغلاق القائمة عند النقر على عنصر قائمة
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                }
+            }
+        });
+    });
+    
+    // تحسين اللمس للمنتجات
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.addEventListener('touchstart', function(e) {
+            this.style.transform = 'scale(0.98)';
+        });
+        
+        card.addEventListener('touchend', function(e) {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // تحسين اللمس لأزرار العربة
+    const cartButtons = document.querySelectorAll('.quantity-btn-horizontal-pos, .remove-btn-horizontal-pos');
+    cartButtons.forEach(button => {
+        button.addEventListener('touchstart', function(e) {
+            this.style.transform = 'scale(0.9)';
+        });
+        
+        button.addEventListener('touchend', function(e) {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // تحسين النوافذ المنبثقة للموبايل
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+    });
+    
+    // تحسين التمرير في العربة
+    const cartContainer = document.querySelector('.cart-items-horizontal-pos');
+    if (cartContainer) {
+        cartContainer.addEventListener('touchstart', function(e) {
+            this.style.overflowY = 'auto';
+        });
+    }
+    
+    // تحسين البحث للموبايل
+    const searchInput = document.getElementById('productSearch');
+    if (searchInput) {
+        searchInput.addEventListener('focus', function() {
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        });
+    }
+    
+    // تحسين الأزرار الكبيرة للموبايل
+    const buttons = document.querySelectorAll('button, .btn');
+    buttons.forEach(button => {
+        if (window.innerWidth <= 768) {
+            button.style.minHeight = '44px';
+            button.style.minWidth = '44px';
+        }
+    });
+    
+    // تحديث عند تغيير حجم الشاشة
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove('active');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        }
+    });
+}
+
+// استدعاء تحسينات الموبايل عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    setupMobileOptimizations();
+});
