@@ -1,6 +1,492 @@
 // بيانات النظام
 let currentUser = null;
 let currentPriceType = 'retail'; // retail, wholesale, vip
+let currentLanguage = 'ar'; // ar, en
+
+// نظام الترجمة الديناميكي
+const translations = {
+    ar: {
+        // الشريط العلوي
+        'system-title': 'نظام المبيعات',
+        'hide-menu': 'إخفاء القائمة',
+        'show-menu': 'إظهار القائمة',
+        'cash-register': 'الصندوق',
+        'welcome': 'مرحباً، المدير',
+        'logout': 'خروج',
+        'language': 'العربية',
+        
+        // القائمة الجانبية
+        'dashboard': 'لوحة التحكم',
+        'pos': 'نقطة البيع',
+        'products': 'المنتجات',
+        'sales': 'المبيعات',
+        'customers': 'العملاء',
+        'suppliers': 'الموردين',
+        'reports': 'التقارير',
+        'settings': 'الإعدادات',
+        
+        // نقطة البيع
+        'currency': 'العملة',
+        'price-type': 'نوع السعر',
+        'retail': 'مفرق',
+        'wholesale': 'جملة',
+        'vip': 'زبون مميز',
+        'exchange-rate': 'سعر الصرف',
+        'search-product': 'ابحث عن منتج بالاسم أو الباركود...',
+        'cart': 'العربة',
+        'subtotal': 'المجموع الفرعي',
+        'final-total': 'المجموع النهائي',
+        'payment-method': 'طريقة الدفع',
+        'cash-payment': 'دفع كامل (نقدي)',
+        'partial-payment': 'دفع جزئي (دين)',
+        'process-payment': 'إتمام الدفع',
+        'clear-cart': 'مسح العربة',
+        
+        // نظام البيع بالدين
+        'credit-sale': 'بيع بالدين',
+        'customer-credit': 'دين العميل',
+        'credit-limit': 'الحد الائتماني',
+        'remaining-credit': 'الائتمان المتبقي',
+        'credit-available': 'ائتمان متاح',
+        'credit-exceeded': 'تجاوز الحد الائتماني',
+        'confirm-credit-sale': 'هل أنت متأكد من البيع بالدين؟',
+        'credit-sale-success': 'تم البيع بالدين بنجاح',
+        
+        // صفحة المبيعات
+        'sales-management': 'إدارة المبيعات',
+        'invoice-number': 'رقم الفاتورة',
+        'date': 'التاريخ',
+        'customer': 'العميل',
+        'amount': 'المبلغ',
+        'payment-method': 'طريقة الدفع',
+        'status': 'الحالة',
+        'actions': 'الإجراءات',
+        'completed': 'مكتملة',
+        'returned': 'مرجعة',
+        'partial': 'مرجعة جزئياً',
+        'cash': 'نقدي',
+        'card': 'بطاقة',
+        'regular-customer': 'عميل عادي',
+        'view': 'عرض',
+        'print': 'طباعة',
+        'refund': 'استرجاع',
+        'all-sales': 'جميع المبيعات',
+        'completed-only': 'مكتملة فقط',
+        'returned-only': 'مرجعة فقط',
+        'partial-only': 'مرجعة جزئياً',
+        'filter': 'تصفية',
+        'reset': 'إعادة تعيين',
+        'from-date': 'من تاريخ',
+        'to-date': 'إلى تاريخ',
+        
+        // صفحة التقارير
+        'reports': 'التقارير',
+        'sales-report': 'تقرير المبيعات',
+        'inventory-report': 'تقرير المخزون',
+        'customers-report': 'تقرير العملاء',
+        'financial-report': 'التقرير المالي',
+        'sales-report-desc': 'تقرير شامل عن المبيعات والإيرادات',
+        'inventory-report-desc': 'حالة المخزون والمنتجات',
+        'customers-report-desc': 'إحصائيات العملاء ومشترياتهم',
+        'financial-report-desc': 'الأرباح والخسائر والتدفق النقدي',
+        'view-report': 'عرض التقرير',
+        
+        // الرسائل
+        'success': 'نجح',
+        'error': 'خطأ',
+        'menu-hidden': 'تم إخفاء القائمة',
+        'menu-shown': 'تم إظهار القائمة',
+        'language-changed': 'تم تغيير اللغة',
+        'confirm-logout': 'هل أنت متأكد من تسجيل الخروج؟',
+        'logout-success': 'تم تسجيل الخروج بنجاح'
+    },
+    en: {
+        // Header
+        'system-title': 'Sales System',
+        'hide-menu': 'Hide Menu',
+        'show-menu': 'Show Menu',
+        'cash-register': 'Cash Register',
+        'welcome': 'Welcome, Manager',
+        'logout': 'Logout',
+        'language': 'English',
+        
+        // Sidebar
+        'dashboard': 'Dashboard',
+        'pos': 'Point of Sale',
+        'products': 'Products',
+        'sales': 'Sales',
+        'customers': 'Customers',
+        'suppliers': 'Suppliers',
+        'reports': 'Reports',
+        'settings': 'Settings',
+        
+        // Point of Sale
+        'currency': 'Currency',
+        'price-type': 'Price Type',
+        'retail': 'Retail',
+        'wholesale': 'Wholesale',
+        'vip': 'VIP Customer',
+        'exchange-rate': 'Exchange Rate',
+        'search-product': 'Search product by name or barcode...',
+        'cart': 'Cart',
+        'subtotal': 'Subtotal',
+        'final-total': 'Final Total',
+        'payment-method': 'Payment Method',
+        'cash-payment': 'Full Payment (Cash)',
+        'partial-payment': 'Partial Payment (Credit)',
+        'process-payment': 'Process Payment',
+        'clear-cart': 'Clear Cart',
+        
+        // Credit Sales System
+        'credit-sale': 'Credit Sale',
+        'customer-credit': 'Customer Credit',
+        'credit-limit': 'Credit Limit',
+        'remaining-credit': 'Remaining Credit',
+        'credit-available': 'Credit Available',
+        'credit-exceeded': 'Credit Limit Exceeded',
+        'confirm-credit-sale': 'Are you sure about the credit sale?',
+        'credit-sale-success': 'Credit sale completed successfully',
+        
+        // Sales Page
+        'sales-management': 'Sales Management',
+        'invoice-number': 'Invoice #',
+        'date': 'Date',
+        'customer': 'Customer',
+        'amount': 'Amount',
+        'payment-method': 'Payment Method',
+        'status': 'Status',
+        'actions': 'Actions',
+        'completed': 'Completed',
+        'returned': 'Returned',
+        'partial': 'Partially Returned',
+        'cash': 'Cash',
+        'card': 'Card',
+        'regular-customer': 'Regular Customer',
+        'view': 'View',
+        'print': 'Print',
+        'refund': 'Refund',
+        'all-sales': 'All Sales',
+        'completed-only': 'Completed Only',
+        'returned-only': 'Returned Only',
+        'partial-only': 'Partially Returned Only',
+        'filter': 'Filter',
+        'reset': 'Reset',
+        'from-date': 'From Date',
+        'to-date': 'To Date',
+        
+        // Reports Page
+        'reports': 'Reports',
+        'sales-report': 'Sales Report',
+        'inventory-report': 'Inventory Report',
+        'customers-report': 'Customers Report',
+        'financial-report': 'Financial Report',
+        'sales-report-desc': 'Comprehensive report on sales and revenues',
+        'inventory-report-desc': 'Inventory and product status',
+        'customers-report-desc': 'Customer statistics and their purchases',
+        'financial-report-desc': 'Profits, losses, and cash flow',
+        'view-report': 'View Report',
+        
+        // Messages
+        'success': 'Success',
+        'error': 'Error',
+        'menu-hidden': 'Menu hidden',
+        'menu-shown': 'Menu shown',
+        'language-changed': 'Language changed',
+        'confirm-logout': 'Are you sure you want to logout?',
+        'logout-success': 'Logged out successfully'
+    }
+};
+
+// دالة الحصول على النص المترجم
+function getText(key) {
+    return translations[currentLanguage][key] || key;
+}
+
+// دالة تغيير اللغة
+function changeLanguage(lang) {
+    currentLanguage = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+    
+    // تطبيق الترجمات على جميع العناصر
+    applyTranslations();
+    
+    // تحديث اختيار اللغة
+    const languageSelect = document.getElementById('languageSelect');
+    if (languageSelect) {
+        languageSelect.value = lang;
+    }
+    
+    // إظهار رسالة
+    showMessage(getText('language-changed'), 'success');
+}
+
+// دالة تطبيق الترجمات على جميع العناصر
+function applyTranslations() {
+    // ترجمة النصوص في الشريط العلوي
+    translateElements();
+    
+    // ترجمة القائمة الجانبية
+    translateNavigation();
+    
+    // ترجمة نقطة البيع
+    translatePOS();
+    
+    // ترجمة صفحة المبيعات
+    translateSales();
+    
+    // ترجمة صفحة التقارير
+    translateReports();
+    
+    // ترجمة الرسائل
+    translateMessages();
+}
+
+// دالة ترجمة العناصر العامة
+function translateElements() {
+    // ترجمة عنوان النظام
+    const systemTitle = document.querySelector('.logo-small span');
+    if (systemTitle) {
+        systemTitle.textContent = getText('system-title');
+    }
+    
+    // ترجمة زر التحكم في القائمة
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    if (navToggleBtn) {
+        const span = navToggleBtn.querySelector('span');
+        if (span) {
+            const isCollapsed = document.querySelector('.sidebar').classList.contains('collapsed');
+            span.textContent = isCollapsed ? getText('show-menu') : getText('hide-menu');
+        }
+    }
+    
+    // ترجمة الصندوق
+    const cashRegister = document.querySelector('.cash-indicator span');
+    if (cashRegister) {
+        cashRegister.textContent = getText('cash-register');
+    }
+    
+    // ترجمة اسم المستخدم
+    const currentUser = document.getElementById('currentUser');
+    if (currentUser) {
+        currentUser.textContent = getText('welcome');
+    }
+    
+    // ترجمة زر الخروج
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> ${getText('logout')}`;
+    }
+}
+
+// دالة ترجمة القائمة الجانبية
+function translateNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const translations_map = {
+        'dashboard': 'dashboard',
+        'pos': 'pos',
+        'products': 'products',
+        'sales': 'sales',
+        'customers': 'customers',
+        'suppliers': 'suppliers',
+        'reports': 'reports',
+        'settings': 'settings'
+    };
+    
+    navItems.forEach(item => {
+        const screen = item.getAttribute('data-screen');
+        const span = item.querySelector('span');
+        if (span && translations_map[screen]) {
+            span.textContent = getText(translations_map[screen]);
+        }
+    });
+}
+
+// دالة ترجمة نقطة البيع
+function translatePOS() {
+    // ترجمة عناصر نقطة البيع
+    const posElements = {
+        'currency': document.querySelector('label[for="currency"]'),
+        'priceType': document.querySelector('label[for="priceType"]'),
+        'exchangeRate': document.getElementById('exchangeRate'),
+        'productSearch': document.getElementById('productSearch'),
+        'cart': document.querySelector('.cart-section h3'),
+        'subtotal': document.querySelector('#subtotal').previousElementSibling,
+        'finalTotal': document.querySelector('#finalTotal').previousElementSibling,
+        'paymentMethod': document.querySelector('label[for="paymentMethod"]'),
+        'processPayment': document.getElementById('processPayment'),
+        'clearCart': document.getElementById('clearCart')
+    };
+    
+    if (posElements.currency) posElements.currency.textContent = getText('currency');
+    if (posElements.priceType) posElements.priceType.textContent = getText('price-type');
+    if (posElements.exchangeRate) posElements.exchangeRate.textContent = `${getText('exchange-rate')}: 89,500 ل.ل`;
+    if (posElements.productSearch) posElements.productSearch.placeholder = getText('search-product');
+    if (posElements.cart) posElements.cart.innerHTML = `<i class="fas fa-shopping-cart"></i> ${getText('cart')}`;
+    if (posElements.subtotal) posElements.subtotal.textContent = getText('subtotal');
+    if (posElements.finalTotal) posElements.finalTotal.textContent = getText('final-total');
+    if (posElements.paymentMethod) posElements.paymentMethod.textContent = getText('payment-method');
+    if (posElements.processPayment) posElements.processPayment.innerHTML = `<i class="fas fa-credit-card"></i> ${getText('process-payment')}`;
+    if (posElements.clearCart) posElements.clearCart.innerHTML = `<i class="fas fa-trash"></i> ${getText('clear-cart')}`;
+    
+    // ترجمة خيارات طريقة الدفع
+    const paymentMethodSelect = document.getElementById('paymentMethod');
+    if (paymentMethodSelect) {
+        const options = paymentMethodSelect.querySelectorAll('option');
+        if (options[0]) options[0].textContent = getText('cash-payment');
+        if (options[1]) options[1].textContent = getText('credit-sale');
+        if (options[2]) options[2].textContent = getText('partial-payment');
+    }
+    
+    // ترجمة عناصر البيع بالدين
+    const creditSaleSection = document.querySelector('#creditSaleSection .credit-feature-highlight h3');
+    if (creditSaleSection) creditSaleSection.textContent = getText('credit-sale');
+    
+    const creditSaleDesc = document.querySelector('#creditSaleSection .credit-feature-highlight p');
+    if (creditSaleDesc) creditSaleDesc.textContent = 'البيع كاملاً على الحساب';
+    
+    const creditCustomerLabel = document.querySelector('#creditSaleSection label');
+    if (creditCustomerLabel) creditCustomerLabel.textContent = 'اختر العميل:';
+    
+}
+
+// دالة ترجمة صفحة المبيعات
+function translateSales() {
+    // ترجمة عنوان صفحة المبيعات
+    const salesHeader = document.querySelector('#sales .page-header h2');
+    if (salesHeader) {
+        salesHeader.innerHTML = `<i class="fas fa-receipt"></i> ${getText('sales-management')}`;
+    }
+    
+    // ترجمة أزرار الفلترة
+    const filterBtn = document.getElementById('filterSales');
+    if (filterBtn) filterBtn.textContent = getText('filter');
+    
+    const resetBtn = document.getElementById('resetFilter');
+    if (resetBtn) resetBtn.textContent = getText('reset');
+    
+    // ترجمة خيارات الفلترة
+    const statusFilter = document.getElementById('statusFilter');
+    if (statusFilter) {
+        const options = statusFilter.querySelectorAll('option');
+        if (options[0]) options[0].textContent = getText('all-sales');
+        if (options[1]) options[1].textContent = getText('completed-only');
+        if (options[2]) options[2].textContent = getText('returned-only');
+        if (options[3]) options[3].textContent = getText('partial-only');
+    }
+    
+    // ترجمة رؤوس الجدول
+    const tableHeaders = document.querySelectorAll('#salesTable').forEach(table => {
+        const headers = table.querySelectorAll('th');
+        if (headers[0]) headers[0].textContent = getText('invoice-number');
+        if (headers[1]) headers[1].textContent = getText('date');
+        if (headers[2]) headers[2].textContent = getText('customer');
+        if (headers[3]) headers[3].textContent = getText('amount');
+        if (headers[4]) headers[4].textContent = getText('payment-method');
+        if (headers[5]) headers[5].textContent = getText('status');
+        if (headers[6]) headers[6].textContent = getText('actions');
+    });
+    
+    // ترجمة بيانات الجدول
+    translateSalesTableData();
+}
+
+// دالة ترجمة بيانات جدول المبيعات
+function translateSalesTableData() {
+    const salesRows = document.querySelectorAll('#salesTable tr');
+    salesRows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length > 0) {
+            // ترجمة حالة الدفع
+            if (cells[4]) {
+                const paymentText = cells[4].textContent;
+                if (paymentText === 'نقدي') cells[4].textContent = getText('cash');
+                else if (paymentText === 'بطاقة') cells[4].textContent = getText('card');
+            }
+            
+            // ترجمة الحالة
+            if (cells[5]) {
+                const statusText = cells[5].textContent;
+                if (statusText === 'مكتملة') cells[5].textContent = getText('completed');
+                else if (statusText === 'مرجعة') cells[5].textContent = getText('returned');
+                else if (statusText === 'مرجعة جزئياً') cells[5].textContent = getText('partial');
+            }
+            
+            // ترجمة اسم العميل
+            if (cells[2]) {
+                const customerText = cells[2].textContent;
+                if (customerText === 'عميل عادي') cells[2].textContent = getText('regular-customer');
+            }
+            
+            // ترجمة أزرار الإجراءات
+            if (cells[6]) {
+                const actionBtns = cells[6].querySelectorAll('button');
+                actionBtns.forEach((btn, index) => {
+                    if (index === 0 && btn.textContent.includes('استرجاع')) {
+                        btn.textContent = getText('refund');
+                    } else if (index === 1 && btn.textContent.includes('طباعة')) {
+                        btn.textContent = getText('print');
+                    } else if (index === 2 && btn.textContent.includes('عرض')) {
+                        btn.textContent = getText('view');
+                    }
+                });
+            }
+        }
+    });
+}
+
+// دالة ترجمة صفحة التقارير
+function translateReports() {
+    // ترجمة عنوان صفحة التقارير
+    const reportsHeader = document.querySelector('#reports .page-header h2');
+    if (reportsHeader) {
+        reportsHeader.innerHTML = `<i class="fas fa-chart-bar"></i> ${getText('reports')}`;
+    }
+    
+    // ترجمة بطاقات التقارير
+    const reportCards = document.querySelectorAll('#reports .report-card');
+    const reportTitles = [
+        'sales-report',
+        'inventory-report', 
+        'customers-report',
+        'financial-report'
+    ];
+    
+    const reportDescriptions = [
+        'sales-report-desc',
+        'inventory-report-desc',
+        'customers-report-desc', 
+        'financial-report-desc'
+    ];
+    
+    reportCards.forEach((card, index) => {
+        const title = card.querySelector('h3');
+        const description = card.querySelector('p');
+        const button = card.querySelector('.report-btn');
+        
+        if (title && reportTitles[index]) {
+            title.innerHTML = `<i class="fas fa-chart-line"></i> ${getText(reportTitles[index])}`;
+        }
+        
+        if (description && reportDescriptions[index]) {
+            description.textContent = getText(reportDescriptions[index]);
+        }
+        
+        if (button) {
+            button.textContent = getText('view-report');
+        }
+    });
+}
+
+// دالة ترجمة الرسائل
+function translateMessages() {
+    // تحديث دالة showMessage لتستخدم الترجمات
+    window.originalShowMessage = showMessage;
+    window.showMessage = function(message, type = 'success') {
+        const translatedMessage = translations[currentLanguage][message] || message;
+        window.originalShowMessage(translatedMessage, type);
+    };
+}
 
 // تحميل البيانات من localStorage أو استخدام البيانات الافتراضية
 let products = loadFromStorage('products', [
@@ -85,7 +571,8 @@ let customers = loadFromStorage('customers', [
         loyaltyPoints: 125,
         dateJoined: '2024-01-01',
         creditBalance: 0.00, // الدين المستحق
-        creditLimit: 500.00, // الحد الأقصى للدين
+        currentDebt: 0.00, // الدين الحالي
+        creditLimit: 1000.00, // الحد الأقصى للدين
         creditHistory: [] // تاريخ المعاملات الآجلة
     },
     {
@@ -98,12 +585,48 @@ let customers = loadFromStorage('customers', [
         loyaltyPoints: 90,
         dateJoined: '2024-01-10',
         creditBalance: 25.00, // لديها دين
-        creditLimit: 300.00,
+        currentDebt: 25.00, // الدين الحالي
+        creditLimit: 500.00,
         creditHistory: [
             {
                 date: '2024-01-15',
                 type: 'purchase',
                 amount: 25.00,
+                description: 'مشتريات متنوعة'
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: 'محمد السعيد',
+        email: 'mohamed@example.com',
+        phone: '0555123456',
+        address: 'حماة، سوريا',
+        totalPurchases: 0.00,
+        loyaltyPoints: 0,
+        dateJoined: '2024-01-01',
+        creditBalance: 0.00,
+        currentDebt: 0.00,
+        creditLimit: 2000.00,
+        creditHistory: []
+    },
+    {
+        id: 4,
+        name: 'سارة أحمد',
+        email: 'sara@example.com',
+        phone: '0999888777',
+        address: 'اللاذقية، سوريا',
+        totalPurchases: 400.00,
+        loyaltyPoints: 200,
+        dateJoined: '2024-01-10',
+        creditBalance: 300.00,
+        currentDebt: 300.00,
+        creditLimit: 800.00,
+        creditHistory: [
+            {
+                date: '2024-01-15',
+                type: 'purchase',
+                amount: 300.00,
                 description: 'مشتريات متنوعة'
             }
         ]
@@ -505,10 +1028,12 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
 // تسجيل الخروج
 document.getElementById('logoutBtn').addEventListener('click', function() {
+    if (confirm(getText('confirm-logout'))) {
     currentUser = null;
     document.getElementById('mainScreen').classList.remove('active');
     document.getElementById('loginScreen').classList.add('active');
-    showMessage('تم تسجيل الخروج بنجاح');
+        showMessage(getText('logout-success'));
+    }
 });
 
 // التنقل بين الصفحات
@@ -539,6 +1064,10 @@ document.querySelectorAll('.nav-item').forEach(item => {
                 break;
             case 'sales':
                 loadSales();
+            // تطبيق الترجمات على صفحة المبيعات
+            setTimeout(() => {
+                translateSales();
+            }, 100);
                 break;
             case 'customers':
                 loadCustomers();
@@ -1292,6 +1821,8 @@ document.getElementById('processPayment').addEventListener('click', function() {
         
         console.log(`تم إضافة دين ${remainingDebt}$ للعميل ${customer.name}. الدين الجديد: ${customer.creditBalance}$`);
         
+    } else if (paymentMethod === 'credit') {
+        processCreditSale();
     } else if (paymentMethod === 'cash') {
         const amountPaid = parseFloat(document.getElementById('amountPaid').value) || 0;
         if (amountPaid === 0) {
@@ -1556,6 +2087,7 @@ function setupPartialPaymentInterface() {
     const paymentMethodSelect = document.getElementById('paymentMethod');
     const cashPaymentSection = document.getElementById('cashPaymentSection');
     const partialPaymentSection = document.getElementById('partialPaymentSection');
+    const creditSaleSection = document.getElementById('creditSaleSection');
     
     // تحقق من وجود العناصر
     if (!paymentMethodSelect) {
@@ -1570,20 +2102,31 @@ function setupPartialPaymentInterface() {
         console.error('عنصر partialPaymentSection غير موجود');
         return;
     }
+    if (!creditSaleSection) {
+        console.error('عنصر creditSaleSection غير موجود');
+        return;
+    }
     
     // إعداد تبديل أقسام الدفع
     paymentMethodSelect.addEventListener('change', function() {
-        console.log('تم تغيير طريقة الدفع إلى:', this.value);
+        // إخفاء جميع الأقسام أولاً
+        if (cashPaymentSection) cashPaymentSection.style.display = 'none';
+        if (partialPaymentSection) partialPaymentSection.style.display = 'none';
+        if (creditSaleSection) creditSaleSection.style.display = 'none';
         
         if (this.value === 'cash') {
-            cashPaymentSection.style.display = 'block';
-            partialPaymentSection.style.display = 'none';
-            console.log('تم إظهار قسم الدفع النقدي');
+            if (cashPaymentSection) cashPaymentSection.style.display = 'block';
         } else if (this.value === 'partial') {
-            cashPaymentSection.style.display = 'none';
-            partialPaymentSection.style.display = 'block';
-            console.log('تم إظهار قسم الدفع الجزئي');
+            if (partialPaymentSection) partialPaymentSection.style.display = 'block';
             updateCustomerSelect();
+        } else if (this.value === 'credit') {
+            if (creditSaleSection) {
+                creditSaleSection.style.display = 'block';
+                // تحديث قائمة العملاء للبيع بالدين
+                setTimeout(() => {
+                    updateCustomerSelectForCredit();
+                }, 100);
+            }
         }
     });
     
@@ -1634,6 +2177,17 @@ function setupPartialPaymentInterface() {
             const partialAmount = document.getElementById('partialAmount');
             if (partialAmount && partialAmount.value && this.value) {
                 calculateAndDisplayCredit();
+            }
+        });
+    }
+    
+    // إعداد مستمعات الأحداث للبيع بالدين
+    const creditCustomerSelect = document.getElementById('creditCustomerSelect');
+    if (creditCustomerSelect) {
+        creditCustomerSelect.addEventListener('change', function() {
+            const customerId = parseInt(this.value);
+            if (customerId) {
+                updateCreditInfo(customerId);
             }
         });
     }
@@ -4708,4 +5262,360 @@ function setupMobileOptimizations() {
 // استدعاء تحسينات الموبايل عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
     setupMobileOptimizations();
+    setupNavigationToggle();
+    setupLanguageToggle();
+    
+    // إعداد واجهة الدفع
+    setupPartialPaymentInterface();
+    
+    // تطبيق الترجمات الافتراضية
+    applyTranslations();
+    
+    // تحديث قوائم العملاء
+    setTimeout(() => {
+        updateCustomerSelectForCredit();
+    }, 500);
+    
+    // التأكد من عمل زر التحكم بعد تحميل الصفحة
+    setTimeout(() => {
+        ensureToggleButtonWorks();
+    }, 1000);
+    
+    // التأكد من ظهور قسم الخصم
+    setTimeout(() => {
+        const discountSection = document.querySelector('.discount-section');
+        if (discountSection) {
+            console.log('✅ قسم الخصم موجود ويعمل');
+            discountSection.style.display = 'block';
+        } else {
+            console.log('❌ قسم الخصم غير موجود');
+        }
+    }, 500);
 });
+
+// إعداد تبديل اللغة
+function setupLanguageToggle() {
+    const languageSelect = document.getElementById('languageSelect');
+    
+    if (languageSelect) {
+        // تعيين اللغة الافتراضية
+        languageSelect.value = currentLanguage;
+        
+        // إضافة مستمع الحدث لتغيير اللغة
+        languageSelect.addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
+        
+        console.log('تم إعداد تبديل اللغة');
+    }
+}
+
+// إعداد زر إظهار/إخفاء القائمة
+function setupNavigationToggle() {
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (!navToggleBtn || !navMenu) {
+        console.error('عناصر التحكم في القائمة غير موجودة');
+        return;
+    }
+    
+    console.log('تم العثور على زر التحكم:', navToggleBtn);
+    
+    // إضافة مستمع الحدث للنقر على الزر
+    navToggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('تم النقر على زر التحكم');
+        toggleNavigationMenu();
+    });
+    
+    // تحديد الحالة الافتراضية (مفتوحة)
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    
+    sidebar.classList.add('expanded');
+    navMenu.classList.add('expanded');
+    mainContent.classList.remove('sidebar-hidden');
+    
+    updateToggleButtonText(false);
+    
+    console.log('تم إعداد زر التحكم بنجاح');
+}
+
+// تبديل حالة القائمة (إظهار/إخفاء)
+function toggleNavigationMenu() {
+    const sidebar = document.querySelector('.sidebar');
+    
+    console.log('حالة القائمة الجانبية:', sidebar.classList.contains('collapsed'));
+    
+    if (sidebar.classList.contains('collapsed')) {
+        // إظهار القائمة
+        console.log('إظهار القائمة');
+        showNavigationMenu();
+    } else {
+        // إخفاء القائمة
+        console.log('إخفاء القائمة');
+        hideNavigationMenu();
+    }
+}
+
+// إظهار القائمة
+function showNavigationMenu() {
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    const navMenu = document.getElementById('navMenu');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    
+    // إظهار القائمة الجانبية
+    sidebar.classList.remove('collapsed');
+    sidebar.classList.add('expanded');
+    
+    // إظهار عناصر القائمة
+    navMenu.classList.remove('collapsed');
+    navMenu.classList.add('expanded');
+    
+    // تحديث الزر
+    navToggleBtn.classList.remove('collapsed');
+    
+    // تعديل المحتوى الرئيسي
+    mainContent.classList.remove('sidebar-hidden');
+    
+    updateToggleButtonText(false);
+    
+    // إظهار رسالة تأكيد
+    showMessage(getText('menu-shown'), 'success');
+}
+
+// إخفاء القائمة
+function hideNavigationMenu() {
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    const navMenu = document.getElementById('navMenu');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    
+    // إخفاء القائمة الجانبية
+    sidebar.classList.remove('expanded');
+    sidebar.classList.add('collapsed');
+    
+    // إخفاء عناصر القائمة
+    navMenu.classList.remove('expanded');
+    navMenu.classList.add('collapsed');
+    
+    // تحديث الزر
+    navToggleBtn.classList.add('collapsed');
+    
+    // تعديل المحتوى الرئيسي ليملأ المساحة
+    mainContent.classList.add('sidebar-hidden');
+    
+    updateToggleButtonText(true);
+    
+    // إظهار رسالة تأكيد
+    showMessage(getText('menu-hidden'), 'success');
+}
+
+// تحديث نص الزر
+function updateToggleButtonText(isCollapsed) {
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    const spanElement = navToggleBtn.querySelector('span');
+    const eyeIcon = navToggleBtn.querySelector('i:first-child');
+    
+    if (isCollapsed) {
+        spanElement.textContent = getText('show-menu');
+        eyeIcon.className = 'fas fa-eye';
+    } else {
+        spanElement.textContent = getText('hide-menu');
+        eyeIcon.className = 'fas fa-eye-slash';
+    }
+}
+
+// إضافة وظيفة للتأكد من أن الزر يعمل دائماً
+function ensureToggleButtonWorks() {
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (navToggleBtn && sidebar) {
+        // إضافة مستمع الحدث مرة أخرى للتأكد
+        navToggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('تم النقر على الزر من ensureToggleButtonWorks');
+            toggleNavigationMenu();
+        });
+        
+        // إضافة مستمع الحدث للضغط على المفتاح Enter
+        navToggleBtn.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                toggleNavigationMenu();
+            }
+        });
+        
+        console.log('تم التأكد من عمل زر التحكم في القائمة');
+    } else {
+        console.error('لم يتم العثور على عناصر التحكم');
+    }
+}
+
+// جعل الوظيفة متاحة عالمياً
+window.toggleNavigationMenu = toggleNavigationMenu;
+
+// دالة لترجمة الصفحة الحالية
+function translateCurrentPage() {
+    const activePage = document.querySelector('.page.active');
+    if (activePage) {
+        const pageId = activePage.id;
+        if (pageId === 'sales') {
+            translateSales();
+        } else if (pageId === 'reports') {
+            translateReports();
+        }
+    }
+}
+
+// استدعاء ترجمة الصفحة الحالية كل ثانية
+setInterval(translateCurrentPage, 1000);
+
+// ===== نظام البيع بالدين والأقساط =====
+
+// إعداد واجهة البيع بالدين
+function setupCreditSaleInterface() {
+    const creditCustomerSelect = document.getElementById('creditCustomerSelect');
+    if (!creditCustomerSelect) return;
+    
+    // تحديث قائمة العملاء للبيع بالدين
+    updateCustomerSelectForCredit();
+    
+    // إضافة مستمع الحدث لاختيار العميل
+    creditCustomerSelect.addEventListener('change', function() {
+        const customerId = parseInt(this.value);
+        if (customerId) {
+            updateCreditInfo(customerId);
+        }
+    });
+}
+
+// إعداد واجهة البيع على أقساط
+function setupInstallmentSaleInterface() {
+    const installmentCustomerSelect = document.getElementById('installmentCustomerSelect');
+    const calculateInstallmentBtn = document.getElementById('calculateInstallment');
+    
+    if (!installmentCustomerSelect) return;
+    
+    // تحديث قائمة العملاء للبيع على أقساط
+    updateCustomerSelectForInstallment();
+    
+    // إضافة مستمع الحدث لحساب الأقساط
+    if (calculateInstallmentBtn) {
+        calculateInstallmentBtn.addEventListener('click', calculateInstallments);
+    }
+}
+
+// تحديث قائمة العملاء للبيع بالدين
+function updateCustomerSelectForCredit() {
+    const creditCustomerSelect = document.getElementById('creditCustomerSelect');
+    if (!creditCustomerSelect) {
+        return;
+    }
+    
+    // مسح الخيارات الموجودة
+    creditCustomerSelect.innerHTML = '<option value="">اختر عميل...</option>';
+    
+    // إضافة العملاء
+    customers.forEach(customer => {
+        const option = document.createElement('option');
+        option.value = customer.id;
+        const remainingCredit = customer.creditLimit - (customer.currentDebt || 0);
+        option.textContent = `${customer.name} (حد: ${customer.creditLimit}$ - متاح: ${remainingCredit}$)`;
+        creditCustomerSelect.appendChild(option);
+    });
+}
+
+
+// تحديث معلومات الائتمان
+function updateCreditInfo(customerId) {
+    const customer = customers.find(c => c.id === customerId);
+    if (!customer) {
+        return;
+    }
+    
+    const creditLimitDisplay = document.getElementById('creditLimitDisplay');
+    const currentDebtDisplay = document.getElementById('currentDebtDisplay');
+    const remainingCreditDisplay = document.getElementById('remainingCreditDisplay');
+    
+    if (creditLimitDisplay) creditLimitDisplay.textContent = `${customer.creditLimit}$`;
+    if (currentDebtDisplay) currentDebtDisplay.textContent = `${customer.currentDebt || 0}$`;
+    
+    const remainingCredit = customer.creditLimit - (customer.currentDebt || 0);
+    if (remainingCreditDisplay) remainingCreditDisplay.textContent = `${remainingCredit}$`;
+    
+    // تغيير لون النص حسب الائتمان المتاح
+    if (remainingCreditDisplay) {
+        if (remainingCredit > 0) {
+            remainingCreditDisplay.style.color = '#10b981';
+        } else {
+            remainingCreditDisplay.style.color = '#ef4444';
+        }
+    }
+}
+
+
+
+
+// معالجة البيع بالدين
+function processCreditSale() {
+    const customerId = document.getElementById('creditCustomerSelect').value;
+    const finalTotal = parseFloat(document.getElementById('finalTotal').textContent.replace(/[^0-9.-]+/g, '')) || 0;
+    
+    if (!customerId) {
+        showMessage('يرجى اختيار عميل', 'error');
+        return;
+    }
+    
+    const customer = customers.find(c => c.id === parseInt(customerId));
+    if (!customer) {
+        showMessage('العميل غير موجود', 'error');
+        return;
+    }
+    
+    const remainingCredit = customer.creditLimit - (customer.currentDebt || 0);
+    if (finalTotal > remainingCredit) {
+        showMessage(getText('credit-exceeded'), 'error');
+        return;
+    }
+    
+    if (confirm(getText('confirm-credit-sale'))) {
+        // تحديث دين العميل
+        customer.currentDebt = (customer.currentDebt || 0) + finalTotal;
+        
+        // إنشاء فاتورة
+        createCreditSaleInvoice(customer, finalTotal);
+        
+        // مسح العربة
+        clearCart();
+        
+        showMessage(getText('credit-sale-success'), 'success');
+    }
+}
+
+
+// إنشاء فاتورة البيع بالدين
+function createCreditSaleInvoice(customer, amount) {
+    const invoice = {
+        id: generateInvoiceId(),
+        customerId: customer.id,
+        customerName: customer.name,
+        amount: amount,
+        paymentMethod: 'credit',
+        status: 'completed',
+        date: new Date().toISOString(),
+        items: [...cart]
+    };
+    
+    sales.push(invoice);
+    saveToStorage('sales', sales);
+}
+
+
+
+

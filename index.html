@@ -60,6 +60,13 @@
                     </button>
                     <i class="fas fa-store"></i>
                     <span>نظام المبيعات</span>
+                    
+                    <!-- زر التحكم في القائمة الجانبية -->
+                    <button id="navToggleBtn" class="nav-toggle-btn" onclick="toggleNavigationMenu()">
+                        <i class="fas fa-eye"></i>
+                        <span>إخفاء القائمة</span>
+                        <i class="fas fa-chevron-down toggle-arrow"></i>
+                    </button>
                 </div>
                 
                 <div class="header-cash-status">
@@ -89,7 +96,7 @@
 
         <!-- القائمة الجانبية -->
         <nav class="sidebar">
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item active" data-screen="dashboard">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>لوحة التحكم</span>
@@ -260,10 +267,13 @@
                                 </div>
                             </div>
                             
+                            
+                            
                             <div class="payment-section">
                                 <label>طريقة الدفع:</label>
                                 <select id="paymentMethod">
                                     <option value="cash" selected>دفع كامل (نقدي)</option>
+                                    <option value="credit">بيع بالدين</option>
                                     <option value="partial">دفع جزئي (دين)</option>
                                 </select>
                                 
@@ -323,6 +333,32 @@
                                     </div>
                                 </div>
                                 
+                                <!-- قسم البيع بالدين -->
+                                <div id="creditSaleSection" class="credit-sale" style="display: none;">
+                                    <div class="credit-feature-highlight">
+                                        <h3>بيع بالدين</h3>
+                                        <p>البيع كاملاً على الحساب</p>
+                                    </div>
+                                    
+                                    <div class="credit-sale-input">
+                                        <div class="input-group">
+                                            <label>اختر العميل:</label>
+                                            <select id="creditCustomerSelect">
+                                                <option value="">اختر عميل...</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="credit-info">
+                                            <div class="credit-limit-display">
+                                                <span>الحد الائتماني: <span id="creditLimitDisplay">--</span></span>
+                                                <span>الدين الحالي: <span id="currentDebtDisplay">--</span></span>
+                                                <span>الائتمان المتبقي: <span id="remainingCreditDisplay">--</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <!-- قسم الدفع الجزئي والدين -->
                                 <div id="partialPaymentSection" class="partial-payment" style="display: none;">
                                     <div class="credit-feature-highlight">
