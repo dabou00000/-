@@ -1,3 +1,62 @@
+// تعديل سعر عنصر في العربة وإظهار مقدار الخصم
+function updateItemCustomPrice(index, value) {
+    const raw = parseFloat(value);
+    if (isNaN(raw) || raw < 0) return;
+    const item = cart[index];
+    if (!item) return;
+    const currencySel = document.getElementById('currency');
+    const currency = currencySel ? currencySel.value : 'USD';
+    // حول السعر المدخل إلى USD إن كان الإدخال بالليرة
+    const newPriceUSD = currency === 'USD' ? raw : (raw / (settings.exchangeRate || 1));
+    const basePriceUSD = getProductPrice(item, item.selectedPriceType || currentPriceType, 'USD');
+    item.customPriceUSD = newPriceUSD;
+    // حساب الخصم كنسبة
+    let discountText = '';
+    if (newPriceUSD < basePriceUSD) {
+        const diff = basePriceUSD - newPriceUSD;
+        const pct = ((diff / basePriceUSD) * 100).toFixed(1);
+        discountText = `خصم ${pct}%`;
+    }
+    const note = document.getElementById(`discountNote_${index}`);
+    if (note) {
+        note.textContent = discountText;
+        note.style.display = discountText ? 'inline' : 'none';
+    }
+    // تحذير بيع تحت الكلفة
+    const cost = item.costUSD || 0;
+    if (cost && newPriceUSD < cost) {
+        const ok = confirm(`تنبيه: السعر (${newPriceUSD.toFixed(2)}$) أقل من الكلفة (${cost}$). هل تريد المتابعة؟`);
+        if (!ok) {
+            item.customPriceUSD = basePriceUSD;
+        }
+    }
+    updateCart();
+}
+
+// إظهار/إخفاء حقل تعديل السعر
+function togglePriceEdit(index) {
+    const wrap = document.getElementById(`editPriceWrap_${index}`);
+    if (!wrap) return;
+    const visible = wrap.style.display !== 'none';
+    wrap.style.display = visible ? 'none' : 'flex';
+    if (!visible) {
+        const input = document.getElementById(`customPrice_${index}`);
+        if (input) {
+            input.focus();
+            input.select();
+        }
+    }
+}
+
+// تحرير سريع عبر نافذة منبثقة (مناسب للزوم المنخفض)
+function quickEditPrice(index) {
+    const item = cart[index];
+    if (!item) return;
+    const baseUSD = item.customPriceUSD != null ? item.customPriceUSD : item.priceUSD;
+    const input = prompt('أدخل سعر البيع الجديد:', baseUSD);
+    if (input == null) return;
+    updateItemCustomPrice(index, input);
+}
 // بيانات النظام
 let currentUser = null;
 let currentPriceType = 'retail'; // retail, wholesale, vip
@@ -494,6 +553,7 @@ let products = loadFromStorage('products', [
         id: 1,
         name: 'كوكاكولا',
         category: 'مشروبات',
+        costUSD: 0.60,
         prices: {
             retail: { USD: 1.00, LBP: 89500 },      // مفرق
             wholesale: { USD: 0.85, LBP: 76000 },  // جملة
@@ -511,6 +571,7 @@ let products = loadFromStorage('products', [
         id: 2,
         name: 'خبز عربي',
         category: 'مخبوزات',
+        costUSD: 0.30,
         prices: {
             retail: { USD: 0.50, LBP: 45000 },      // مفرق
             wholesale: { USD: 0.40, LBP: 36000 },  // جملة
@@ -528,6 +589,7 @@ let products = loadFromStorage('products', [
         id: 3,
         name: 'شيبس',
         category: 'وجبات خفيفة',
+        costUSD: 0.40,
         prices: {
             retail: { USD: 0.75, LBP: 67000 },      // مفرق
             wholesale: { USD: 0.65, LBP: 58000 },  // جملة
@@ -545,6 +607,7 @@ let products = loadFromStorage('products', [
         id: 4,
         name: 'ماء',
         category: 'مشروبات',
+        costUSD: 0.10,
         prices: {
             retail: { USD: 0.25, LBP: 22000 },      // مفرق
             wholesale: { USD: 0.20, LBP: 18000 },  // جملة
@@ -1431,22 +1494,16 @@ function displayProducts(searchTerm = '') {
     
     container.innerHTML = '';
     
-    // إذا لم يكن هناك مصطلح بحث، لا نعرض أي منتجات
+    // إذا لم يكن هناك مصطلح بحث، نعرض كل المنتجات لتسريع العمل
     if (!searchTerm || searchTerm.trim() === '') {
-        container.innerHTML = `
-            <div class="no-products-message">
-                <i class="fas fa-search"></i>
-                <h3>ابحث عن منتج لإظهاره</h3>
-                <p>اكتب اسم المنتج أو الباركود في مربع البحث أعلاه</p>
-            </div>
-        `;
-        return;
+        searchTerm = '';
     }
     
     const filteredProducts = products.filter(product => 
+        searchTerm === '' ||
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.barcode.includes(searchTerm)
+        (product.barcode || '').includes(searchTerm)
     );
     
     console.log('عدد المنتجات المفلترة:', filteredProducts.length); // للتشخيص
@@ -1562,13 +1619,25 @@ function addToCart(product) {
         cart.push({
             ...product,
             quantity: 1,
-            selectedPriceType: currentPriceType  // حفظ نوع السعر المختار
+            selectedPriceType: currentPriceType,  // حفظ نوع السعر المختار
+            customPriceUSD: undefined
         });
         console.log('تم إضافة منتج جديد للعربة:', product.name);
     }
     
     // تحديث العربة والحسابات
     updateCart();
+    // إبراز العربة والتمرير إليها لضمان ظهورها مهما كان الزوم
+    setTimeout(() => {
+        const cartWrap = document.getElementById('cartSection') || document.getElementById('cartItems');
+        if (cartWrap && cartWrap.scrollIntoView) {
+            cartWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            try {
+                cartWrap.classList.add('cart-flash');
+                setTimeout(() => cartWrap.classList.remove('cart-flash'), 800);
+            } catch(e) {}
+        }
+    }, 50);
     
     // تحديث فوري للحسابات إذا كانت موجودة
     setTimeout(() => {
@@ -1630,7 +1699,14 @@ function updateCart() {
     cart.forEach((item, index) => {
         // استخدام السعر المحفوظ مع المنتج في السلة
         const priceType = item.selectedPriceType || currentPriceType;
-        const price = getProductPrice(item, priceType, currency);
+        const baseUSD = getProductPrice(item, priceType, 'USD');
+        // إذا كان هناك سعر مخصص، طبّقه على العملتين
+        let price;
+        if (typeof item.customPriceUSD === 'number') {
+            price = currency === 'USD' ? item.customPriceUSD : Math.round(item.customPriceUSD * (settings.exchangeRate || 1));
+        } else {
+            price = getProductPrice(item, priceType, currency);
+        }
         const total = price * item.quantity;
         subtotal += total;
         totalItems += item.quantity;
@@ -1639,10 +1715,27 @@ function updateCart() {
         
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
+        // حساب نسبة الخصم للعرض
+        let discountPct = 0;
+        if (typeof item.customPriceUSD === 'number' && item.customPriceUSD < baseUSD) {
+            discountPct = +(((baseUSD - item.customPriceUSD) / baseUSD) * 100).toFixed(1);
+        }
         cartItem.innerHTML = `
             <div class="item-info">
                 <span class="item-name">${item.name}</span>
-                <span class="item-price">${formatCurrency(price, currency)} <small class="price-type-tag">${priceTypeLabel}</small></span>
+                <span class="item-price">${formatCurrency(price, currency)} <small class="price-type-tag">${priceTypeLabel}</small>
+                    <button type="button" title="سعر سريع" onclick="quickEditPrice(${index})" style="margin-inline-start:6px;padding:2px 6px;font-size:11px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">✎</button>
+                </span>
+                <div class="inline-edit-price" style="margin-top:6px;display:flex;align-items:center;gap:8px;">
+                    <button type="button" class="edit-price-btn" onclick="togglePriceEdit(${index})" title="تعديل السعر" style="padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:#f8fafc;cursor:pointer;">
+                        <i class="fas fa-edit"></i> تعديل السعر
+                    </button>
+                    <div class="edit-price-field" id="editPriceWrap_${index}" style="display:flex;align-items:center;gap:6px;">
+                        <input type="number" step="0.01" value="${price}" min="0" id="customPrice_${index}" style="width:110px;padding:6px 8px;border:2px solid #a7f3d0;border-radius:8px;background:#ecfeff;font-weight:700;" placeholder="سعر جديد" oninput="updateItemCustomPrice(${index}, this.value)" onkeydown="if(event.key==='Enter'){updateItemCustomPrice(${index}, this.value)}">
+                        <span style="font-size:12px;color:#64748b;">${currency}</span>
+                    </div>
+                    <small class="discount-note" id="discountNote_${index}" style="color:#16a34a;font-weight:700;${discountPct>0 ? '' : 'display:none;'}">${discountPct>0 ? `خصم ${discountPct}%` : ''}</small>
+                </div>
             </div>
             <div class="quantity-controls">
                 <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
@@ -1916,14 +2009,24 @@ document.getElementById('processPayment').addEventListener('click', function() {
     const saleItems = [];
     
     cart.forEach(item => {
-        const price = currency === 'USD' ? item.priceUSD : item.priceLBP;
+        // اعتماد السعر المخصص إن وجد (USD) ثم تحويله عند الحاجة
+        let baseUSD = item.customPriceUSD != null ? item.customPriceUSD : item.priceUSD;
+        const price = currency === 'USD' ? baseUSD : Math.round(baseUSD * settings.exchangeRate);
         total += price * item.quantity;
         
+        // حساب الخصم إن وُجد
+        const originalUSD = item.priceUSD;
+        const discountUSD = Math.max(0, originalUSD - baseUSD);
+        const discountPct = originalUSD > 0 ? +(discountUSD / originalUSD * 100).toFixed(1) : 0;
         saleItems.push({
             id: item.id,
             name: item.name,
             quantity: item.quantity,
-            price: currency === 'USD' ? item.priceUSD : item.priceLBP
+            price: price,
+            originalPriceUSD: originalUSD,
+            finalPriceUSD: baseUSD,
+            discountUSD: discountUSD,
+            discountPct: discountPct
         });
         
         // تحديث المخزون
@@ -2660,6 +2763,7 @@ function loadProducts() {
             <td>${product.barcode || 'غير محدد'}</td>
             <td>${product.supplier || 'غير محدد'}</td>
             <td>${formatCurrency(product.priceUSD)}</td>
+            <td>${formatCurrency(product.costUSD || 0)}</td>
             <td>${formatCurrency(product.priceLBP, 'LBP')}</td>
             <td ${isLowStock ? 'style="color: red; font-weight: bold;"' : ''}>${product.stock}</td>
             <td>
@@ -2692,8 +2796,8 @@ function editProduct(id) {
     }
     
     // طلب كلمة المرور لتعديل المنتج
-    const password = prompt('🔒 أدخل كلمة المرور لتعديل المنتج:');
-    if (password !== '00') {
+    const password = prompt('🔒 أدخل رمز الأمان لتعديل المنتج (12345):');
+    if (password !== '12345') {
         showNotification('❌ كلمة المرور خاطئة! لا يمكن تعديل المنتج.', 'error', 3000);
         return;
     }
@@ -2703,6 +2807,7 @@ function editProduct(id) {
     document.getElementById('editProductCategory').value = product.category;
     document.getElementById('editProductPriceUSD').value = product.priceUSD;
     document.getElementById('editProductPriceLBP').value = product.priceLBP;
+    document.getElementById('editProductCostUSD').value = product.costUSD || 0;
     document.getElementById('editProductQuantity').value = product.stock;
     document.getElementById('editProductBarcode').value = product.barcode || '';
     
@@ -2735,6 +2840,7 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
         category: document.getElementById('editProductCategory').value,
         priceUSD: parseFloat(document.getElementById('editProductPriceUSD').value),
         priceLBP: parseFloat(document.getElementById('editProductPriceLBP').value),
+        costUSD: parseFloat(document.getElementById('editProductCostUSD').value) || 0,
         stock: parseInt(document.getElementById('editProductQuantity').value),
         barcode: document.getElementById('editProductBarcode').value,
         supplier: document.getElementById('editProductSupplier').value
@@ -2763,6 +2869,11 @@ function updateSuppliersDropdown(selectId) {
 }
 
 function deleteProduct(id) {
+    const password = prompt('🔒 أدخل رمز الأمان لحذف المنتج (12345):');
+    if (password !== '12345') {
+        showNotification('❌ رمز غير صحيح! لا يمكن حذف المنتج.', 'error', 3000);
+        return;
+    }
     if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
         products = products.filter(p => p.id !== id);
         saveToStorage('products', products);
@@ -2792,12 +2903,23 @@ function loadSales() {
         }
         
         const row = document.createElement('tr');
+        // إنشاء نص الخصومات المرتبة
+        let discountSummary = '';
+        if (sale.items && sale.items.length) {
+            const discounted = sale.items.filter(i => (i.originalPriceUSD != null && i.finalPriceUSD != null && i.finalPriceUSD < i.originalPriceUSD));
+            if (discounted.length) {
+                discountSummary = discounted.map(i => `${i.name}: ${i.discountPct}%`).join('، ');
+            } else {
+                discountSummary = '—';
+            }
+        }
         row.innerHTML = `
             <td>${sale.invoiceNumber}</td>
             <td>${sale.date}</td>
             <td>${sale.customer}</td>
             <td>${formatCurrency(sale.amount)}</td>
             <td>${sale.paymentMethod}</td>
+            <td>${discountSummary}</td>
             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
             <td>
                 <button class="action-btn view-btn" onclick="viewSale(${sale.id})">
@@ -4021,6 +4143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // للتوافق مع الكود القديم - استخدام سعر المفرق
                 priceUSD: retailUSD,
                 priceLBP: Math.round(retailUSD * exchangeRate),
+        costUSD: parseFloat(document.getElementById('productCostUSD').value) || 0,
         stock: parseInt(document.getElementById('productQuantity').value),
         barcode: document.getElementById('productBarcode').value,
         supplier: document.getElementById('productSupplier').value,

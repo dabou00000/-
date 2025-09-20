@@ -284,7 +284,7 @@ body {
     position: fixed;
     top: 70px;
     right: 0;
-    width: 350px;
+    width: 240px; /* تقليل العرض لإزالة المساحة البيضاء */
     height: calc(100vh - 70px);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
     backdrop-filter: blur(20px);
@@ -346,7 +346,9 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1;
-    justify-content: space-around;
+    justify-content: flex-start; /* لا تملأ الفراغ بالتساوي */
+    align-items: flex-start;     /* اجعل الأزرار بعرضها الذاتي */
+    gap: 8px;                   /* مسافة ثابتة بين الأزرار */
     margin: 0;
     max-height: calc(100vh - 120px);
     transition: all 0.3s ease;
@@ -376,20 +378,22 @@ body {
 
 
 .nav-item {
-    padding: 15px 25px;
+    padding: 8px 12px; /* تقليل عرض الأزرار عبر تصغير الحشو */
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
     color: #495057;
     border-radius: 0 12px 12px 0;
-    margin: 2px 15px 2px 0;
+    margin: 2px 10px 2px 0;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     border-right: 3px solid transparent;
     min-height: 48px;
     position: relative;
+    width: auto;        /* لا تملأ العرض كاملاً */
+    max-width: 220px;   /* أقصى عرض للزر */
 }
 
 .nav-item:hover,
@@ -435,7 +439,7 @@ body {
 
 /* المحتوى الرئيسي */
 .main-content {
-    margin-right: 350px;
+    margin-right: 240px; /* مواءمة هامش المحتوى مع عرض القائمة */
     margin-top: 70px;
     padding: 25px;
     min-height: calc(100vh - 70px);
@@ -638,8 +642,67 @@ body {
 
 .pos-container {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 520px;
-    gap: 15px;
+    grid-template-columns: minmax(0, 1fr) 480px; /* تقليل عرض العمود الأيمن */
+    gap: 18px;
+}
+
+/* تخطيط سفلي: المنتجات بالأعلى ولوحة البيع كصف سفلية بكامل العرض */
+.pos-container.bottom-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 16px;
+    height: auto; /* حتى يظهر كل شيء على 100% زوم */
+    min-height: calc(100vh - 120px);
+    overflow: visible; /* السماح بالتمرير العام للصفحة */
+}
+.pos-container.bottom-layout .pos-left {
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: visible; /* إظهار شريط البحث دائماً */
+}
+.pos-container.bottom-layout .pos-left .search-section {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(226,232,240,0.8);
+    padding: 8px 10px;
+}
+.pos-container.bottom-layout .pos-left .search-section input { height: 36px; padding: 8px 10px; font-size: 14px; }
+.pos-container.bottom-layout .pos-left .search-section button { height: 36px; padding: 0 12px; font-size: 14px; }
+.pos-container.bottom-layout .pos-left #productsGrid {
+    flex: 1;
+    overflow: auto;
+    margin-top: 8px;
+}
+.pos-container.bottom-layout .pos-left,
+.pos-container.bottom-layout .pos-left #productsGrid { overflow-x: hidden; }
+.pos-container.bottom-layout .pos-right {
+    grid-row: 2;
+    width: 100%;
+    position: static; /* إلغاء التثبيت لمنع القطع على زوم 100% */
+    z-index: 1;
+    border-top: none;
+    box-shadow: none;
+}
+.pos-container.bottom-layout .pos-right .cart-section,
+.pos-container.bottom-layout .pos-right .payment-section {
+    width: 100%;
+}
+.pos-container.bottom-layout .pos-right .cart-section {
+    margin-bottom: 12px;
+}
+
+/* اجعل عناصر العربة قابلة للتمرير الداخلي بينما تبقى اللوحة ثابتة */
+.pos-container.bottom-layout .pos-right .cart-items {
+    max-height: 30vh; /* مساحة أكبر لتقليل التمرير على 100% */
+    overflow-y: auto;
+}
+.pos-container.bottom-layout .pos-right .payment-section {
+    position: relative;
 }
 
 .pos-left {
@@ -832,14 +895,14 @@ body {
 }
 
 .pos-right {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(249,250,251,0.96) 100%);
+    backdrop-filter: blur(22px);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 20px 45px rgba(31, 41, 55, 0.12);
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(226,232,240,0.7);
     position: relative;
     z-index: 0;
     min-height: 600px;
@@ -848,6 +911,31 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1;
+}
+
+/* إبراز العربة عند إضافة عنصر */
+.cart-flash {
+    animation: cartFlash 0.8s ease;
+}
+@keyframes cartFlash {
+    0% { box-shadow: 0 0 0 rgba(34,197,94,0); }
+    50% { box-shadow: 0 0 0 6px rgba(34,197,94,0.25); }
+    100% { box-shadow: 0 0 0 rgba(34,197,94,0); }
+}
+
+/* صناديق أفخم داخل لوحة البيع */
+.cart-section, .payment-section {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgba(226,232,240,0.7);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(148,163,184,0.18);
+}
+
+.cart-total {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    border-radius: 14px;
+    padding: 10px 12px;
+    border: 1px solid rgba(209,213,219,0.7);
 }
 
 .cart-section h3 {
@@ -1744,7 +1832,7 @@ body {
     .sidebar {
         transform: translateX(100%);
         transition: transform 0.3s ease;
-        width: 350px;
+        width: 240px;
         top: 70px;
         height: calc(100vh - 70px);
     }
@@ -3306,6 +3394,55 @@ input:checked + .toggle-slider:before {
     flex-shrink: 0;
     box-shadow: 0 10px 25px rgba(81, 207, 102, 0.15);
 }
+
+/* وضع مدمج للقوائم – تقليص الحجم بشكل عام */
+:root {
+    --menu-compact-font: 12px;
+    --menu-compact-font-sm: 11px;
+    --menu-compact-pad-y: 6px;
+    --menu-compact-pad-x: 10px;
+    /* خطوط مرنة: حد أدنى/أقصى مع قياس يعتمد على عرض الشاشة لضمان الوضوح حتى مع الزوم */
+    --font-min: 12px;
+    --font-fluid: 1.1vw;
+    --font-max: 14px;
+}
+
+/* قاعدة عامة: حجم خط مرن وواضح على كل الزوم */
+body {
+    font-size: clamp(var(--font-min), var(--font-fluid), var(--font-max));
+    line-height: 1.35;
+}
+
+/* تصغير عناصر القائمة الجانبية */
+.nav-item {
+    padding: var(--menu-compact-pad-y) calc(var(--menu-compact-pad-x) + 4px) !important;
+    font-size: clamp(12px, 1vw, 13px) !important;
+    min-height: 40px;
+}
+.nav-item i { font-size: 15px !important; width: 16px !important; }
+.sidebar-header h3 { font-size: 18px !important; }
+
+/* تصغير رؤوس وأدوات نقطة البيع */
+.page-header h2 { font-size: 18px !important; }
+.cart-section h3 { font-size: 14px !important; }
+
+.currency-selector label,
+.currency-selector select { font-size: var(--menu-compact-font) !important; }
+.currency-selector select { padding: 6px 10px !important; height: 34px !important; }
+
+.payment-section select,
+.payment-section input,
+.search-section input,
+.search-section button { font-size: clamp(12px, 1vw, 13px) !important; padding: 6px 8px !important; height: 32px; }
+
+/* تصغير بطاقات المنتجات قليلاً للحفاظ على التوازن */
+.product-card h4 { font-size: 14px; }
+.product-card .price { font-size: 14px; }
+
+/* جداول أصغر */
+.data-table th, .data-table td { padding: 8px 10px; font-size: clamp(11px, 0.9vw, 12px); }
+.data-table th { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.add-btn, .action-btn, .save-btn, .cancel-btn, .update-cash-btn { padding: 6px 10px; font-size: 12px; }
 
 .cash-feature-highlight {
     background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
