@@ -237,7 +237,125 @@
                     </div>
                 </div>
                 
-                <div class="pos-container bottom-layout">
+                <div class="pos-container three-col">
+                    <div class="pos-sale">
+                        <div class="sale-panel">
+                            <h3><i class="fas fa-cash-register"></i> قائمة البيع</h3>
+                            <div class="payment-section">
+                                <label>طريقة الدفع:</label>
+                                <select id="paymentMethod">
+                                    <option value="cash" selected>دفع كامل (نقدي)</option>
+                                    <option value="credit">بيع بالدين</option>
+                                    <option value="partial">دفع جزئي (دين)</option>
+                                </select>
+
+                                <!-- قسم الدفع النقدي المتطور -->
+                                <div id="cashPaymentSection" class="cash-payment" style="display: block;">
+                                    <div class="cash-feature-highlight">
+                                        <h3>دفع نقدي ذكي</h3>
+                                        <p>حساب الباقي تلقائياً بعملات مختلفة</p>
+                                    </div>
+
+                                    <div class="payment-input">
+                                        <div class="input-group">
+                                            <label>عملة الدفع:</label>
+                                            <select id="paymentCurrency">
+                                                <option value="USD">دولار ($)</option>
+                                                <option value="LBP">ليرة (ل.ل)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label>المبلغ المدفوع:</label>
+                                            <input type="number" id="amountPaid" step="0.01" placeholder="المبلغ">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label>عملة الباقي:</label>
+                                            <select id="changeCurrency">
+                                                <option value="">تلقائي</option>
+                                                <option value="USD">دولار ($)</option>
+                                                <option value="LBP">ليرة (ل.ل)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <button id="calculateChange" class="calculate-btn-compact">
+                                                حساب الباقي
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div id="changeDetails" class="change-details" style="display: none;"></div>
+                                </div>
+
+                                <!-- قسم البيع بالدين -->
+                                <div id="creditSaleSection" class="credit-sale" style="display: none;">
+                                    <div class="credit-feature-highlight">
+                                        <h3>بيع بالدين</h3>
+                                        <p>البيع كاملاً على الحساب</p>
+                                    </div>
+                                    <div class="credit-sale-input">
+                                        <div class="input-group">
+                                            <label>اختر العميل:</label>
+                                            <select id="creditCustomerSelect">
+                                                <option value="">اختر عميل...</option>
+                                            </select>
+                                        </div>
+                                        <div class="credit-info">
+                                            <div class="credit-limit-display">
+                                                <span>الحد الائتماني: <span id="creditLimitDisplay">--</span></span>
+                                                <span>الدين الحالي: <span id="currentDebtDisplay">--</span></span>
+                                                <span>الائتمان المتبقي: <span id="remainingCreditDisplay">--</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- قسم الدفع الجزئي والدين -->
+                                <div id="partialPaymentSection" class="partial-payment" style="display: none;">
+                                    <div class="credit-feature-highlight">
+                                        <h3>دفع جزئي (دين)</h3>
+                                        <p>ادفع جزء والباقي على الحساب</p>
+                                    </div>
+                                    <div class="partial-payment-input">
+                                        <div class="input-group">
+                                            <label>اختر العميل:</label>
+                                            <select id="customerSelect">
+                                                <option value="">اختر عميل...</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>مبلغ مدفوع:</label>
+                                            <input type="number" id="partialAmount" step="0.01" placeholder="المبلغ المدفوع">
+                                        </div>
+                                        <div class="input-group">
+                                            <label>عملة الدفع:</label>
+                                            <select id="partialCurrency">
+                                                <option value="USD">دولار ($)</option>
+                                                <option value="LBP">ليرة (ل.ل)</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <button id="calculateCredit" class="calculate-btn-compact">
+                                                حساب الدين
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="creditDetails" class="credit-details" style="display: none;"></div>
+                                </div>
+
+                                <button id="processPayment" class="pay-btn">
+                                    <i class="fas fa-credit-card"></i>
+                                    إتمام الدفع
+                                </button>
+                                <button id="clearCart" class="clear-btn">
+                                    <i class="fas fa-trash"></i>
+                                    مسح العربة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="pos-left">
                         <div class="search-section">
                             <input type="text" id="productSearch" placeholder="ابحث عن منتج بالاسم أو الباركود...">
@@ -266,137 +384,10 @@
                                     <span id="finalTotal">$0.00</span>
                                 </div>
                             </div>
-                            
-                            
-                            
-                            <div class="payment-section">
-                                <label>طريقة الدفع:</label>
-                                <select id="paymentMethod">
-                                    <option value="cash" selected>دفع كامل (نقدي)</option>
-                                    <option value="credit">بيع بالدين</option>
-                                    <option value="partial">دفع جزئي (دين)</option>
-                                </select>
-                                
-                                <!-- تمت إزالة العربة المكررة هنا -->
-
-                                <!-- قسم الدفع النقدي المتطور -->
-                                <div id="cashPaymentSection" class="cash-payment" style="display: block;">
-                                    <div class="cash-feature-highlight">
-                                        <h3>دفع نقدي ذكي</h3>
-                                        <p>حساب الباقي تلقائياً بعملات مختلفة</p>
-                                    </div>
-                                    
-                                    <div class="payment-input">
-                                        <div class="input-group">
-                                            <label>عملة الدفع:</label>
-                                            <select id="paymentCurrency">
-                                                <option value="USD">دولار ($)</option>
-                                                <option value="LBP">ليرة (ل.ل)</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="input-group">
-                                            <label>المبلغ المدفوع:</label>
-                                            <input type="number" id="amountPaid" step="0.01" placeholder="المبلغ">
-                                        </div>
-                                        
-                                        <div class="input-group">
-                                            <label>عملة الباقي:</label>
-                                            <select id="changeCurrency">
-                                                <option value="">تلقائي</option>
-                                                <option value="USD">دولار ($)</option>
-                                                <option value="LBP">ليرة (ل.ل)</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="input-group">
-                                            <button id="calculateChange" class="calculate-btn-compact">
-                                                حساب الباقي
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <div id="changeDetails" class="change-details" style="display: none;">
-                                        <!-- تفاصيل الباقي ستظهر هنا -->
-                                    </div>
-                                </div>
-                                
-                                <!-- قسم البيع بالدين -->
-                                <div id="creditSaleSection" class="credit-sale" style="display: none;">
-                                    <div class="credit-feature-highlight">
-                                        <h3>بيع بالدين</h3>
-                                        <p>البيع كاملاً على الحساب</p>
-                                    </div>
-                                    
-                                    <div class="credit-sale-input">
-                                        <div class="input-group">
-                                            <label>اختر العميل:</label>
-                                            <select id="creditCustomerSelect">
-                                                <option value="">اختر عميل...</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="credit-info">
-                                            <div class="credit-limit-display">
-                                                <span>الحد الائتماني: <span id="creditLimitDisplay">--</span></span>
-                                                <span>الدين الحالي: <span id="currentDebtDisplay">--</span></span>
-                                                <span>الائتمان المتبقي: <span id="remainingCreditDisplay">--</span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- قسم الدفع الجزئي والدين -->
-                                <div id="partialPaymentSection" class="partial-payment" style="display: none;">
-                                    <div class="credit-feature-highlight">
-                                        <h3>دفع جزئي (دين)</h3>
-                                        <p>ادفع جزء والباقي على الحساب</p>
-                                    </div>
-                                    
-                                    <div class="partial-payment-input">
-                                        <div class="input-group">
-                                            <label>اختر العميل:</label>
-                                            <select id="customerSelect">
-                                                <option value="">اختر عميل...</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="input-group">
-                                            <label>مبلغ مدفوع:</label>
-                                            <input type="number" id="partialAmount" step="0.01" placeholder="المبلغ المدفوع">
-                                        </div>
-                                        
-                                        <div class="input-group">
-                                            <label>عملة الدفع:</label>
-                                            <select id="partialCurrency">
-                                                <option value="USD">دولار ($)</option>
-                                                <option value="LBP">ليرة (ل.ل)</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="input-group">
-                                            <button id="calculateCredit" class="calculate-btn-compact">
-                                                حساب الدين
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <div id="creditDetails" class="credit-details" style="display: none;">
-                                        <!-- تفاصيل الدين ستظهر هنا -->
-                                    </div>
-                                </div>
-                                
-                                <button id="processPayment" class="pay-btn">
-                                    <i class="fas fa-credit-card"></i>
-                                    إتمام الدفع
-                                </button>
-                                
-                                <button id="clearCart" class="clear-btn">
-                                    <i class="fas fa-trash"></i>
-                                    مسح العربة
-                                </button>
-                            </div>
+                            <button id="clearCart" class="clear-btn">
+                                <i class="fas fa-trash"></i>
+                                مسح العربة
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -570,6 +561,22 @@
             <div id="reports" class="page">
                 <div class="page-header">
                     <h2><i class="fas fa-chart-bar"></i> التقارير</h2>
+                    <div class="date-filter">
+                        <select id="reportPreset">
+                            <option value="today">اليوم</option>
+                            <option value="yesterday">أمس</option>
+                            <option value="this_week">هذا الأسبوع</option>
+                            <option value="last_7">آخر 7 أيام</option>
+                            <option value="this_month">هذا الشهر</option>
+                            <option value="last_30">آخر 30 يوم</option>
+                            <option value="this_year">هذه السنة</option>
+                            <option value="custom">مخصص</option>
+                        </select>
+                        <input type="date" id="reportFromDate">
+                        <input type="date" id="reportToDate">
+                        <button id="applyReportFilter" class="filter-btn">تطبيق</button>
+                        <button id="openSalesHistory" class="report-btn"><i class="fas fa-history"></i> سجل المبيعات</button>
+                    </div>
                 </div>
                 
                 <div class="reports-grid">
@@ -643,6 +650,9 @@
                             <i class="fas fa-save"></i>
                             حفظ سعر الصرف
                         </button>
+                        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+                            <button id="openCashMove" class="report-btn"><i class="fas fa-exchange-alt"></i> حركة الصندوق</button>
+                        </div>
                     </div>
                     
                     
@@ -991,6 +1001,80 @@
             </div>
             <div id="reportContent" class="report-body">
                 <!-- محتوى التقرير سيتم إنشاؤه ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة دفع دين عميل -->
+    <div id="payDebtModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تسديد دين العميل</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="report-body">
+                <div class="form-group">
+                    <label>العميل</label>
+                    <select id="payDebtCustomer"></select>
+                </div>
+                <div class="form-group">
+                    <label>الدين الحالي</label>
+                    <input type="text" id="payDebtCurrent" disabled>
+                </div>
+                <div class="form-group">
+                    <label>المبلغ المدفوع</label>
+                    <input type="number" step="0.01" id="payDebtAmount" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>عملة الدفع</label>
+                    <select id="payDebtCurrency">
+                        <option value="USD">دولار ($)</option>
+                        <option value="LBP">ليرة (ل.ل)</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button id="confirmPayDebt" class="save-btn"><i class="fas fa-check"></i> تأكيد التسديد</button>
+                    <button class="cancel-btn" onclick="hideModal('payDebtModal')"><i class="fas fa-times"></i> إلغاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة حركة الصندوق (إخراج/إيداع/نقل) -->
+    <div id="cashMoveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>حركة الصندوق</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="report-body">
+                <div class="form-group">
+                    <label>النوع</label>
+                    <select id="cashMoveType">
+                        <option value="expense">إخراج (مصاريف)</option>
+                        <option value="deposit">إيداع للصندوق</option>
+                        <option value="transfer">نقل إلى الخزنة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المبلغ</label>
+                    <input type="number" step="0.01" id="cashMoveAmount" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>العملة</label>
+                    <select id="cashMoveCurrency">
+                        <option value="USD">دولار ($)</option>
+                        <option value="LBP">ليرة (ل.ل)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>وصف</label>
+                    <input type="text" id="cashMoveNote" placeholder="مثال: شراء مستلزمات/نقل للخزنة ...">
+                </div>
+                <div class="modal-actions">
+                    <button id="confirmCashMove" class="save-btn"><i class="fas fa-check"></i> تأكيد</button>
+                    <button class="cancel-btn" onclick="hideModal('cashMoveModal')"><i class="fas fa-times"></i> إلغاء</button>
+                </div>
             </div>
         </div>
     </div>

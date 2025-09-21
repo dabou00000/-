@@ -1835,6 +1835,12 @@ function removeFromCart(index) {
     showMessage(`تم حذف ${removedItem.name} من العربة`);
 }
 
+// مسح العربة (مفيد لإعادة الاستخدام عند إتمام البيع أو الإلغاء)
+function clearCart() {
+    cart = [];
+    updateCart();
+}
+
 // معالجة الدفع
 document.getElementById('processPayment').addEventListener('click', function() {
     if (cart.length === 0) {
@@ -2094,6 +2100,18 @@ document.getElementById('processPayment').addEventListener('click', function() {
     
     sales.push(newSale);
     saveAllData();
+    // حفظ سجل المبيعات العام
+    const salesLogs = loadFromStorage('salesLogs', []);
+    salesLogs.push({
+        timestamp: new Date().toLocaleString(),
+        invoiceNumber: newSale.invoiceNumber,
+        amount: newSale.amount,
+        currency,
+        method: newSale.paymentMethod,
+        customer: newSale.customer || '-',
+        user: currentUser || 'المستخدم'
+    });
+    saveToStorage('salesLogs', salesLogs);
     
     // إفراغ العربة وتنظيف الواجهة
     cart = [];
@@ -2519,6 +2537,109 @@ function viewCreditHistory(customerId) {
     modalBody.innerHTML = html;
     modal.style.display = 'block';
 }
+
+// عرض سجل المعاملات (دخول/خروج) للعميل
+function openCustomerTransactions(customerId) {
+    const customer = customers.find(c => c.id === customerId);
+    if (!customer) return;
+    const logs = loadFromStorage('customerLogs', {});
+    const list = logs[customerId] || [];
+    let html = `
+        <div class="report-stats">
+            <div class="stat-item">
+                <h4>سجل العميل</h4>
+                <p class="stat-value">${customer.name}</p>
+            </div>
+        </div>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>التاريخ والوقت</th>
+                    <th>النوع</th>
+                    <th>المستخدم</th>
+                    <th>ملاحظات</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${list.length ? list.map(r => `
+                    <tr>
+                        <td>${r.timestamp || '-'}</td>
+                        <td>${r.action || '-'}</td>
+                        <td>${r.user || '-'}</td>
+                        <td>${r.note || '-'}</td>
+                    </tr>
+                `).join('') : '<tr><td colspan="4">لا يوجد سجلات</td></tr>'}
+            </tbody>
+        </table>
+    `;
+    const reportContent = document.getElementById('reportContent');
+    const reportTitle = document.getElementById('reportTitle');
+    if (reportTitle) reportTitle.textContent = 'سجل معاملات العميل';
+    if (reportContent) reportContent.innerHTML = html;
+    showModal('reportModal');
+}
+
+function openPayDebt(customerId) {
+    const select = document.getElementById('payDebtCustomer');
+    const current = document.getElementById('payDebtCurrent');
+    if (!select || !current) return;
+    // تعبئة العملاء
+    select.innerHTML = '';
+    customers.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = `${c.name} - دين: ${formatCurrency(c.creditBalance || 0)}`;
+        select.appendChild(opt);
+    });
+    select.value = String(customerId || '');
+    const cust = customers.find(c => c.id === (customerId || parseInt(select.value)));
+    current.value = formatCurrency(cust?.creditBalance || 0);
+    showModal('payDebtModal');
+}
+
+document.getElementById('payDebtCustomer')?.addEventListener('change', function(){
+    const c = customers.find(x => x.id === parseInt(this.value));
+    const current = document.getElementById('payDebtCurrent');
+    if (current) current.value = formatCurrency(c?.creditBalance || 0);
+});
+
+document.getElementById('confirmPayDebt')?.addEventListener('click', function(){
+    const select = document.getElementById('payDebtCustomer');
+    const amountInput = document.getElementById('payDebtAmount');
+    const currencySel = document.getElementById('payDebtCurrency');
+    const customer = customers.find(c => c.id === parseInt(select.value));
+    if (!customer) { showMessage('يرجى اختيار عميل', 'error'); return; }
+    const amount = parseFloat(amountInput.value) || 0;
+    if (amount <= 0) { showMessage('أدخل مبلغاً صحيحاً', 'error'); return; }
+    // تحويل إلى USD إذا الدفع بالليرة
+    const amountUSD = currencySel.value === 'USD' ? amount : (amount / (settings.exchangeRate || 1));
+    const before = customer.creditBalance || customer.currentDebt || 0;
+    const pay = Math.min(amountUSD, before);
+    customer.currentDebt = Math.max(before - pay, 0);
+    customer.creditBalance = customer.currentDebt;
+    saveToStorage('customers', customers);
+
+    // تحديث الصندوق بإضافة المبلغ المدفوع
+    if (currencySel.value === 'USD') { cashDrawer.cashUSD += amount; } else { cashDrawer.cashLBP += amount; }
+    cashDrawer.lastUpdate = new Date().toISOString();
+    saveToStorage('cashDrawer', cashDrawer);
+    updateCashDrawerDisplay();
+
+    // سجل العميل
+    const clog = loadFromStorage('customerLogs', {});
+    if (!clog[customer.id]) clog[customer.id] = [];
+    clog[customer.id].push({ timestamp: new Date().toLocaleString(), action: 'تسديد', user: (currentUser || 'المستخدم'), note: `تسديد ${amount} ${currencySel.value}` });
+    saveToStorage('customerLogs', clog);
+
+    // سجل المبيعات (دفعة على حساب)
+    const salesLogs = loadFromStorage('salesLogs', []);
+    salesLogs.push({ timestamp: new Date().toLocaleString(), invoiceNumber: '-', amount: amountUSD, currency: 'USD', method: 'payment', customer: customer.name, user: (currentUser || 'المستخدم') });
+    saveToStorage('salesLogs', salesLogs);
+
+    showNotification('تم تسجيل التسديد بنجاح', 'success', 2500);
+    hideModal('payDebtModal');
+    loadCustomers();
+});
 
 // مسح العربة
 document.getElementById('clearCart').addEventListener('click', function() {
@@ -3170,9 +3291,8 @@ function loadCustomers() {
             <td>
                 <button class="action-btn edit-btn" onclick="editCustomer(${customer.id})">تعديل</button>
                 <button class="action-btn delete-btn" onclick="deleteCustomer(${customer.id})">حذف</button>
-                ${customer.creditBalance > 0 ? `
-                <button class="action-btn view-btn" onclick="viewCreditHistory(${customer.id})">التاريخ</button>
-                ` : ''}
+                <button class="action-btn" style="background:#6f42c1;color:#fff" onclick="openCustomerTransactions(${customer.id})">السجل</button>
+                ${customer.creditBalance > 0 ? `<button class="action-btn" style="background:#2dce89;color:#fff" onclick="openPayDebt(${customer.id})">تسديد دين</button>` : ''}
             </td>
         `;
         
@@ -3446,18 +3566,160 @@ document.querySelectorAll('.report-btn').forEach((btn, index) => {
     });
 });
 
+// فلترة التقارير حسب الفترات الجاهزة أو تاريخ مخصص
+document.getElementById('applyReportFilter')?.addEventListener('click', () => {
+    const preset = document.getElementById('reportPreset').value;
+    const fromInp = document.getElementById('reportFromDate');
+    const toInp = document.getElementById('reportToDate');
+    const { from, to } = getRangeByPreset(preset, fromInp.value, toInp.value);
+    window.currentReportRange = { from, to };
+    // إعادة فتح آخر تقرير تم عرضه إن وجد
+    const title = document.getElementById('reportTitle')?.textContent || '';
+    if (title.includes('المبيعات') || title.toLowerCase().includes('sales')) return showSalesReport();
+    if (title.includes('المالي') || title.toLowerCase().includes('financial')) return showFinancialReport();
+    if (title.includes('المخزون') || title.toLowerCase().includes('inventory')) return showInventoryReport();
+    if (title.includes('العملاء') || title.toLowerCase().includes('customers')) return showCustomersReport();
+});
+
+document.getElementById('openSalesHistory')?.addEventListener('click', openSalesHistory);
+document.getElementById('openCashMove')?.addEventListener('click', () => showModal('cashMoveModal'));
+
+document.getElementById('confirmCashMove')?.addEventListener('click', () => {
+    const type = document.getElementById('cashMoveType').value;
+    const amount = parseFloat(document.getElementById('cashMoveAmount').value) || 0;
+    const currency = document.getElementById('cashMoveCurrency').value;
+    const note = document.getElementById('cashMoveNote').value || '';
+    if (amount <= 0) { showMessage('أدخل مبلغاً صحيحاً', 'error'); return; }
+    // تنفيذ الحركة
+    if (type === 'expense' || type === 'transfer') {
+        if (currency === 'USD') {
+            if (cashDrawer.cashUSD < amount) { showMessage('لا يوجد رصيد دولار كافٍ', 'error'); return; }
+            cashDrawer.cashUSD -= amount;
+        } else {
+            if (cashDrawer.cashLBP < amount) { showMessage('لا يوجد رصيد ليرة كافٍ', 'error'); return; }
+            cashDrawer.cashLBP -= amount;
+        }
+    } else if (type === 'deposit') {
+        if (currency === 'USD') cashDrawer.cashUSD += amount; else cashDrawer.cashLBP += amount;
+    }
+    // سجل الحركة
+    cashDrawer.transactions = cashDrawer.transactions || [];
+    cashDrawer.transactions.push({
+        timestamp: new Date().toISOString(),
+        type,
+        amount,
+        currency,
+        note,
+        balanceAfter: { USD: cashDrawer.cashUSD, LBP: cashDrawer.cashLBP }
+    });
+    cashDrawer.lastUpdate = new Date().toISOString();
+    saveToStorage('cashDrawer', cashDrawer);
+    updateCashDrawerDisplay();
+
+    // إضافة أيضاً لسجل المبيعات العام كمرجع يومي
+    const salesLogs = loadFromStorage('salesLogs', []);
+    salesLogs.push({ timestamp: new Date().toLocaleString(), invoiceNumber: '-', amount: (currency==='USD'?amount:amount/(settings.exchangeRate||1)), currency: 'USD', method: `cash-${type}`, customer: '-', user: currentUser || 'المستخدم', note });
+    saveToStorage('salesLogs', salesLogs);
+    
+    showNotification('تم تسجيل حركة الصندوق', 'success', 2500);
+    hideModal('cashMoveModal');
+});
+
+// تطبيق تلقائي عند تغيير القائمة الجاهزة
+document.getElementById('reportPreset')?.addEventListener('change', (e) => {
+    const preset = e.target.value;
+    const fromInp = document.getElementById('reportFromDate');
+    const toInp = document.getElementById('reportToDate');
+    if (preset !== 'custom') {
+        const { from, to } = getRangeByPreset(preset);
+        fromInp.value = toDateInputValue(from);
+        toInp.value = toDateInputValue(to);
+        fromInp.disabled = true; toInp.disabled = true;
+        window.currentReportRange = { from, to };
+        rerenderCurrentReport();
+    } else {
+        fromInp.disabled = false; toInp.disabled = false;
+    }
+});
+
+// تطبيق تلقائي عند إدخال تاريخين في وضع "مخصص"
+['reportFromDate','reportToDate'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', () => {
+        const presetSel = document.getElementById('reportPreset');
+        if (!presetSel || presetSel.value !== 'custom') return;
+        const fromVal = document.getElementById('reportFromDate').value;
+        const toVal = document.getElementById('reportToDate').value;
+        if (fromVal && toVal) {
+            const { from, to } = getRangeByPreset('custom', fromVal, toVal);
+            window.currentReportRange = { from, to };
+            rerenderCurrentReport();
+        }
+    });
+});
+
+function getRangeByPreset(preset, customFrom, customTo) {
+    const now = new Date();
+    let from = new Date();
+    let to = new Date();
+    switch (preset) {
+        case 'today':
+            from.setHours(0,0,0,0); to.setHours(23,59,59,999); break;
+        case 'yesterday':
+            from.setDate(now.getDate()-1); from.setHours(0,0,0,0);
+            to = new Date(from); to.setHours(23,59,59,999); break;
+        case 'this_week': {
+            const day = now.getDay(); // 0 Sun
+            const diff = (day + 6) % 7; // جعل الاثنين بداية الأسبوع إن رغبت لاحقاً
+            from.setDate(now.getDate() - diff); from.setHours(0,0,0,0);
+            to.setHours(23,59,59,999); break;
+        }
+        case 'last_7':
+            from.setDate(now.getDate()-6); from.setHours(0,0,0,0);
+            to.setHours(23,59,59,999); break;
+        case 'this_month':
+            from = new Date(now.getFullYear(), now.getMonth(), 1);
+            to = new Date(now.getFullYear(), now.getMonth()+1, 0, 23,59,59,999); break;
+        case 'last_30':
+            from.setDate(now.getDate()-29); from.setHours(0,0,0,0);
+            to.setHours(23,59,59,999); break;
+        case 'this_year':
+            from = new Date(now.getFullYear(), 0, 1);
+            to = new Date(now.getFullYear(), 11, 31, 23,59,59,999); break;
+        case 'custom':
+        default:
+            from = customFrom ? new Date(customFrom) : new Date(now.getFullYear(), now.getMonth(), 1);
+            to = customTo ? new Date(customTo) : now;
+    }
+    return { from, to };
+}
+
+function toDateInputValue(d) {
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2,'0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function rerenderCurrentReport() {
+    const title = document.getElementById('reportTitle')?.textContent || '';
+    if (title.includes('المبيعات') || title.toLowerCase().includes('sales')) return showSalesReport();
+    if (title.includes('المالي') || title.toLowerCase().includes('financial')) return showFinancialReport();
+    if (title.includes('المخزون') || title.toLowerCase().includes('inventory')) return showInventoryReport();
+    if (title.includes('العملاء') || title.toLowerCase().includes('customers')) return showCustomersReport();
+}
+
 function showSalesReport() {
     const reportContent = document.getElementById('reportContent');
     const reportTitle = document.getElementById('reportTitle');
     
     reportTitle.textContent = 'تقرير المبيعات';
-    
-    const totalSales = sales.reduce((sum, sale) => sum + sale.amount, 0);
-    const totalTransactions = sales.length;
-    const averageTransaction = totalSales / totalTransactions || 0;
-    
-    const today = new Date().toISOString().split('T')[0];
-    const todaySales = sales.filter(sale => sale.date === today);
+    const range = window.currentReportRange || getRangeByPreset('this_month');
+    const filtered = sales.filter(s => new Date(s.date) >= range.from && new Date(s.date) <= range.to);
+    const totalSales = filtered.reduce((sum, sale) => sum + sale.amount, 0);
+    const totalTransactions = filtered.length;
+    const averageTransaction = totalSales / (totalTransactions || 1);
+    const todayStr = new Date().toISOString().split('T')[0];
+    const todaySales = filtered.filter(sale => sale.date === todayStr);
     const todayRevenue = todaySales.reduce((sum, sale) => sum + sale.amount, 0);
     
     const reportHTML = `
@@ -3480,6 +3742,7 @@ function showSalesReport() {
             </div>
         </div>
         
+        <h4>الفواتير ضمن الفترة المحددة:</h4>
         <table class="report-table">
             <thead>
                 <tr>
@@ -3491,7 +3754,7 @@ function showSalesReport() {
                 </tr>
             </thead>
             <tbody>
-                ${sales.map(sale => `
+                ${filtered.map(sale => `
                     <tr>
                         <td>${sale.invoiceNumber}</td>
                         <td>${sale.date}</td>
@@ -3505,6 +3768,45 @@ function showSalesReport() {
     `;
     
     reportContent.innerHTML = reportHTML;
+    showModal('reportModal');
+}
+
+// عرض سجل المبيعات العام
+function openSalesHistory() {
+    const logs = loadFromStorage('salesLogs', []);
+    let html = `
+        <div class="report-stats">
+            <div class="stat-item"><h4>سجل المبيعات</h4><p class="stat-value">${logs.length} عملية</p></div>
+        </div>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>التاريخ والوقت</th>
+                    <th>رقم الفاتورة</th>
+                    <th>العميل</th>
+                    <th>الطريقة</th>
+                    <th>المبلغ</th>
+                    <th>المستخدم</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${logs.length ? logs.map(l => `
+                    <tr>
+                        <td>${l.timestamp}</td>
+                        <td>${l.invoiceNumber}</td>
+                        <td>${l.customer || '-'}</td>
+                        <td>${l.method}</td>
+                        <td>${formatCurrency(l.amount, l.currency)}</td>
+                        <td>${l.user}</td>
+                    </tr>
+                `).join('') : '<tr><td colspan="6">لا يوجد سجلات</td></tr>'}
+            </tbody>
+        </table>
+    `;
+    const reportContent = document.getElementById('reportContent');
+    const reportTitle = document.getElementById('reportTitle');
+    if (reportTitle) reportTitle.textContent = 'سجل المبيعات';
+    if (reportContent) reportContent.innerHTML = html;
     showModal('reportModal');
 }
 
@@ -3652,15 +3954,16 @@ function showFinancialReport() {
     const reportTitle = document.getElementById('reportTitle');
     
     reportTitle.textContent = 'التقرير المالي';
-    
-    const totalRevenue = sales.reduce((sum, sale) => sum + sale.amount, 0);
+    const range = window.currentReportRange || getRangeByPreset('this_month');
+    const filtered = sales.filter(s => new Date(s.date) >= range.from && new Date(s.date) <= range.to);
+    const totalRevenue = filtered.reduce((sum, sale) => sum + sale.amount, 0);
     const totalTax = totalRevenue * 0.11;
     const netRevenue = totalRevenue - totalTax;
     const totalStockValue = products.reduce((sum, product) => sum + (product.stock * product.priceUSD), 0);
     
     // حساب المبيعات حسب طريقة الدفع
     const paymentMethods = {};
-    sales.forEach(sale => {
+    filtered.forEach(sale => {
         paymentMethods[sale.paymentMethod] = (paymentMethods[sale.paymentMethod] || 0) + sale.amount;
     });
     
@@ -5124,15 +5427,16 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
         const addProdBtn = document.getElementById('addProductBtn');
         if (addProdBtn) { const icon = addProdBtn.querySelector('i'); addProdBtn.textContent = t.add_product; if (icon) addProdBtn.prepend(icon); }
         const productsHead = document.querySelectorAll('#products thead th');
-        if (productsHead && productsHead.length >= 8) {
+        if (productsHead && productsHead.length >= 9) {
             productsHead[0].textContent = t.th_product_name;
             productsHead[1].textContent = t.th_category;
             productsHead[2].textContent = t.th_barcode;
             productsHead[3].textContent = t.th_supplier;
             productsHead[4].textContent = t.th_price_usd;
-            productsHead[5].textContent = t.th_price_lbp;
-            productsHead[6].textContent = t.th_stock;
-            productsHead[7].textContent = t.th_actions;
+            productsHead[5].textContent = t.th_cost_usd ? t.th_cost_usd : (lang === 'ar' ? 'التكلفة (USD)' : 'Cost (USD)');
+            productsHead[6].textContent = t.th_price_lbp;
+            productsHead[7].textContent = t.th_stock;
+            productsHead[8].textContent = t.th_actions;
         }
 
         // Sales table head
@@ -5688,7 +5992,17 @@ function updateCreditInfo(customerId) {
 // معالجة البيع بالدين
 function processCreditSale() {
     const customerId = document.getElementById('creditCustomerSelect').value;
-    const finalTotal = parseFloat(document.getElementById('finalTotal').textContent.replace(/[^0-9.-]+/g, '')) || 0;
+    // قراءة قيمة الفاتورة حسب العملة المعروضة
+    const currency = (document.getElementById('currency')?.value) || 'USD';
+    const finalText = document.getElementById('finalTotal').textContent.trim();
+    let finalTotal = 0;
+    if (currency === 'USD') {
+        finalTotal = parseFloat(finalText.replace(/[^0-9.-]+/g, '')) || 0;
+    } else {
+        // إذا كانت بالليرة حوّل إلى USD باستخدام سعر الصرف المخزّن
+        const rawLBP = parseFloat(finalText.replace(/[^0-9.-]+/g, '')) || 0;
+        finalTotal = (rawLBP / (settings.exchangeRate || 1));
+    }
     
     if (!customerId) {
         showMessage('يرجى اختيار عميل', 'error');
@@ -5701,23 +6015,43 @@ function processCreditSale() {
         return;
     }
     
-    const remainingCredit = customer.creditLimit - (customer.currentDebt || 0);
-    if (finalTotal > remainingCredit) {
+    const existingDebt = (customer.currentDebt != null ? customer.currentDebt : (customer.creditBalance || 0));
+    const remainingCredit = (customer.creditLimit || 0) - existingDebt;
+    if (finalTotal > remainingCredit + 1e-6) {
         showMessage(getText('credit-exceeded'), 'error');
         return;
     }
     
     if (confirm(getText('confirm-credit-sale'))) {
         // تحديث دين العميل
-        customer.currentDebt = (customer.currentDebt || 0) + finalTotal;
+        customer.currentDebt = existingDebt + finalTotal;
+        customer.creditBalance = customer.currentDebt;
+        saveToStorage('customers', customers);
         
-        // إنشاء فاتورة
-        createCreditSaleInvoice(customer, finalTotal);
+        // إنشاء فاتورة وإرجاعها
+        const newInvoice = createCreditSaleInvoice(customer, finalTotal);
+        saveToStorage('sales', sales);
+        // سجل دخول/خروج على حساب العميل
+        const logs = loadFromStorage('customerLogs', {});
+        if (!logs[customer.id]) logs[customer.id] = [];
+        logs[customer.id].push({
+            timestamp: new Date().toLocaleString(),
+            action: 'دين',
+            user: (currentUser || 'المستخدم'),
+            note: `فاتورة ${newInvoice.invoiceNumber} بقيمة ${finalTotal.toFixed(2)}$`
+        });
+        saveToStorage('customerLogs', logs);
         
-        // مسح العربة
+        // مسح العربة وتحديث الواجهة
         clearCart();
         
-        showMessage(getText('credit-sale-success'), 'success');
+        // إشعار وطباعة اختيارية
+        showNotification(getText('credit-sale-success'), 'success', 3000);
+        if (settings.printAfterSale && newInvoice) {
+            setTimeout(() => {
+                showInvoice(newInvoice);
+            }, 500);
+        }
     }
 }
 
@@ -5737,6 +6071,19 @@ function createCreditSaleInvoice(customer, amount) {
     
     sales.push(invoice);
     saveToStorage('sales', sales);
+    // سجل المبيعات: البيع بالدين
+    const salesLogs = loadFromStorage('salesLogs', []);
+    salesLogs.push({
+        timestamp: new Date().toLocaleString(),
+        invoiceNumber: invoice.invoiceNumber,
+        amount: invoice.amount,
+        currency: 'USD',
+        method: 'credit',
+        customer: invoice.customerName || '-',
+        user: currentUser || 'المستخدم'
+    });
+    saveToStorage('salesLogs', salesLogs);
+    return invoice;
 }
 
 

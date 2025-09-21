@@ -284,11 +284,12 @@ body {
     position: fixed;
     top: 70px;
     right: 0;
-    width: 240px; /* تقليل العرض لإزالة المساحة البيضاء */
+    width: 170px; /* تقليل العرض أكثر */
     height: calc(100vh - 70px);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
+    /* خلفية محايدة فاتحة بدل الأبيض الصافي */
+    background: linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%);
     backdrop-filter: blur(20px);
-    border-left: 1px solid rgba(255,255,255,0.3);
+    border-left: 1px solid rgba(229,231,235,0.9);
     z-index: 999;
     box-shadow: -4px 0 25px rgba(0,0,0,0.1);
     display: flex;
@@ -392,8 +393,8 @@ body {
     border-right: 3px solid transparent;
     min-height: 48px;
     position: relative;
-    width: auto;        /* لا تملأ العرض كاملاً */
-    max-width: 220px;   /* أقصى عرض للزر */
+    width: fit-content;        /* لا تملأ العرض كاملاً */
+    max-width: none;   /* إزالة الحد الأقصى كي لا يبقى فراغ أبيض */
 }
 
 .nav-item:hover,
@@ -418,7 +419,7 @@ body {
 }
 
 .nav-item span {
-    flex: 1;
+    flex: 0 1 auto; /* لا تتمدد كي لا تترك فراغاً بعد النص */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -439,7 +440,7 @@ body {
 
 /* المحتوى الرئيسي */
 .main-content {
-    margin-right: 240px; /* مواءمة هامش المحتوى مع عرض القائمة */
+    margin-right: 170px; /* مواءمة هامش المحتوى مع عرض القائمة */
     margin-top: 70px;
     padding: 25px;
     min-height: calc(100vh - 70px);
@@ -642,8 +643,48 @@ body {
 
 .pos-container {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 480px; /* تقليل عرض العمود الأيمن */
-    gap: 18px;
+    grid-template-columns: var(--sale-col) minmax(0, 1fr) var(--cart-col); /* يسار: قائمة البيع، وسط: منتجات، يمين: العربة */
+    gap: var(--gutter);
+    align-items: start;
+    overflow: visible;
+    padding-bottom: 16px; /* مساحة سفلية لمنع القص */
+}
+.three-col { grid-template-columns: var(--sale-col) minmax(0, 1fr) var(--cart-col); }
+
+.pos-sale {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 12px 14px;
+    border: 1px solid rgba(226,232,240,0.7);
+    position: sticky;
+    top: 90px;
+    height: calc(100dvh - 100px);
+    overflow-y: auto;
+    padding-bottom: 20px;
+    scroll-padding-bottom: 24px;
+    overscroll-behavior: contain;
+}
+
+.sale-panel h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+/* توحيد شكل الألواح اليمنى واليسرى */
+.pos-right, .pos-sale, .pos-left {
+    box-shadow: 0 8px 24px rgba(148,163,184,0.18);
+}
+
+/* تثبيت عمود العربة مع ارتفاع مساوي */
+.pos-right {
+    position: sticky;
+    top: 90px;
+    height: calc(100vh - 110px);
+    overflow-y: auto;
 }
 
 /* تخطيط سفلي: المنتجات بالأعلى ولوحة البيع كصف سفلية بكامل العرض */
@@ -651,10 +692,9 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
-    gap: 16px;
-    height: auto; /* حتى يظهر كل شيء على 100% زوم */
+    gap: 8px;
     min-height: calc(100vh - 120px);
-    overflow: visible; /* السماح بالتمرير العام للصفحة */
+    overflow: visible;
 }
 .pos-container.bottom-layout .pos-left {
     grid-row: 1;
@@ -671,8 +711,8 @@ body {
     border-bottom: 1px solid rgba(226,232,240,0.8);
     padding: 8px 10px;
 }
-.pos-container.bottom-layout .pos-left .search-section input { height: 36px; padding: 8px 10px; font-size: 14px; }
-.pos-container.bottom-layout .pos-left .search-section button { height: 36px; padding: 0 12px; font-size: 14px; }
+.pos-container.bottom-layout .pos-left .search-section input { height: 30px; padding: 6px 8px; font-size: 12px; }
+.pos-container.bottom-layout .pos-left .search-section button { height: 30px; padding: 0 10px; font-size: 12px; }
 .pos-container.bottom-layout .pos-left #productsGrid {
     flex: 1;
     overflow: auto;
@@ -683,10 +723,11 @@ body {
 .pos-container.bottom-layout .pos-right {
     grid-row: 2;
     width: 100%;
-    position: static; /* إلغاء التثبيت لمنع القطع على زوم 100% */
-    z-index: 1;
-    border-top: none;
-    box-shadow: none;
+    position: sticky;
+    bottom: 0;
+    z-index: 900;
+    border-top: 1px solid rgba(226,232,240,0.7);
+    box-shadow: 0 -8px 24px rgba(148,163,184,0.18);
 }
 .pos-container.bottom-layout .pos-right .cart-section,
 .pos-container.bottom-layout .pos-right .payment-section {
@@ -698,7 +739,7 @@ body {
 
 /* اجعل عناصر العربة قابلة للتمرير الداخلي بينما تبقى اللوحة ثابتة */
 .pos-container.bottom-layout .pos-right .cart-items {
-    max-height: 30vh; /* مساحة أكبر لتقليل التمرير على 100% */
+    max-height: 24vh;
     overflow-y: auto;
 }
 .pos-container.bottom-layout .pos-right .payment-section {
@@ -709,13 +750,24 @@ body {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     border-radius: 20px;
-    padding: 25px;
+    padding: 18px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(255,255,255,0.3);
     position: relative;
+    z-index: 1;
+}
+
+/* تثبيت شريط البحث أعلى عمود المنتجات دائمًا */
+.pos-left .search-section {
+    position: sticky;
+    top: 0;
     z-index: 2;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(226,232,240,0.8);
+    padding: 8px 10px;
 }
 
 .search-section {
@@ -743,11 +795,12 @@ body {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
     flex: 1;
     overflow-y: auto;
-    padding: 5px;
+    padding: 4px 4px 92px 4px; /* زيادة طفيفة لمنع القص السفلي */
+    scroll-padding-bottom: 28px;
 }
 
 /* رسائل عدم وجود منتجات */
@@ -898,14 +951,18 @@ body {
     background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(249,250,251,0.96) 100%);
     backdrop-filter: blur(22px);
     border-radius: 22px;
-    padding: 22px;
+    padding: 16px;
     box-shadow: 0 20px 45px rgba(31, 41, 55, 0.12);
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(226,232,240,0.7);
-    position: relative;
-    z-index: 0;
-    min-height: 600px;
+    position: sticky;
+    top: 90px;
+    height: calc(100dvh - 100px);
+    z-index: 900; /* أعلى من المحتوى الآخر وأدنى من الهيدر/sidebar */
+    padding-bottom: 20px;
+    scroll-padding-bottom: 24px;
+    overscroll-behavior: contain;
 }
 .cart-section {
     display: flex;
@@ -951,7 +1008,7 @@ body {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -965,14 +1022,14 @@ body {
 
 .cart-item {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto auto;
+    grid-template-columns: minmax(0, 1fr) 110px 90px 32px;
     align-items: center;
-    padding: 12px;
-    border: 2px solid #e5e9f0;
+    padding: 15px 12px;
+    border: 1px solid #e5e9f0;
     border-radius: 10px;
-    background: white;
-    gap: 12px;
-    font-size: 14px;
+    background: rgb(255, 255, 255);
+    gap: 8px;
+    font-size: 13px;
     margin: 0;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.04);
@@ -997,7 +1054,7 @@ body {
 .item-name {
     font-weight: 700;
     color: #1a1a1a;
-    font-size: 15px;
+    font-size: 14px;
     margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -1006,7 +1063,7 @@ body {
 
 .item-price {
     color: #4a5568;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -1026,7 +1083,7 @@ body {
 .item-total {
     font-weight: 800;
     color: #4c6ef5;
-    font-size: 16px;
+    font-size: 13px;
     background: #f8f9fc;
     padding: 4px 8px;
     border-radius: 6px;
@@ -1036,31 +1093,25 @@ body {
 .quantity-controls {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0;
+    border: 1px solid #dbe1ea;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 2px;
 }
 
 /* منع التمرير الأفقي داخل العربة وضمان بقاء زر الحذف ظاهرًا */
 .cart-items { overflow-x: hidden; }
 .cart-item .remove-btn { justify-self: end; flex-shrink: 0; }
 
-.quantity {
-    background: linear-gradient(135deg, #f8f9fc 0%, #e9ecef 100%);
-    padding: 6px 12px;
-    border-radius: 8px;
-    min-width: 32px;
-    text-align: center;
-    font-weight: 800;
-    color: #1a1a1a;
-    border: 2px solid #e5e9f0;
-    font-size: 14px;
-}
+.quantity { background: transparent; padding: 0 10px; border: none; min-width: 26px; text-align: center; font-weight: 800; color: #1a1a1a; font-size: 13px; }
 
 .remove-btn {
     background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
     color: white;
     border: none;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1110,10 +1161,10 @@ body {
 }
 
 .quantity-btn {
-    width: 32px;
-    height: 32px;
-    border: 2px solid #4c6ef5;
-    background: white;
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: transparent;
     cursor: pointer;
     border-radius: 8px;
     display: flex;
@@ -1121,27 +1172,26 @@ body {
     justify-content: center;
     font-weight: 700;
     color: #4c6ef5;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(76, 110, 245, 0.1);
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-.quantity-btn:hover {
-    background: #4c6ef5;
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(76, 110, 245, 0.2);
-}
+.quantity-btn:hover { background: rgba(76,110,245,0.08); color: #3b5bdb; }
 
+.cart-section h3 { order: 0; }
 .cart-total {
+    order: 1;
+    position: sticky;
+    top: 0;
+    z-index: 3;
     border-top: 2px solid #4c6ef5;
     padding: 16px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, #f8f9fc 0%, #f1f3f9 100%);
     border-radius: 10px;
     flex-shrink: 0;
     box-shadow: 0 2px 8px rgba(76, 110, 245, 0.1);
-    position: static;
 }
+.cart-items { order: 2; }
 
 .total-line {
     display: flex;
@@ -1153,26 +1203,26 @@ body {
 }
 
 .total-line.final {
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 900;
     color: #1a1a1a;
     border-top: 3px solid #4c6ef5;
-    padding-top: 15px;
+    padding-top: 8px;
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     background: #f8f9fc;
     border-radius: 8px;
-    padding: 15px;
-    margin-top: 10px;
+    padding: 8px;
+    margin-top: 6px;
 }
 
 .payment-section {
     margin-top: auto;
     flex-shrink: 0;
-    min-height: 140px;
+    min-height: 110px;
     background: white;
     border: 1px solid #e9ecef;
     border-radius: 6px;
-    padding: 12px;
+    padding: 10px;
     position: sticky;
     bottom: 0;
     z-index: 3;
@@ -1195,14 +1245,14 @@ body {
 
 .pay-btn, .clear-btn {
     width: 100%;
-    padding: 18px;
+    padding: 12px;
     border: none;
     border-radius: 15px;
     font-weight: 700;
     cursor: pointer;
     margin-bottom: 12px;
     transition: all 0.3s ease;
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -3397,14 +3447,18 @@ input:checked + .toggle-slider:before {
 
 /* وضع مدمج للقوائم – تقليص الحجم بشكل عام */
 :root {
-    --menu-compact-font: 12px;
-    --menu-compact-font-sm: 11px;
-    --menu-compact-pad-y: 6px;
-    --menu-compact-pad-x: 10px;
+    --menu-compact-font: 11px;
+    --menu-compact-font-sm: 10px;
+    --menu-compact-pad-y: 4px;
+    --menu-compact-pad-x: 8px;
     /* خطوط مرنة: حد أدنى/أقصى مع قياس يعتمد على عرض الشاشة لضمان الوضوح حتى مع الزوم */
-    --font-min: 12px;
-    --font-fluid: 1.1vw;
-    --font-max: 14px;
+    --font-min: 11px;
+    --font-fluid: 0.95vw;
+    --font-max: 13px;
+    /* أبعاد تخطيط نقطة البيع ثلاثي الأعمدة */
+    --sale-col: 300px;
+    --cart-col: 360px;
+    --gutter: 14px;
 }
 
 /* قاعدة عامة: حجم خط مرن وواضح على كل الزوم */
@@ -3415,34 +3469,34 @@ body {
 
 /* تصغير عناصر القائمة الجانبية */
 .nav-item {
-    padding: var(--menu-compact-pad-y) calc(var(--menu-compact-pad-x) + 4px) !important;
-    font-size: clamp(12px, 1vw, 13px) !important;
-    min-height: 40px;
+    padding: var(--menu-compact-pad-y) calc(var(--menu-compact-pad-x) + 2px) !important;
+    font-size: clamp(11px, 0.95vw, 12px) !important;
+    min-height: 36px;
 }
-.nav-item i { font-size: 15px !important; width: 16px !important; }
-.sidebar-header h3 { font-size: 18px !important; }
+.nav-item i { font-size: 14px !important; width: 16px !important; }
+.sidebar-header h3 { font-size: 17px !important; }
 
 /* تصغير رؤوس وأدوات نقطة البيع */
-.page-header h2 { font-size: 18px !important; }
-.cart-section h3 { font-size: 14px !important; }
+.page-header h2 { font-size: 16px !important; }
+.cart-section h3 { font-size: 13px !important; }
 
 .currency-selector label,
 .currency-selector select { font-size: var(--menu-compact-font) !important; }
-.currency-selector select { padding: 6px 10px !important; height: 34px !important; }
+.currency-selector select { padding: 4px 8px !important; height: 28px !important; }
 
 .payment-section select,
 .payment-section input,
 .search-section input,
-.search-section button { font-size: clamp(12px, 1vw, 13px) !important; padding: 6px 8px !important; height: 32px; }
+.search-section button { font-size: clamp(11px, 0.95vw, 12px) !important; padding: 5px 8px !important; height: 28px; }
 
 /* تصغير بطاقات المنتجات قليلاً للحفاظ على التوازن */
-.product-card h4 { font-size: 14px; }
-.product-card .price { font-size: 14px; }
+.product-card h4 { font-size: 13px; }
+.product-card .price { font-size: 13px; }
 
 /* جداول أصغر */
-.data-table th, .data-table td { padding: 8px 10px; font-size: clamp(11px, 0.9vw, 12px); }
+.data-table th, .data-table td { padding: 6px 8px; font-size: clamp(10px, 0.85vw, 11px); }
 .data-table th { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-.add-btn, .action-btn, .save-btn, .cancel-btn, .update-cash-btn { padding: 6px 10px; font-size: 12px; }
+.add-btn, .action-btn, .save-btn, .cancel-btn, .update-cash-btn { padding: 5px 8px; font-size: 11px; }
 
 .cash-feature-highlight {
     background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
