@@ -78,6 +78,24 @@
                     </div>
                 </div>
                 
+                <!-- عناصر نقطة البيع المنقولة إلى الشريط العلوي -->
+                <div class="currency-selector header-pos-controls" aria-label="POS Controls">
+                    <label for="currency">العملة:</label>
+                    <select id="currency">
+                        <option value="USD">دولار أمريكي ($)</option>
+                        <option value="LBP">ليرة لبنانية (ل.ل)</option>
+                    </select>
+                    
+                    <label for="priceType">نوع السعر:</label>
+                    <select id="priceType">
+                        <option value="retail">مفرق 🏪</option>
+                        <option value="wholesale">جملة 📦</option>
+                        <option value="vip">زبون مميز ⭐</option>
+                    </select>
+                    
+                    <span id="exchangeRate">سعر الصرف: 89,500 ل.ل</span>
+                </div>
+                
                 <div class="user-info">
                     <div class="lang-switch">
                         <select id="languageSelect" aria-label="Language">
@@ -217,25 +235,6 @@
 
             <!-- نقطة البيع -->
             <div id="pos" class="page">
-                <div class="page-header">
-                    <h2>نقطة البيع</h2>
-                    <div class="currency-selector">
-                        <label>العملة:</label>
-                        <select id="currency">
-                            <option value="USD">دولار أمريكي ($)</option>
-                            <option value="LBP">ليرة لبنانية (ل.ل)</option>
-                        </select>
-                        
-                        <label>نوع السعر:</label>
-                        <select id="priceType">
-                            <option value="retail">مفرق 🏪</option>
-                            <option value="wholesale">جملة 📦</option>
-                            <option value="vip">زبون مميز ⭐</option>
-                        </select>
-                        
-                        <span id="exchangeRate">سعر الصرف: 89,500 ل.ل</span>
-                    </div>
-                </div>
                 
                 <div class="pos-container three-col">
                     <div class="pos-sale">
@@ -283,6 +282,14 @@
                                             <button id="calculateChange" class="calculate-btn-compact">
                                                 حساب الباقي
                                             </button>
+                                        </div>
+
+                                        <div class="input-group remainder-wrap">
+                                            <button id="completeRemainderLBP" class="calculate-btn-compact secondary" title="إكمال المتبقي بالليرة">
+                                                <i class="fas fa-exchange-alt"></i>
+                                                إكمال بالليرة
+                                            </button>
+                                            <span id="remainderLBPDisplay" class="remainder-badge" style="display:none;"></span>
                                         </div>
                                     </div>
 
@@ -384,10 +391,7 @@
                                     <span id="finalTotal">$0.00</span>
                                 </div>
                             </div>
-                            <button id="clearCart" class="clear-btn">
-                                <i class="fas fa-trash"></i>
-                                مسح العربة
-                            </button>
+                            
                         </div>
                     </div>
                 </div>
@@ -428,6 +432,9 @@
             <div id="products" class="page">
                 <div class="page-header">
                     <h2>إدارة المنتجات</h2>
+                    <div class="page-toolbar">
+                        <input type="search" id="productsSearch" placeholder="ابحث داخل المنتجات..." />
+                    </div>
                     <button id="addProductBtn" class="add-btn">
                         <i class="fas fa-plus"></i>
                         إضافة منتج
@@ -460,9 +467,11 @@
             <div id="sales" class="page">
                 <div class="page-header">
                     <h2><i class="fas fa-receipt"></i> إدارة المبيعات</h2>
+                    <div class="page-toolbar">
+                        <input type="search" id="salesSearch" placeholder="ابحث داخل المبيعات..." />
+                    </div>
                     <div class="date-filter">
                         <input type="date" id="dateFrom">
-                        <input type="date" id="dateTo">
                         <select id="statusFilter">
                             <option value="all">جميع المبيعات</option>
                             <option value="completed">مكتملة فقط</option>
@@ -532,6 +541,9 @@
             <div id="suppliers" class="page">
                 <div class="page-header">
                     <h2><i class="fas fa-truck"></i> إدارة الموردين</h2>
+                    <div class="page-toolbar">
+                        <input type="search" id="suppliersSearch" placeholder="ابحث داخل الموردين..." />
+                    </div>
                     <button id="addSupplierBtn" class="add-btn">
                         <i class="fas fa-plus"></i>
                         إضافة مورد
@@ -573,7 +585,6 @@
                             <option value="custom">مخصص</option>
                         </select>
                         <input type="date" id="reportFromDate">
-                        <input type="date" id="reportToDate">
                         <button id="applyReportFilter" class="filter-btn">تطبيق</button>
                         <button id="openSalesHistory" class="report-btn"><i class="fas fa-history"></i> سجل المبيعات</button>
                     </div>

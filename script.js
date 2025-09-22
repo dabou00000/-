@@ -103,6 +103,8 @@ const translations = {
         
         // نظام البيع بالدين
         'credit-sale': 'بيع بالدين',
+        'credit-sale-desc': 'البيع كاملاً على الحساب',
+        'choose-customer-label': 'اختر العميل:',
         'customer-credit': 'دين العميل',
         'credit-limit': 'الحد الائتماني',
         'remaining-credit': 'الائتمان المتبقي',
@@ -120,6 +122,7 @@ const translations = {
         'payment-method': 'طريقة الدفع',
         'status': 'الحالة',
         'actions': 'الإجراءات',
+        'discounts': 'الخصومات',
         'completed': 'مكتملة',
         'returned': 'مرجعة',
         'partial': 'مرجعة جزئياً',
@@ -129,12 +132,17 @@ const translations = {
         'view': 'عرض',
         'print': 'طباعة',
         'refund': 'استرجاع',
+        'edit': 'تعديل',
+        'delete': 'حذف',
+        'log': 'السجل',
+        'pay-debt': 'تسديد دين',
         'all-sales': 'جميع المبيعات',
         'completed-only': 'مكتملة فقط',
         'returned-only': 'مرجعة فقط',
         'partial-only': 'مرجعة جزئياً',
         'filter': 'تصفية',
         'reset': 'إعادة تعيين',
+        'search-sales': 'ابحث داخل المبيعات...',
         'from-date': 'من تاريخ',
         'to-date': 'إلى تاريخ',
         
@@ -150,6 +158,15 @@ const translations = {
         'financial-report-desc': 'الأرباح والخسائر والتدفق النقدي',
         'view-report': 'عرض التقرير',
         
+        // Mixed cash payment
+        'complete-remainder': 'إكمال بالليرة',
+        'will-complete-lbp': 'سيُكمل المتبقي بالليرة عند إتمام الدفع',
+        'no-remainder': 'لا يوجد متبقي لإكماله',
+        
+        // Empty cart
+        'cart-empty': '🛒 العربة فارغة',
+        'click-to-add': 'انقر على المنتجات لإضافتها',
+        
         // الرسائل
         'success': 'نجح',
         'error': 'خطأ',
@@ -157,7 +174,48 @@ const translations = {
         'menu-shown': 'تم إظهار القائمة',
         'language-changed': 'تم تغيير اللغة',
         'confirm-logout': 'هل أنت متأكد من تسجيل الخروج؟',
-        'logout-success': 'تم تسجيل الخروج بنجاح'
+        'logout-success': 'تم تسجيل الخروج بنجاح',
+
+        // شاشة الدخول
+        'login-title': 'نظام إدارة المبيعات',
+        'login-subtitle': 'Professional Sales System',
+        'username': 'اسم المستخدم',
+        'password': 'كلمة المرور',
+        'login': 'تسجيل الدخول',
+        'demo-data': 'بيانات التجربة:',
+
+        // الفواتير
+        'invoices-management': 'إدارة الفواتير',
+        'filter-date': 'فلترة',
+
+        // التقارير - الفترات
+        'today': 'اليوم',
+        'yesterday': 'أمس',
+        'this-week': 'هذا الأسبوع',
+        'last-7-days': 'آخر 7 أيام',
+        'this-month': 'هذا الشهر',
+        'last-30-days': 'آخر 30 يوم',
+        'this-year': 'هذه السنة',
+        'custom': 'مخصص',
+        'apply': 'تطبيق',
+        'sales-history': 'سجل المبيعات',
+        // رسائل إضافية
+        'pay-debt-success': 'تم تسجيل التسديد بنجاح',
+        // نافذة تسديد دين
+        'pay-debt-title': 'تسديد دين العميل',
+        'pay-debt-customer': 'العميل',
+        'pay-debt-current': 'الدين الحالي',
+        'pay-debt-amount': 'المبلغ المدفوع',
+        'pay-debt-currency': 'عملة الدفع',
+        'confirm-pay-debt': 'تأكيد التسديد',
+        'cancel-generic': 'إلغاء',
+        'currency-usd': 'دولار ($)',
+        'currency-lbp': 'ليرة (ل.ل)',
+        'debt-word': 'دين',
+        // تأكيدات
+        'confirm-delete-customer': 'هل أنت متأكد من حذف هذا العميل؟',
+        // رسائل نجاح إضافية
+        'customer-deleted': 'تم حذف العميل'
     },
     en: {
         // Header
@@ -198,6 +256,8 @@ const translations = {
         
         // Credit Sales System
         'credit-sale': 'Credit Sale',
+        'credit-sale-desc': 'Full on account sale',
+        'choose-customer-label': 'Select Customer:',
         'customer-credit': 'Customer Credit',
         'credit-limit': 'Credit Limit',
         'remaining-credit': 'Remaining Credit',
@@ -215,6 +275,7 @@ const translations = {
         'payment-method': 'Payment Method',
         'status': 'Status',
         'actions': 'Actions',
+        'discounts': 'Discounts',
         'completed': 'Completed',
         'returned': 'Returned',
         'partial': 'Partially Returned',
@@ -224,12 +285,17 @@ const translations = {
         'view': 'View',
         'print': 'Print',
         'refund': 'Refund',
+        'edit': 'Edit',
+        'delete': 'Delete',
+        'log': 'Log',
+        'pay-debt': 'Pay Debt',
         'all-sales': 'All Sales',
         'completed-only': 'Completed Only',
         'returned-only': 'Returned Only',
         'partial-only': 'Partially Returned Only',
         'filter': 'Filter',
         'reset': 'Reset',
+        'search-sales': 'Search in sales...',
         'from-date': 'From Date',
         'to-date': 'To Date',
         
@@ -245,6 +311,15 @@ const translations = {
         'financial-report-desc': 'Profits, losses, and cash flow',
         'view-report': 'View Report',
         
+        // Mixed cash payment
+        'complete-remainder': 'Complete in LBP',
+        'will-complete-lbp': 'Remainder will be completed in LBP at checkout',
+        'no-remainder': 'No remainder to complete',
+        
+        // Empty cart
+        'cart-empty': '🛒 Cart is empty',
+        'click-to-add': 'Click products to add',
+        
         // Messages
         'success': 'Success',
         'error': 'Error',
@@ -252,7 +327,48 @@ const translations = {
         'menu-shown': 'Menu shown',
         'language-changed': 'Language changed',
         'confirm-logout': 'Are you sure you want to logout?',
-        'logout-success': 'Logged out successfully'
+        'logout-success': 'Logged out successfully',
+
+        // Login screen
+        'login-title': 'Sales Management System',
+        'login-subtitle': 'Professional Sales System',
+        'username': 'Username',
+        'password': 'Password',
+        'login': 'Login',
+        'demo-data': 'Demo credentials:',
+
+        // Invoices
+        'invoices-management': 'Invoices Management',
+        'filter-date': 'Filter',
+
+        // Reports presets
+        'today': 'Today',
+        'yesterday': 'Yesterday',
+        'this-week': 'This Week',
+        'last-7-days': 'Last 7 Days',
+        'this-month': 'This Month',
+        'last-30-days': 'Last 30 Days',
+        'this-year': 'This Year',
+        'custom': 'Custom',
+        'apply': 'Apply',
+        'sales-history': 'Sales History',
+        // Extra messages
+        'pay-debt-success': 'Payment recorded successfully',
+        // Pay Debt modal
+        'pay-debt-title': 'Pay Customer Debt',
+        'pay-debt-customer': 'Customer',
+        'pay-debt-current': 'Current Debt',
+        'pay-debt-amount': 'Paid Amount',
+        'pay-debt-currency': 'Pay Currency',
+        'confirm-pay-debt': 'Confirm Payment',
+        'cancel-generic': 'Cancel',
+        'currency-usd': 'US Dollar ($)',
+        'currency-lbp': 'Lebanese Pound (LBP)',
+        'debt-word': 'Debt',
+        // Confirmations
+        'confirm-delete-customer': 'Are you sure you want to delete this customer?',
+        // Success messages
+        'customer-deleted': 'Customer deleted'
     }
 };
 
@@ -266,17 +382,29 @@ function changeLanguage(lang) {
     currentLanguage = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
-    
-    // تطبيق الترجمات على جميع العناصر
-    applyTranslations();
-    
-    // تحديث اختيار اللغة
+
+    // حفظ اللغة المختارة
+    try { localStorage.setItem('appLanguage', lang); } catch(e) {}
+
+    // استدعاء مترجم الواجهة الآخر إن وجد (لتغطية عناصر إضافية)
+    if (typeof window.translateUI === 'function') {
+        try { window.translateUI(lang); } catch(e) {}
+    }
+
+    // تطبيق الترجمات المعتمدة على getText
+    try { applyTranslations(); } catch(e) {}
+    try { translateCustomerActionButtons(); } catch(e) {}
+    try { translateEditCustomerModal(); } catch(e) {}
+    try { translateProductActionButtons(); } catch(e) {}
+    try { translateInlineEditPriceButtons(); } catch(e) {}
+
+    // مزامنة اختيار الواجهة
     const languageSelect = document.getElementById('languageSelect');
     if (languageSelect) {
         languageSelect.value = lang;
     }
-    
-    // إظهار رسالة
+
+    // إشعار
     showMessage(getText('language-changed'), 'success');
 }
 
@@ -297,6 +425,12 @@ function applyTranslations() {
     // ترجمة صفحة التقارير
     translateReports();
     
+    // ترجمة فلاتر التقارير
+    translateReportPresets();
+
+    // ترجمة صفحة الفواتير
+    translateInvoices();
+
     // ترجمة الرسائل
     translateMessages();
 }
@@ -336,6 +470,20 @@ function translateElements() {
     if (logoutBtn) {
         logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> ${getText('logout')}`;
     }
+
+    // شاشة تسجيل الدخول
+    const loginTitle = document.querySelector('#loginScreen .logo h1');
+    if (loginTitle) loginTitle.textContent = getText('login-title');
+    const loginSubtitle = document.querySelector('#loginScreen .logo p');
+    if (loginSubtitle) loginSubtitle.textContent = getText('login-subtitle');
+    const usernameLbl = document.querySelector('label[for="username"]');
+    if (usernameLbl) usernameLbl.textContent = getText('username');
+    const passwordLbl = document.querySelector('label[for="password"]');
+    if (passwordLbl) passwordLbl.textContent = getText('password');
+    const loginBtn = document.querySelector('#loginForm .login-btn');
+    if (loginBtn) { const icon = loginBtn.querySelector('i'); loginBtn.textContent = getText('login'); if (icon) loginBtn.prepend(icon); }
+    const demoInfoH4 = document.querySelector('#loginScreen .demo-info h4');
+    if (demoInfoH4) demoInfoH4.textContent = getText('demo-data');
 }
 
 // دالة ترجمة القائمة الجانبية
@@ -402,10 +550,10 @@ function translatePOS() {
     if (creditSaleSection) creditSaleSection.textContent = getText('credit-sale');
     
     const creditSaleDesc = document.querySelector('#creditSaleSection .credit-feature-highlight p');
-    if (creditSaleDesc) creditSaleDesc.textContent = 'البيع كاملاً على الحساب';
+    if (creditSaleDesc) creditSaleDesc.textContent = getText('credit-sale-desc');
     
     const creditCustomerLabel = document.querySelector('#creditSaleSection label');
-    if (creditCustomerLabel) creditCustomerLabel.textContent = 'اختر العميل:';
+    if (creditCustomerLabel) creditCustomerLabel.textContent = getText('choose-customer-label');
     
 }
 
@@ -423,6 +571,10 @@ function translateSales() {
     
     const resetBtn = document.getElementById('resetFilter');
     if (resetBtn) resetBtn.textContent = getText('reset');
+
+    // ترجمة حقل البحث داخل المبيعات
+    const salesSearch = document.getElementById('salesSearch');
+    if (salesSearch) salesSearch.placeholder = getText('search-sales');
     
     // ترجمة خيارات الفلترة
     const statusFilter = document.getElementById('statusFilter');
@@ -434,17 +586,18 @@ function translateSales() {
         if (options[3]) options[3].textContent = getText('partial-only');
     }
     
-    // ترجمة رؤوس الجدول
-    const tableHeaders = document.querySelectorAll('#salesTable').forEach(table => {
-        const headers = table.querySelectorAll('th');
-        if (headers[0]) headers[0].textContent = getText('invoice-number');
-        if (headers[1]) headers[1].textContent = getText('date');
-        if (headers[2]) headers[2].textContent = getText('customer');
-        if (headers[3]) headers[3].textContent = getText('amount');
-        if (headers[4]) headers[4].textContent = getText('payment-method');
-        if (headers[5]) headers[5].textContent = getText('status');
-        if (headers[6]) headers[6].textContent = getText('actions');
-    });
+    // ترجمة رؤوس الجدول (ثمانية أعمدة بما فيها الخصومات)
+    const salesTheadHeaders = document.querySelectorAll('#sales thead th');
+    if (salesTheadHeaders && salesTheadHeaders.length >= 8) {
+        salesTheadHeaders[0].textContent = getText('invoice-number');
+        salesTheadHeaders[1].textContent = getText('date');
+        salesTheadHeaders[2].textContent = getText('customer');
+        salesTheadHeaders[3].textContent = getText('amount');
+        salesTheadHeaders[4].textContent = getText('payment-method');
+        salesTheadHeaders[5].textContent = getText('discounts');
+        salesTheadHeaders[6].textContent = getText('status');
+        salesTheadHeaders[7].textContent = getText('actions');
+    }
     
     // ترجمة بيانات الجدول
     translateSalesTableData();
@@ -456,19 +609,32 @@ function translateSalesTableData() {
     salesRows.forEach(row => {
         const cells = row.querySelectorAll('td');
         if (cells.length > 0) {
-            // ترجمة حالة الدفع
+            // ترجمة طريقة الدفع داخل الجدول (نقدي/بطاقة/دفع جزئي/بيع بالدين)
             if (cells[4]) {
-                const paymentText = cells[4].textContent;
-                if (paymentText === 'نقدي') cells[4].textContent = getText('cash');
-                else if (paymentText === 'بطاقة') cells[4].textContent = getText('card');
+                const rawPay = (cells[4].textContent || '').trim();
+                if (rawPay === 'نقدي' || rawPay.toLowerCase() === 'cash') {
+                    cells[4].textContent = getText('cash');
+                } else if (rawPay === 'بطاقة' || rawPay.toLowerCase() === 'card') {
+                    cells[4].textContent = getText('card');
+                } else if (rawPay.includes('دفع جزئي') || /partial/i.test(rawPay)) {
+                    cells[4].textContent = getText('partial-payment');
+                } else if (rawPay.includes('بيع بالدين') || /credit sale/i.test(rawPay) || /credit/i.test(rawPay)) {
+                    cells[4].textContent = getText('credit-sale');
+                }
             }
             
-            // ترجمة الحالة
-            if (cells[5]) {
-                const statusText = cells[5].textContent;
-                if (statusText === 'مكتملة') cells[5].textContent = getText('completed');
-                else if (statusText === 'مرجعة') cells[5].textContent = getText('returned');
-                else if (statusText === 'مرجعة جزئياً') cells[5].textContent = getText('partial');
+            // ترجمة الحالة (العمود السابع، مع شارة حالة داخلية)
+            const statusCell = cells[6] || cells[5];
+            if (statusCell) {
+                const badge = statusCell.querySelector('.status-badge') || statusCell;
+                const statusText = (badge.textContent || '').trim();
+                if (statusText === 'مكتملة' || statusText === 'Completed') {
+                    badge.textContent = getText('completed');
+                } else if (statusText === 'مرجعة' || statusText === 'مرجعة كاملة' || statusText === 'Returned') {
+                    badge.textContent = getText('returned');
+                } else if (statusText === 'مرجعة جزئياً' || statusText === 'Partially Returned') {
+                    badge.textContent = getText('partial');
+                }
             }
             
             // ترجمة اسم العميل
@@ -477,16 +643,21 @@ function translateSalesTableData() {
                 if (customerText === 'عميل عادي') cells[2].textContent = getText('regular-customer');
             }
             
-            // ترجمة أزرار الإجراءات
-            if (cells[6]) {
-                const actionBtns = cells[6].querySelectorAll('button');
-                actionBtns.forEach((btn, index) => {
-                    if (index === 0 && btn.textContent.includes('استرجاع')) {
-                        btn.textContent = getText('refund');
-                    } else if (index === 1 && btn.textContent.includes('طباعة')) {
-                        btn.textContent = getText('print');
-                    } else if (index === 2 && btn.textContent.includes('عرض')) {
-                        btn.textContent = getText('view');
+            // ترجمة أزرار الإجراءات (حسب الصنف/الأيقونة وليس النص)
+            if (cells[7] || cells[6]) {
+                const actionsCell = cells[7] || cells[6];
+                const actionBtns = actionsCell.querySelectorAll('button');
+                actionBtns.forEach(btn => {
+                    const icon = btn.querySelector('i');
+                    if (btn.classList.contains('return-btn')) {
+                        btn.innerHTML = `<i class="fas fa-undo"></i> ${getText('refund')}`;
+                    } else if (btn.classList.contains('view-btn')) {
+                        btn.innerHTML = `<i class="fas fa-eye"></i> ${getText('view')}`;
+                    } else if (icon && icon.classList.contains('fa-print')) {
+                        btn.innerHTML = `<i class="fas fa-print"></i> ${getText('print')}`;
+                    } else if (btn.disabled) {
+                        // زر معطل لبيعة مُرجعة
+                        btn.innerHTML = `<i class="fas fa-check"></i> ${getText('returned')}`;
                     }
                 });
             }
@@ -494,6 +665,24 @@ function translateSalesTableData() {
     });
 }
 
+// ترجمة أزرار جدول العملاء (تعديل/حذف/السجل/تسديد دين)
+function translateCustomerActionButtons() {
+    try {
+        const rows = document.querySelectorAll('#customersTable tr');
+        rows.forEach(row => {
+            const actionsCell = row.querySelector('td:last-child');
+            if (!actionsCell) return;
+            const editBtn = actionsCell.querySelector('.edit-btn');
+            if (editBtn) editBtn.innerHTML = `<i class="fas fa-edit"></i> ${getText('edit')}`;
+            const deleteBtn = actionsCell.querySelector('.delete-btn');
+            if (deleteBtn) deleteBtn.innerHTML = `<i class="fas fa-trash"></i> ${getText('delete')}`;
+            const logBtn = actionsCell.querySelector('.customer-log-btn');
+            if (logBtn) logBtn.innerHTML = `<i class="fas fa-list"></i> ${getText('log')}`;
+            const payBtn = actionsCell.querySelector('.pay-debt-btn');
+            if (payBtn) payBtn.innerHTML = `<i class="fas fa-dollar-sign"></i> ${getText('pay-debt')}`;
+        });
+    } catch(_) {}
+}
 // دالة ترجمة صفحة التقارير
 function translateReports() {
     // ترجمة عنوان صفحة التقارير
@@ -535,6 +724,144 @@ function translateReports() {
             button.textContent = getText('view-report');
         }
     });
+}
+
+// ترجمة زر تعديل السعر داخل بطاقة المنتج
+function translateInlineEditPriceButtons() {
+    const isEn = (document.documentElement.lang || 'ar') === 'en';
+    const buttons = document.querySelectorAll('.edit-price-btn');
+    buttons.forEach(btn => {
+        btn.title = isEn ? 'Edit Price' : 'تعديل السعر';
+        btn.innerHTML = `<i class="fas fa-edit"></i> ${isEn ? 'Edit Price' : 'تعديل السعر'}`;
+    });
+}
+// ترجمة واجهة نافذة استرجاع المبيعة
+function translateReturnModalUI() {
+    const lang = document.documentElement.lang || 'ar';
+    const t = lang === 'en' ? {
+        title: 'Return Sale',
+        sale_details: 'Sale Details',
+        invoice_no: 'Invoice #',
+        customer: 'Customer',
+        total: 'Total',
+        pay_method: 'Payment Method',
+        options: 'Return Options',
+        type_label: 'Return Type:',
+        type_full: 'Full Return',
+        type_partial: 'Partial Return',
+        reason_label: 'Return Reason:',
+        reason_defective: 'Defective',
+        reason_wrong: 'Wrong Item',
+        reason_change: 'Customer Changed Mind',
+        reason_size: 'Size Issue',
+        reason_other: 'Other',
+        notes: 'Additional Notes',
+        summary: 'Return Summary',
+        refunded_amount: 'Refunded Amount:',
+        refund_method: 'Refund Method:',
+        confirm: 'Confirm Return',
+        cancel: 'Cancel'
+    } : {
+        title: 'استرجاع المبيعة',
+        sale_details: 'تفاصيل المبيعة',
+        invoice_no: 'رقم الفاتورة',
+        customer: 'العميل',
+        total: 'المبلغ الإجمالي',
+        pay_method: 'طريقة الدفع',
+        options: 'خيارات الاسترجاع',
+        type_label: 'نوع الاسترجاع:',
+        type_full: 'استرجاع كامل',
+        type_partial: 'استرجاع جزئي',
+        reason_label: 'سبب الاسترجاع:',
+        reason_defective: 'منتج معيب',
+        reason_wrong: 'منتج خاطئ',
+        reason_change: 'تغيير رأي العميل',
+        reason_size: 'مشكلة في الحجم',
+        reason_other: 'أخرى',
+        notes: 'ملاحظات إضافية',
+        summary: 'ملخص الاسترجاع',
+        refunded_amount: 'المبلغ المسترجع:',
+        refund_method: 'طريقة الإرجاع:',
+        confirm: 'تأكيد الاسترجاع',
+        cancel: 'إلغاء'
+    };
+
+    const modal = document.getElementById('returnSaleModal');
+    if (!modal) return;
+    const header = modal.querySelector('.modal-header h3');
+    if (header) header.innerHTML = (lang === 'en' ? '<i class="fas fa-undo"></i> ' : '<i class="fas fa-undo"></i> ') + t.title;
+
+    const detailsTitle = modal.querySelector('.return-info .sale-details h4');
+    if (detailsTitle) detailsTitle.textContent = t.sale_details;
+    const detailsLabels = modal.querySelectorAll('.sale-details .detail-row span:first-child');
+    if (detailsLabels && detailsLabels.length >= 4) {
+        detailsLabels[0].textContent = t.invoice_no + ':';
+        detailsLabels[1].textContent = t.customer + ':';
+        detailsLabels[2].textContent = t.total + ':';
+        detailsLabels[3].textContent = t.pay_method + ':';
+    }
+
+    const optionsTitle = modal.querySelector('.return-options h4');
+    if (optionsTitle) optionsTitle.textContent = t.options;
+    const typeLabel = modal.querySelector('#returnType')?.closest('.form-group')?.querySelector('label');
+    if (typeLabel) typeLabel.textContent = t.type_label;
+    const returnType = document.getElementById('returnType');
+    if (returnType && returnType.options.length >= 2) {
+        returnType.options[0].textContent = t.type_full;
+        returnType.options[1].textContent = t.type_partial;
+    }
+    const reasonLabel = modal.querySelector('#returnReason')?.closest('.form-group')?.querySelector('label');
+    if (reasonLabel) reasonLabel.textContent = t.reason_label;
+    const reasonSel = document.getElementById('returnReason');
+    if (reasonSel && reasonSel.options.length >= 5) {
+        reasonSel.options[0].textContent = t.reason_defective;
+        reasonSel.options[1].textContent = t.reason_wrong;
+        reasonSel.options[2].textContent = t.reason_change;
+        reasonSel.options[3].textContent = t.reason_size;
+        reasonSel.options[4].textContent = t.reason_other;
+    }
+    const notesLabel = modal.querySelector('#returnNotes')?.closest('.form-group')?.querySelector('label');
+    if (notesLabel) notesLabel.textContent = t.notes;
+
+    const summaryTitle = modal.querySelector('.return-summary h4');
+    if (summaryTitle) summaryTitle.textContent = t.summary;
+    const summaryLabels = modal.querySelectorAll('.return-summary .summary-row span:first-child');
+    if (summaryLabels && summaryLabels.length >= 2) {
+        summaryLabels[0].textContent = t.refunded_amount;
+        summaryLabels[1].textContent = t.refund_method;
+    }
+
+    // أزرار التذييل
+    const footerBtns = modal.querySelectorAll('.modal-actions button');
+    if (footerBtns && footerBtns.length >= 2) {
+        const confirmBtn = footerBtns[0];
+        const cancelBtn = footerBtns[1];
+        const confirmIcon = confirmBtn.querySelector('i');
+        const cancelIcon = cancelBtn.querySelector('i');
+        confirmBtn.textContent = t.confirm;
+        cancelBtn.textContent = t.cancel;
+        if (confirmIcon) confirmBtn.prepend(confirmIcon);
+        if (cancelIcon) cancelBtn.prepend(cancelIcon);
+    }
+}
+
+// ترجمة إعدادات التقارير: الفترات والأزرار
+function translateReportPresets() {
+    const preset = document.getElementById('reportPreset');
+    if (preset && preset.options.length >= 8) {
+        preset.options[0].textContent = getText('today');
+        preset.options[1].textContent = getText('yesterday');
+        preset.options[2].textContent = getText('this-week');
+        preset.options[3].textContent = getText('last-7-days');
+        preset.options[4].textContent = getText('this-month');
+        preset.options[5].textContent = getText('last-30-days');
+        preset.options[6].textContent = getText('this-year');
+        preset.options[7].textContent = getText('custom');
+    }
+    const applyBtn = document.getElementById('applyReportFilter');
+    if (applyBtn) applyBtn.textContent = getText('apply');
+    const openHist = document.getElementById('openSalesHistory');
+    if (openHist) { const icon = openHist.querySelector('i'); openHist.textContent = getText('sales-history'); if (icon) openHist.prepend(icon); }
 }
 
 // دالة ترجمة الرسائل
@@ -622,7 +949,6 @@ let products = loadFromStorage('products', [
         supplier: 'شركة المياه النقية'
     }
 ]);
-
 let customers = loadFromStorage('customers', [
     {
         id: 1,
@@ -745,6 +1071,7 @@ let suppliers = loadFromStorage('suppliers', [
 ]);
 
 let cart = [];
+let lastCartFocusIndex = null; // لتتبع آخر عنصر تم تعديل كميته
 let settings = loadFromStorage('settings', {
     exchangeRate: 89500,
     taxRate: 0, // إزالة الضريبة
@@ -776,6 +1103,24 @@ function saveToStorage(key, data) {
     }
 }
 
+// ترجمة صفحة الفواتير
+function translateInvoices() {
+    const invHeader = document.querySelector('#invoices .page-header h2');
+    if (invHeader) invHeader.textContent = getText('invoices-management');
+    const filterBtn = document.querySelector('#invoices .filter-btn');
+    if (filterBtn) filterBtn.textContent = getText('filter-date');
+    const head = document.querySelectorAll('#invoices thead th');
+    if (head && head.length >= 7) {
+        head[0].textContent = getText('invoice-number');
+        head[1].textContent = getText('date');
+        head[2].textContent = getText('customer');
+        head[3].textContent = getText('amount');
+        head[4].textContent = getText('payment-method');
+        head[5].textContent = getText('status');
+        head[6].textContent = getText('actions');
+    }
+}
+
 function loadFromStorage(key, defaultValue = null) {
     try {
         const data = localStorage.getItem(key);
@@ -796,15 +1141,13 @@ function getProductPrice(product, priceType = currentPriceType, currency = 'USD'
     // العودة للسعر القديم للتوافق
     return currency === 'USD' ? product.priceUSD : product.priceLBP;
 }
-
 // دالة للحصول على نص نوع السعر
 function getPriceTypeLabel(priceType) {
-    const labels = {
-        'retail': '🏪 مفرق',
-        'wholesale': '📦 جملة',
-        'vip': '⭐ مميز'
-    };
-    return labels[priceType] || 'مفرق';
+    const isEn = (document.documentElement.lang || 'ar') === 'en';
+    const labelsAr = { retail: '🏪 مفرق', wholesale: '📦 جملة', vip: '⭐ مميز' };
+    const labelsEn = { retail: '🏪 Retail', wholesale: '📦 Wholesale', vip: '⭐ VIP' };
+    const map = isEn ? labelsEn : labelsAr;
+    return map[priceType] || (isEn ? 'Retail' : 'مفرق');
 }
 
 function clearStorage() {
@@ -1124,9 +1467,11 @@ document.querySelectorAll('.nav-item').forEach(item => {
                 break;
             case 'products':
                 loadProducts();
+                // لا حاجة لإدارة قفل تمرير
                 break;
             case 'sales':
                 loadSales();
+                // لا حاجة لإدارة قفل تمرير
             // تطبيق الترجمات على صفحة المبيعات
             setTimeout(() => {
                 translateSales();
@@ -1134,12 +1479,15 @@ document.querySelectorAll('.nav-item').forEach(item => {
                 break;
             case 'customers':
                 loadCustomers();
+                // لا حاجة لإدارة قفل تمرير
                 break;
             case 'suppliers':
                 loadSuppliers();
+                // لا حاجة لإدارة قفل تمرير
                 break;
             case 'settings':
                 loadSettings();
+                // لا حاجة لإدارة قفل تمرير
                 break;
         }
     });
@@ -1164,6 +1512,7 @@ function loadDashboard() {
     setTimeout(() => {
         updateCashDrawerDisplay();
     }, 500);
+    // لا حاجة لإدارة قفل تمرير
 }
 
 // تحميل نقطة البيع
@@ -1171,6 +1520,7 @@ function loadPOS() {
     displayProducts(''); // إخفاء المنتجات افتراضياً
     updateCart();
     updateCashDrawerDisplay();
+    // إلغاء قفل التمرير: سنعتمد على سلوك العربة الافتراضي فقط
     
     // ربط event listener لتغيير نوع السعر
     const priceTypeSelect = document.getElementById('priceType');
@@ -1231,19 +1581,28 @@ function loadPOS() {
         });
     }
     
-    // ربط event listener لتغيير طريقة الدفع
+    // ربط event listener لتغيير طريقة الدفع (موحد لكافة الأنماط: نقدي/جزئي/دين)
     const paymentMethodSelect = document.getElementById('paymentMethod');
     if (paymentMethodSelect) {
         paymentMethodSelect.addEventListener('change', function() {
             const cashSection = document.getElementById('cashPaymentSection');
             const partialSection = document.getElementById('partialPaymentSection');
-            
+            const creditSection = document.getElementById('creditSaleSection');
+            if (cashSection) cashSection.style.display = 'none';
+            if (partialSection) partialSection.style.display = 'none';
+            if (creditSection) creditSection.style.display = 'none';
             if (this.value === 'cash') {
-                cashSection.style.display = 'block';
-                partialSection.style.display = 'none';
+                if (cashSection) cashSection.style.display = 'block';
             } else if (this.value === 'partial') {
-                cashSection.style.display = 'none';
-                partialSection.style.display = 'block';
+                if (partialSection) partialSection.style.display = 'block';
+            } else if (this.value === 'credit') {
+                if (creditSection) creditSection.style.display = 'block';
+                // تأكد من تعبئة قائمة العملاء وتحديث معلومات الائتمان
+                setTimeout(() => {
+                    if (typeof updateCustomerSelectForCredit === 'function') {
+                        updateCustomerSelectForCredit();
+                    }
+                }, 50);
             }
         });
     }
@@ -1254,7 +1613,6 @@ function loadPOS() {
     // تحديث سعر الصرف
     updateExchangeRateDisplay();
 }
-
 function setupCashPaymentInterface() {
     const paymentMethodSelect = document.getElementById('paymentMethod');
     const cashPaymentSection = document.getElementById('cashPaymentSection');
@@ -1480,7 +1838,6 @@ function displayChangeDetails(changeResult, totalDue, amountPaid, paymentCurrenc
     changeDetailsDiv.innerHTML = html;
     changeDetailsDiv.style.display = 'block';
 }
-
 function displayProducts(searchTerm = '') {
     console.log('displayProducts تم استدعاؤها بمصطلح البحث:', searchTerm); // للتشخيص
     
@@ -1530,11 +1887,8 @@ function displayProducts(searchTerm = '') {
         
         // إضافة الأسعار الأخرى إذا كانت متوفرة
         if (product.prices) {
-            const priceTypes = {
-                'retail': 'مفرق',
-                'wholesale': 'جملة',
-                'vip': 'مميز'
-            };
+            const isEn = (document.documentElement.lang || 'ar') === 'en';
+            const priceTypes = isEn ? { retail: 'Retail', wholesale: 'Wholesale', vip: 'VIP' } : { retail: 'مفرق', wholesale: 'جملة', vip: 'مميز' };
             
             let otherPrices = '';
             Object.keys(product.prices).forEach(type => {
@@ -1556,7 +1910,7 @@ function displayProducts(searchTerm = '') {
         productCard.innerHTML = `
             <h4>${product.name}</h4>
             ${priceDisplay}
-            <div class="stock">متوفر: ${product.stock}</div>
+            <div class="stock">${(document.documentElement.lang||'ar')==='en' ? 'In stock' : 'متوفر'}: ${product.stock}</div>
             <div class="price-type-indicator">${getPriceTypeLabel(currentPriceType)}</div>
             <div class="add-to-cart-hint">
                 <i class="fas fa-plus-circle"></i>
@@ -1626,12 +1980,18 @@ function addToCart(product) {
     }
     
     // تحديث العربة والحسابات
+    // إذا كان موجودًا، احتفظ بالمؤشر للتمركز بعد التحديث
+    if (existingItem) {
+        lastCartFocusIndex = cart.findIndex(it => it.id === product.id);
+    } else {
+        lastCartFocusIndex = cart.length; // العنصر الجديد في النهاية
+    }
     updateCart();
     // إبراز العربة والتمرير إليها لضمان ظهورها مهما كان الزوم
     setTimeout(() => {
         const cartWrap = document.getElementById('cartSection') || document.getElementById('cartItems');
-        if (cartWrap && cartWrap.scrollIntoView) {
-            cartWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (cartWrap) {
+            // إلغاء أي تمرير تلقائي عند الإضافة حتى لا ترتفع القوائم
             try {
                 cartWrap.classList.add('cart-flash');
                 setTimeout(() => cartWrap.classList.remove('cart-flash'), 800);
@@ -1660,9 +2020,12 @@ function addToCart(product) {
 }
 
 function updateCart() {
+    // حفظ موضع التمرير أو الفهرس للتمركز بعد إعادة الرسم
+    const container = document.getElementById('cartItems');
+    const previousScrollTop = container ? container.scrollTop : 0;
     console.log('تحديث العربة، عدد العناصر:', cart.length); // للتشخيص
     
-    const container = document.getElementById('cartItems');
+    // تمت تهيئة container أعلاه
     const horizontalContainer = document.getElementById('cartItemsHorizontalPos');
     const currency = document.getElementById('currency').value;
     
@@ -1674,7 +2037,7 @@ function updateCart() {
     container.innerHTML = '';
     
     if (cart.length === 0) {
-        container.innerHTML = '<div class="empty-state">🛒 العربة فارغة<br><small>انقر على المنتجات لإضافتها</small></div>';
+        container.innerHTML = `<div class="empty-state">${getText('cart-empty')}<br><small>${getText('click-to-add')}</small></div>`;
         if (horizontalContainer) {
             horizontalContainer.innerHTML = '<div class="cart-empty-horizontal-pos">🛒 العربة فارغة - انقر على المنتجات لإضافتها</div>';
         }
@@ -1727,8 +2090,8 @@ function updateCart() {
                     <button type="button" title="سعر سريع" onclick="quickEditPrice(${index})" style="margin-inline-start:6px;padding:2px 6px;font-size:11px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">✎</button>
                 </span>
                 <div class="inline-edit-price" style="margin-top:6px;display:flex;align-items:center;gap:8px;">
-                    <button type="button" class="edit-price-btn" onclick="togglePriceEdit(${index})" title="تعديل السعر" style="padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:#f8fafc;cursor:pointer;">
-                        <i class="fas fa-edit"></i> تعديل السعر
+                    <button type="button" class="edit-price-btn" onclick="togglePriceEdit(${index})" title="${(document.documentElement.lang||'ar')==='en' ? 'Edit Price' : 'تعديل السعر'}" style="padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:#f8fafc;cursor:pointer;">
+                        <i class="fas fa-edit"></i> ${(document.documentElement.lang||'ar')==='en' ? 'Edit Price' : 'تعديل السعر'}
                     </button>
                     <div class="edit-price-field" id="editPriceWrap_${index}" style="display:flex;align-items:center;gap:6px;">
                         <input type="number" step="0.01" value="${price}" min="0" id="customPrice_${index}" style="width:110px;padding:6px 8px;border:2px solid #a7f3d0;border-radius:8px;background:#ecfeff;font-weight:700;" placeholder="سعر جديد" oninput="updateItemCustomPrice(${index}, this.value)" onkeydown="if(event.key==='Enter'){updateItemCustomPrice(${index}, this.value)}">
@@ -1787,6 +2150,17 @@ function updateCart() {
             }, 50);
         }
     }
+    // استعادة موضع التمرير أو التمركز على العنصر الذي تم تعديله
+    if (container) {
+        if (typeof lastCartFocusIndex === 'number' && lastCartFocusIndex !== null) {
+            const items = Array.from(container.querySelectorAll('.cart-item'));
+            const clampedIndex = Math.max(0, Math.min(items.length - 1, lastCartFocusIndex));
+            const target = items[clampedIndex];
+            // لا تقوم بالتمرير التلقائي؛ فقط حافظ على موضع التمرير السابق
+        } else {
+            container.scrollTop = previousScrollTop;
+        }
+    }
 }
 
 function changeQuantity(index, change) {
@@ -1804,6 +2178,7 @@ function changeQuantity(index, change) {
     }
     
     cart[index].quantity = newQuantity;
+    lastCartFocusIndex = index;
     
     // تحديث العربة والحسابات
     updateCart();
@@ -1840,7 +2215,6 @@ function clearCart() {
     cart = [];
     updateCart();
 }
-
 // معالجة الدفع
 document.getElementById('processPayment').addEventListener('click', function() {
     if (cart.length === 0) {
@@ -1951,12 +2325,23 @@ document.getElementById('processPayment').addEventListener('click', function() {
         }
         
         if (amountPaid < totalInPaymentCurrency) {
-            showMessage(`المبلغ المدفوع أقل من المطلوب. الناقص: ${formatCurrency(totalInPaymentCurrency - amountPaid, paymentCurrency)}`, 'error');
-            return;
+            const completeRemainderEnabled = window.__completeRemainderLBP__ === true;
+            if (!completeRemainderEnabled) {
+                showMessage(`المبلغ المدفوع أقل من المطلوب. الناقص: ${formatCurrency(totalInPaymentCurrency - amountPaid, paymentCurrency)}`, 'error');
+                return;
+            }
         }
         
-        // حساب الباقي
-        const changeResult = calculateOptimalChange(totalInPaymentCurrency, amountPaid, paymentCurrency, preferredChangeCurrency);
+        // حساب الباقي (مع أخذ الإكمال بالليرة بعين الاعتبار)
+        const completeRemainderEnabled = window.__completeRemainderLBP__ === true;
+        let mixedLBPRemainder = 0;
+        if (completeRemainderEnabled && amountPaid < totalInPaymentCurrency) {
+            const remainingInPaymentCurrency = totalInPaymentCurrency - amountPaid;
+            mixedLBPRemainder = paymentCurrency === 'LBP' ? remainingInPaymentCurrency : Math.round(remainingInPaymentCurrency * (settings.exchangeRate || 1));
+        }
+        const changeResult = completeRemainderEnabled && mixedLBPRemainder > 0
+            ? { canGiveChange: true, change: 0, currency: paymentCurrency }
+            : calculateOptimalChange(totalInPaymentCurrency, amountPaid, paymentCurrency, preferredChangeCurrency);
         
         if (!changeResult.canGiveChange && changeResult.change > 0) {
             if (!confirm('لا توجد نقدية كافية لإعطاء الباقي. هل تريد المتابعة؟')) {
@@ -1965,14 +2350,11 @@ document.getElementById('processPayment').addEventListener('click', function() {
         }
         
         // تحديث الصندوق - إضافة المبلغ المستلم
-        if (paymentCurrency === 'USD') {
-            cashDrawer.cashUSD += amountPaid;
-        } else {
-            cashDrawer.cashLBP += amountPaid;
-        }
+        if (paymentCurrency === 'USD') { cashDrawer.cashUSD += amountPaid; } else { cashDrawer.cashLBP += amountPaid; }
+        if (mixedLBPRemainder > 0) { cashDrawer.cashLBP += mixedLBPRemainder; }
         
         // خصم الباقي المُعطى
-        if (changeResult.breakdown) {
+        if (mixedLBPRemainder === 0 && changeResult.breakdown) {
             // عملات مختلطة
             if (changeResult.breakdown.USD > 0) {
                 cashDrawer.cashUSD -= changeResult.breakdown.USD;
@@ -1980,7 +2362,7 @@ document.getElementById('processPayment').addEventListener('click', function() {
             if (changeResult.breakdown.LBP > 0) {
                 cashDrawer.cashLBP -= changeResult.breakdown.LBP;
             }
-        } else if (changeResult.change > 0) {
+        } else if (mixedLBPRemainder === 0 && changeResult.change > 0) {
             if (changeResult.currency === 'USD') {
                 cashDrawer.cashUSD -= changeResult.change;
             } else {
@@ -1998,6 +2380,7 @@ document.getElementById('processPayment').addEventListener('click', function() {
                 (changeResult.breakdown.USD + changeResult.breakdown.LBP / settings.exchangeRate) : 
                 changeResult.change,
             changeCurrency: changeResult.currency,
+            details: mixedLBPRemainder > 0 ? `دفعة مختلطة: ${amountPaid} ${paymentCurrency} + ${mixedLBPRemainder.toLocaleString()} ل.ل` : undefined,
             balanceAfter: {
                 USD: cashDrawer.cashUSD,
                 LBP: cashDrawer.cashLBP
@@ -2202,7 +2585,6 @@ function getPaymentMethodText(method) {
     };
     return methods[method] || method;
 }
-
 // وظائف نظام الدين والدفع الجزئي
 function setupPartialPaymentInterface() {
     const paymentMethodSelect = document.getElementById('paymentMethod');
@@ -2250,6 +2632,9 @@ function setupPartialPaymentInterface() {
             }
         }
     });
+    
+    // تطبيق الحالة الابتدائية بحسب القيمة الحالية
+    try { paymentMethodSelect.dispatchEvent(new Event('change')); } catch(e) {}
     
     // حساب الدين
     const calculateCreditBtn = document.getElementById('calculateCredit');
@@ -2459,7 +2844,6 @@ function addCreditToCustomer(customerId, amount, description) {
     saveToStorage('customers', customers);
     return true;
 }
-
 function viewCreditHistory(customerId) {
     const customer = customers.find(c => c.id === customerId);
     if (!customer) return;
@@ -2494,15 +2878,19 @@ function viewCreditHistory(customerId) {
             <div class="credit-history-table">
     `;
     
+    const langCH = document.documentElement.lang || 'ar';
+    const tCH = langCH === 'en'
+        ? { title: 'Transactions History', date: 'Date', type: 'Type', amount: 'Amount', desc: 'Description', purchase: 'Purchase', pay: 'Payment', empty: 'No history' }
+        : { title: 'تاريخ المعاملات', date: 'التاريخ', type: 'النوع', amount: 'المبلغ', desc: 'الوصف', purchase: 'شراء', pay: 'دفع', empty: 'لا يوجد تاريخ معاملات' };
     if (customer.creditHistory && customer.creditHistory.length > 0) {
         html += `
             <table>
                 <thead>
                     <tr>
-                        <th>التاريخ</th>
-                        <th>النوع</th>
-                        <th>المبلغ</th>
-                        <th>الوصف</th>
+                        <th>${tCH.date}</th>
+                        <th>${tCH.type}</th>
+                        <th>${tCH.amount}</th>
+                        <th>${tCH.desc}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -2510,7 +2898,7 @@ function viewCreditHistory(customerId) {
         
         customer.creditHistory.forEach(record => {
             const typeIcon = record.type === 'purchase' ? 'fas fa-shopping-cart' : 'fas fa-money-bill';
-            const typeText = record.type === 'purchase' ? 'شراء' : 'دفع';
+            const typeText = record.type === 'purchase' ? tCH.purchase : tCH.pay;
             html += `
                 <tr>
                     <td>${record.date}</td>
@@ -2526,7 +2914,7 @@ function viewCreditHistory(customerId) {
             </table>
         `;
     } else {
-        html += '<p class="no-data">لا يوجد تاريخ معاملات</p>';
+        html += `<p class="no-data">${tCH.empty}</p>`;
     }
     
     html += `
@@ -2543,21 +2931,26 @@ function openCustomerTransactions(customerId) {
     const customer = customers.find(c => c.id === customerId);
     if (!customer) return;
     const logs = loadFromStorage('customerLogs', {});
-    const list = logs[customerId] || [];
+    const key = String(customerId);
+    const list = Array.isArray(logs[key]) ? logs[key] : [];
+    const lang = document.documentElement.lang || 'ar';
+    const tHead = lang === 'en'
+        ? { title: 'Customer Log', datetime: 'Date & Time', type: 'Type', user: 'User', notes: 'Notes', empty: 'No logs' }
+        : { title: 'سجل العميل', datetime: 'التاريخ والوقت', type: 'النوع', user: 'المستخدم', notes: 'ملاحظات', empty: 'لا يوجد سجلات' };
     let html = `
         <div class="report-stats">
             <div class="stat-item">
-                <h4>سجل العميل</h4>
+                <h4>${tHead.title}</h4>
                 <p class="stat-value">${customer.name}</p>
             </div>
         </div>
         <table class="report-table">
             <thead>
                 <tr>
-                    <th>التاريخ والوقت</th>
-                    <th>النوع</th>
-                    <th>المستخدم</th>
-                    <th>ملاحظات</th>
+                    <th>${tHead.datetime}</th>
+                    <th>${tHead.type}</th>
+                    <th>${tHead.user}</th>
+                    <th>${tHead.notes}</th>
                 </tr>
             </thead>
             <tbody>
@@ -2568,13 +2961,13 @@ function openCustomerTransactions(customerId) {
                         <td>${r.user || '-'}</td>
                         <td>${r.note || '-'}</td>
                     </tr>
-                `).join('') : '<tr><td colspan="4">لا يوجد سجلات</td></tr>'}
+                `).join('') : `<tr><td colspan="4">${tHead.empty}</td></tr>`}
             </tbody>
         </table>
     `;
     const reportContent = document.getElementById('reportContent');
     const reportTitle = document.getElementById('reportTitle');
-    if (reportTitle) reportTitle.textContent = 'سجل معاملات العميل';
+    if (reportTitle) reportTitle.textContent = tHead.title;
     if (reportContent) reportContent.innerHTML = html;
     showModal('reportModal');
 }
@@ -2583,6 +2976,8 @@ function openPayDebt(customerId) {
     const select = document.getElementById('payDebtCustomer');
     const current = document.getElementById('payDebtCurrent');
     if (!select || !current) return;
+    // تعريب واجهة النافذة
+    try { translatePayDebtModalUI(); } catch(e) {}
     // تعبئة العملاء
     select.innerHTML = '';
     customers.forEach(c => {
@@ -2627,19 +3022,59 @@ document.getElementById('confirmPayDebt')?.addEventListener('click', function(){
 
     // سجل العميل
     const clog = loadFromStorage('customerLogs', {});
-    if (!clog[customer.id]) clog[customer.id] = [];
-    clog[customer.id].push({ timestamp: new Date().toLocaleString(), action: 'تسديد', user: (currentUser || 'المستخدم'), note: `تسديد ${amount} ${currencySel.value}` });
+    const key = String(customer.id);
+    if (!Array.isArray(clog[key])) clog[key] = [];
+    const logEntry = { timestamp: new Date().toLocaleString(), action: 'تسديد', user: (currentUser || 'المستخدم'), note: `تسديد ${amount} ${currencySel.value}` };
+    clog[key].push(logEntry);
     saveToStorage('customerLogs', clog);
+    console.log('Saved customerLogs entry:', key, logEntry);
 
     // سجل المبيعات (دفعة على حساب)
     const salesLogs = loadFromStorage('salesLogs', []);
     salesLogs.push({ timestamp: new Date().toLocaleString(), invoiceNumber: '-', amount: amountUSD, currency: 'USD', method: 'payment', customer: customer.name, user: (currentUser || 'المستخدم') });
     saveToStorage('salesLogs', salesLogs);
 
-    showNotification('تم تسجيل التسديد بنجاح', 'success', 2500);
+    showNotification(getText('pay-debt-success'), 'success', 2500);
     hideModal('payDebtModal');
     loadCustomers();
 });
+
+// ترجمة نافذة تسديد دين العميل
+function translatePayDebtModalUI() {
+    const lang = document.documentElement.lang || 'ar';
+    const modal = document.getElementById('payDebtModal');
+    if (!modal) return;
+    const t = (key) => ( (typeof getText === 'function') ? getText(key) : key );
+    const header = modal.querySelector('.modal-header h3');
+    if (header) header.textContent = t('pay-debt-title');
+    const groups = modal.querySelectorAll('.report-body .form-group');
+    if (groups && groups.length >= 4) {
+        groups[0].querySelector('label').textContent = t('pay-debt-customer');
+        groups[1].querySelector('label').textContent = t('pay-debt-current');
+        groups[2].querySelector('label').textContent = t('pay-debt-amount');
+        groups[3].querySelector('label').textContent = t('pay-debt-currency');
+    }
+    const currencySel = document.getElementById('payDebtCurrency');
+    if (currencySel && currencySel.options.length >= 2) {
+        currencySel.options[0].textContent = t('currency-usd');
+        currencySel.options[1].textContent = t('currency-lbp');
+    }
+    const actions = modal.querySelectorAll('.modal-actions button');
+    if (actions && actions.length >= 2) {
+        const confirmBtn = modal.querySelector('#confirmPayDebt');
+        const cancelBtn = actions[1];
+        if (confirmBtn) {
+            const icon = confirmBtn.querySelector('i');
+            confirmBtn.textContent = t('confirm-pay-debt');
+            if (icon) confirmBtn.prepend(icon);
+        }
+        if (cancelBtn) {
+            const icon = cancelBtn.querySelector('i');
+            cancelBtn.textContent = t('cancel-generic');
+            if (icon) cancelBtn.prepend(icon);
+        }
+    }
+}
 
 // مسح العربة
 document.getElementById('clearCart').addEventListener('click', function() {
@@ -2888,12 +3323,20 @@ function loadProducts() {
             <td>${formatCurrency(product.priceLBP, 'LBP')}</td>
             <td ${isLowStock ? 'style="color: red; font-weight: bold;"' : ''}>${product.stock}</td>
             <td>
-                <button class="action-btn edit-btn" onclick="editProduct(${product.id})">تعديل</button>
-                <button class="action-btn delete-btn" onclick="deleteProduct(${product.id})">حذف</button>
+                <button class="action-btn edit-btn" onclick="editProduct(${product.id})"><i class=\"fas fa-edit\"></i> ${getText('edit')}</button>
+                <button class="action-btn delete-btn" onclick="deleteProduct(${product.id})"><i class=\"fas fa-trash\"></i> ${getText('delete')}</button>
             </td>
         `;
         
         tbody.appendChild(row);
+    });
+}
+
+function filterProductsTable(term) {
+    const rows = document.querySelectorAll('#productsTable tr');
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(term) ? '' : 'none';
     });
 }
 
@@ -2910,16 +3353,17 @@ document.getElementById('addProductBtn').addEventListener('click', function() {
 // تم نقل معالج النموذج إلى الأسفل مع الحساب التلقائي
 
 function editProduct(id) {
+    const lang = document.documentElement.lang || 'ar';
     const product = products.find(p => p.id === id);
     if (!product) {
-        showMessage('المنتج غير موجود', 'error');
+        showMessage(lang === 'en' ? 'Product not found' : 'المنتج غير موجود', 'error');
         return;
     }
     
     // طلب كلمة المرور لتعديل المنتج
-    const password = prompt('🔒 أدخل رمز الأمان لتعديل المنتج (12345):');
+    const password = prompt(lang === 'en' ? '🔒 Enter security code to edit product (12345):' : '🔒 أدخل رمز الأمان لتعديل المنتج (12345):');
     if (password !== '12345') {
-        showNotification('❌ كلمة المرور خاطئة! لا يمكن تعديل المنتج.', 'error', 3000);
+        showNotification(lang === 'en' ? '❌ Incorrect code! Cannot edit product.' : '❌ كلمة المرور خاطئة! لا يمكن تعديل المنتج.', 'error', 3000);
         return;
     }
     
@@ -2950,7 +3394,8 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
     const productIndex = products.findIndex(p => p.id === editId);
     
     if (productIndex === -1) {
-        showMessage('خطأ في العثور على المنتج', 'error');
+        const lang = document.documentElement.lang || 'ar';
+        showMessage(lang === 'en' ? 'Error finding product' : 'خطأ في العثور على المنتج', 'error');
         return;
     }
     
@@ -2970,14 +3415,15 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
     saveToStorage('products', products);
     loadProducts();
     hideModal('editProductModal');
-    showMessage('تم تحديث المنتج بنجاح');
+    const langDone = document.documentElement.lang || 'ar';
+    showMessage(langDone === 'en' ? 'Product updated successfully' : 'تم تحديث المنتج بنجاح');
 });
 
 function updateSuppliersDropdown(selectId) {
     const select = document.getElementById(selectId);
     const currentValue = select.value;
     
-    select.innerHTML = '<option value="">اختر المورد</option>';
+    select.innerHTML = `<option value="">${(document.documentElement.lang||'ar')==='en' ? 'Select supplier' : 'اختر المورد'}</option>`;
     
     suppliers.forEach(supplier => {
         const option = document.createElement('option');
@@ -2988,18 +3434,18 @@ function updateSuppliersDropdown(selectId) {
     
     select.value = currentValue;
 }
-
 function deleteProduct(id) {
-    const password = prompt('🔒 أدخل رمز الأمان لحذف المنتج (12345):');
+    const lang = document.documentElement.lang || 'ar';
+    const password = prompt(lang === 'en' ? '🔒 Enter security code to delete product (12345):' : '🔒 أدخل رمز الأمان لحذف المنتج (12345):');
     if (password !== '12345') {
-        showNotification('❌ رمز غير صحيح! لا يمكن حذف المنتج.', 'error', 3000);
+        showNotification(lang === 'en' ? '❌ Invalid code! Cannot delete product.' : '❌ رمز غير صحيح! لا يمكن حذف المنتج.', 'error', 3000);
         return;
     }
-    if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+    if (confirm(lang === 'en' ? 'Are you sure you want to delete this product?' : 'هل أنت متأكد من حذف هذا المنتج؟')) {
         products = products.filter(p => p.id !== id);
         saveToStorage('products', products);
         loadProducts();
-        showMessage('تم حذف المنتج');
+        showMessage(lang === 'en' ? 'Product deleted' : 'تم حذف المنتج');
     }
 }
 
@@ -3064,6 +3510,14 @@ function loadSales() {
     });
 }
 
+function filterSalesTable(term) {
+    const rows = document.querySelectorAll('#salesTable tr');
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(term) ? '' : 'none';
+    });
+}
+
 function viewSale(id) {
     const sale = sales.find(s => s.id === id);
     if (sale) {
@@ -3081,7 +3535,6 @@ function printSale(id) {
         if (btn) btn.click();
     }, 50);
 }
-
 function showInvoice(sale) {
     const invoiceContent = document.getElementById('invoiceContent');
     const lang = document.documentElement.lang || 'ar';
@@ -3127,6 +3580,7 @@ function showInvoice(sale) {
     const subtotal = sale.amount;
     const tax = 0;
     
+    const exRate = settings.exchangeRate || 1;
     const invoiceHTML = `
         <div class="invoice-header">
             <div class="store-info">
@@ -3152,14 +3606,27 @@ function showInvoice(sale) {
                 </tr>
             </thead>
             <tbody>
-                ${sale.items ? sale.items.map(item => `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>${item.quantity}</td>
-                        <td>${formatCurrency(item.price)}</td>
-                        <td>${formatCurrency(item.price * item.quantity)}</td>
-                    </tr>
-                `).join('') : ''}
+                ${sale.items ? sale.items.map(item => {
+                    // تحديد عملة سعر العنصر في لحظة البيع بمقارنة السعر النهائي بالدولار وسعر الصرف
+                    const isUSD = Math.abs((item.finalPriceUSD || 0) - (item.price || 0)) < 0.5;
+                    const itemCurrency = isUSD ? 'USD' : 'LBP';
+                    const originalPrice = itemCurrency === 'USD' ? (item.originalPriceUSD || item.price) : Math.round((item.originalPriceUSD || 0) * exRate);
+                    const finalPrice    = itemCurrency === 'USD' ? (item.finalPriceUSD    || item.price) : Math.round((item.finalPriceUSD    || 0) * exRate);
+                    const hasDiscount   = typeof item.discountPct === 'number' && item.discountPct > 0 && finalPrice < originalPrice;
+                    const nameCell = hasDiscount
+                        ? `${item.name}<br><small style="color:#16a34a;font-weight:700">-${item.discountPct}% → ${formatCurrency(finalPrice, itemCurrency)}</small>`
+                        : `${item.name}`;
+                    const priceCell = formatCurrency(originalPrice, itemCurrency); // عرض السعر الأساسي فقط
+                    const totalCell = formatCurrency(finalPrice * (item.quantity || 1), itemCurrency); // مجموع بعد الخصم
+                    return `
+                        <tr>
+                            <td>${nameCell}</td>
+                            <td>${item.quantity}</td>
+                            <td>${priceCell}</td>
+                            <td>${totalCell}</td>
+                        </tr>
+                    `;
+                }).join('') : ''}
             </tbody>
         </table>
         
@@ -3289,15 +3756,17 @@ function loadCustomers() {
             <td>${formatCurrency(customer.creditLimit || 0)}</td>
             <td>${customer.dateJoined || 'غير محدد'}</td>
             <td>
-                <button class="action-btn edit-btn" onclick="editCustomer(${customer.id})">تعديل</button>
-                <button class="action-btn delete-btn" onclick="deleteCustomer(${customer.id})">حذف</button>
-                <button class="action-btn" style="background:#6f42c1;color:#fff" onclick="openCustomerTransactions(${customer.id})">السجل</button>
-                ${customer.creditBalance > 0 ? `<button class="action-btn" style="background:#2dce89;color:#fff" onclick="openPayDebt(${customer.id})">تسديد دين</button>` : ''}
+                <button class="action-btn edit-btn" onclick="editCustomer(${customer.id})"><i class="fas fa-edit"></i> <span data-i18n="edit">${getText('edit')}</span></button>
+                <button class="action-btn delete-btn" onclick="deleteCustomer(${customer.id})"><i class="fas fa-trash"></i> <span data-i18n="delete">${getText('delete')}</span></button>
+                <button class="action-btn customer-log-btn" style="background:#6f42c1;color:#fff" onclick="openCustomerTransactions(${customer.id})"><i class="fas fa-list"></i> <span data-i18n="log">${getText('log')}</span></button>
+                ${customer.creditBalance > 0 ? `<button class="action-btn pay-debt-btn" style="background:#2dce89;color:#fff" onclick="openPayDebt(${customer.id})"><i class=\"fas fa-dollar-sign\"></i> <span data-i18n=\"pay-debt\">${getText('pay-debt')}</span></button>` : ''}
             </td>
         `;
         
         tbody.appendChild(row);
     });
+    // بعد البناء، ترجم الأزرار وفق اللغة الحالية
+    try { translateCustomerActionButtons(); } catch(e) {}
 }
 
 // إضافة عميل جديد
@@ -3349,6 +3818,7 @@ function editCustomer(id) {
     document.getElementById('editCustomerForm').dataset.editId = id;
     
     showModal('editCustomerModal');
+    try { translateEditCustomerModal(); } catch(e) {}
 }
 
 // معالج تعديل العميل
@@ -3380,11 +3850,52 @@ document.getElementById('editCustomerForm').addEventListener('submit', function(
 });
 
 function deleteCustomer(id) {
-    if (confirm('هل أنت متأكد من حذف هذا العميل؟')) {
+    if (confirm(getText('confirm-delete-customer'))) {
         customers = customers.filter(c => c.id !== id);
         saveToStorage('customers', customers);
         loadCustomers();
-        showMessage('تم حذف العميل');
+        showMessage(getText('customer-deleted'));
+    }
+}
+
+// ترجمة نافذة تعديل عميل
+function translateEditCustomerModal() {
+    const lang = document.documentElement.lang || 'ar';
+    const t = lang === 'en' ? {
+        title: 'Edit Customer',
+        name: 'Customer Name',
+        email: 'Email',
+        phone: 'Phone',
+        address: 'Address',
+        credit_limit: 'Credit Limit (USD)',
+        save: 'Save Changes',
+        cancel: 'Cancel'
+    } : {
+        title: 'تعديل العميل',
+        name: 'اسم العميل',
+        email: 'البريد الإلكتروني',
+        phone: 'رقم الهاتف',
+        address: 'العنوان',
+        credit_limit: 'الحد الائتماني (دولار)',
+        save: 'حفظ التعديلات',
+        cancel: 'إلغاء'
+    };
+    const modal = document.getElementById('editCustomerModal');
+    if (!modal) return;
+    const header = modal.querySelector('.modal-header h3');
+    if (header) header.textContent = t.title;
+    const groups = modal.querySelectorAll('.form-group');
+    if (groups && groups.length >= 5) {
+        groups[0].querySelector('label').textContent = t.name;
+        groups[1].querySelector('label').textContent = t.email;
+        groups[2].querySelector('label').textContent = t.phone;
+        groups[3].querySelector('label').textContent = t.address;
+        groups[4].querySelector('label').textContent = t.credit_limit;
+    }
+    const actions = modal.querySelectorAll('.modal-actions button');
+    if (actions && actions.length >= 2) {
+        actions[0].textContent = t.save;
+        actions[1].textContent = t.cancel;
     }
 }
 
@@ -3408,6 +3919,14 @@ function loadSuppliers() {
         `;
         
         tbody.appendChild(row);
+    });
+}
+
+function filterSuppliersTable(term) {
+    const rows = document.querySelectorAll('#suppliersTable tr');
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(term) ? '' : 'none';
     });
 }
 
@@ -3536,15 +4055,13 @@ function updateProductPrices() {
 // إعداد التواريخ الافتراضية
 document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
-    document.getElementById('dateFrom').value = today;
-    document.getElementById('dateTo').value = today;
+    const df = document.getElementById('dateFrom');
+    const dt = document.getElementById('dateTo');
+    if (df) df.value = today;
+    if (dt) dt.value = today;
 });
 
-// تصفية المبيعات
-document.getElementById('filterSales').addEventListener('click', function() {
-    loadSales(); // في التطبيق الحقيقي، ستتم التصفية حسب التواريخ
-    showMessage('تم تطبيق التصفية');
-});
+// تمت إزالة معالج قديم لتصفية المبيعات كان يعيد تحميل كل المبيعات
 
 // تقارير
 document.querySelectorAll('.report-btn').forEach((btn, index) => {
@@ -3571,7 +4088,7 @@ document.getElementById('applyReportFilter')?.addEventListener('click', () => {
     const preset = document.getElementById('reportPreset').value;
     const fromInp = document.getElementById('reportFromDate');
     const toInp = document.getElementById('reportToDate');
-    const { from, to } = getRangeByPreset(preset, fromInp.value, toInp.value);
+    const { from, to } = getRangeByPreset(preset, fromInp.value, toInp ? toInp.value : '');
     window.currentReportRange = { from, to };
     // إعادة فتح آخر تقرير تم عرضه إن وجد
     const title = document.getElementById('reportTitle')?.textContent || '';
@@ -3633,12 +4150,15 @@ document.getElementById('reportPreset')?.addEventListener('change', (e) => {
     if (preset !== 'custom') {
         const { from, to } = getRangeByPreset(preset);
         fromInp.value = toDateInputValue(from);
-        toInp.value = toDateInputValue(to);
-        fromInp.disabled = true; toInp.disabled = true;
+        if (toInp) {
+            toInp.value = toDateInputValue(to);
+            toInp.disabled = true;
+        }
+        fromInp.disabled = true;
         window.currentReportRange = { from, to };
         rerenderCurrentReport();
     } else {
-        fromInp.disabled = false; toInp.disabled = false;
+        fromInp.disabled = false; if (toInp) toInp.disabled = false;
     }
 });
 
@@ -3707,12 +4227,11 @@ function rerenderCurrentReport() {
     if (title.includes('المخزون') || title.toLowerCase().includes('inventory')) return showInventoryReport();
     if (title.includes('العملاء') || title.toLowerCase().includes('customers')) return showCustomersReport();
 }
-
 function showSalesReport() {
     const reportContent = document.getElementById('reportContent');
     const reportTitle = document.getElementById('reportTitle');
-    
-    reportTitle.textContent = 'تقرير المبيعات';
+    const isEn = (document.documentElement.lang || 'ar') === 'en';
+    reportTitle.textContent = isEn ? 'Sales Report' : 'تقرير المبيعات';
     const range = window.currentReportRange || getRangeByPreset('this_month');
     const filtered = sales.filter(s => new Date(s.date) >= range.from && new Date(s.date) <= range.to);
     const totalSales = filtered.reduce((sum, sale) => sum + sale.amount, 0);
@@ -3725,32 +4244,32 @@ function showSalesReport() {
     const reportHTML = `
         <div class="report-stats">
             <div class="stat-item">
-                <h4>إجمالي المبيعات</h4>
+                <h4>${isEn ? 'Total Sales' : 'إجمالي المبيعات'}</h4>
                 <p class="stat-value">${formatCurrency(totalSales)}</p>
             </div>
             <div class="stat-item">
-                <h4>عدد المعاملات</h4>
+                <h4>${isEn ? 'Transactions' : 'عدد المعاملات'}</h4>
                 <p class="stat-value">${totalTransactions}</p>
             </div>
             <div class="stat-item">
-                <h4>متوسط المعاملة</h4>
+                <h4>${isEn ? 'Average Transaction' : 'متوسط المعاملة'}</h4>
                 <p class="stat-value">${formatCurrency(averageTransaction)}</p>
             </div>
             <div class="stat-item">
-                <h4>مبيعات اليوم</h4>
+                <h4>${isEn ? 'Today Sales' : 'مبيعات اليوم'}</h4>
                 <p class="stat-value">${formatCurrency(todayRevenue)}</p>
             </div>
         </div>
         
-        <h4>الفواتير ضمن الفترة المحددة:</h4>
+        <h4>${isEn ? 'Invoices in selected range:' : 'الفواتير ضمن الفترة المحددة:'}</h4>
         <table class="report-table">
             <thead>
                 <tr>
-                    <th>رقم الفاتورة</th>
-                    <th>التاريخ</th>
-                    <th>العميل</th>
-                    <th>المبلغ</th>
-                    <th>طريقة الدفع</th>
+                    <th>${isEn ? 'Invoice #' : 'رقم الفاتورة'}</th>
+                    <th>${isEn ? 'Date' : 'التاريخ'}</th>
+                    <th>${isEn ? 'Customer' : 'العميل'}</th>
+                    <th>${isEn ? 'Amount' : 'المبلغ'}</th>
+                    <th>${isEn ? 'Payment Method' : 'طريقة الدفع'}</th>
                 </tr>
             </thead>
             <tbody>
@@ -3770,7 +4289,6 @@ function showSalesReport() {
     reportContent.innerHTML = reportHTML;
     showModal('reportModal');
 }
-
 // عرض سجل المبيعات العام
 function openSalesHistory() {
     const logs = loadFromStorage('salesLogs', []);
@@ -3814,7 +4332,8 @@ function showInventoryReport() {
     const reportContent = document.getElementById('reportContent');
     const reportTitle = document.getElementById('reportTitle');
     
-    reportTitle.textContent = 'تقرير المخزون';
+    const isEn = (document.documentElement.lang || 'ar') === 'en';
+    reportTitle.textContent = isEn ? 'Inventory Report' : 'تقرير المخزون';
     
     const totalProducts = products.length;
     const totalStockValue = products.reduce((sum, product) => sum + (product.stock * product.priceUSD), 0);
@@ -3823,27 +4342,27 @@ function showInventoryReport() {
     const reportHTML = `
         <div class="report-stats">
             <div class="stat-item">
-                <h4>إجمالي المنتجات</h4>
+                <h4>${isEn ? 'Total Products' : 'إجمالي المنتجات'}</h4>
                 <p class="stat-value">${totalProducts}</p>
             </div>
             <div class="stat-item">
-                <h4>قيمة المخزون</h4>
+                <h4>${isEn ? 'Stock Value' : 'قيمة المخزون'}</h4>
                 <p class="stat-value">${formatCurrency(totalStockValue)}</p>
             </div>
             <div class="stat-item">
-                <h4>منتجات منخفضة المخزون</h4>
+                <h4>${isEn ? 'Low Stock Products' : 'منتجات منخفضة المخزون'}</h4>
                 <p class="stat-value">${lowStockProducts.length}</p>
             </div>
         </div>
         
-        <h4>المنتجات منخفضة المخزون:</h4>
+        <h4>${isEn ? 'Low-stock products:' : 'المنتجات منخفضة المخزون:'}</h4>
         <table class="report-table">
             <thead>
                 <tr>
-                    <th>اسم المنتج</th>
-                    <th>المخزون الحالي</th>
-                    <th>الحد الأدنى</th>
-                    <th>الحالة</th>
+                    <th>${isEn ? 'Product' : 'اسم المنتج'}</th>
+                    <th>${isEn ? 'Current Stock' : 'المخزون الحالي'}</th>
+                    <th>${isEn ? 'Min Threshold' : 'الحد الأدنى'}</th>
+                    <th>${isEn ? 'Status' : 'الحالة'}</th>
                 </tr>
             </thead>
             <tbody>
@@ -3858,15 +4377,15 @@ function showInventoryReport() {
             </tbody>
         </table>
         
-        <h4>جميع المنتجات:</h4>
+        <h4>${isEn ? 'All products:' : 'جميع المنتجات:'}</h4>
         <table class="report-table">
             <thead>
                 <tr>
-                    <th>اسم المنتج</th>
-                    <th>التصنيف</th>
-                    <th>المخزون</th>
-                    <th>السعر</th>
-                    <th>القيمة الإجمالية</th>
+                    <th>${isEn ? 'Product' : 'اسم المنتج'}</th>
+                    <th>${isEn ? 'Category' : 'التصنيف'}</th>
+                    <th>${isEn ? 'Stock' : 'المخزون'}</th>
+                    <th>${isEn ? 'Price' : 'السعر'}</th>
+                    <th>${isEn ? 'Total Value' : 'القيمة الإجمالية'}</th>
                 </tr>
             </thead>
             <tbody>
@@ -3890,8 +4409,8 @@ function showInventoryReport() {
 function showCustomersReport() {
     const reportContent = document.getElementById('reportContent');
     const reportTitle = document.getElementById('reportTitle');
-    
-    reportTitle.textContent = 'تقرير العملاء';
+    const isEn = (document.documentElement.lang || 'ar') === 'en';
+    reportTitle.textContent = isEn ? 'Customers Report' : 'تقرير العملاء';
     
     const totalCustomers = customers.length;
     const totalCustomerPurchases = customers.reduce((sum, customer) => sum + customer.totalPurchases, 0);
@@ -3902,32 +4421,32 @@ function showCustomersReport() {
     const reportHTML = `
         <div class="report-stats">
             <div class="stat-item">
-                <h4>إجمالي العملاء</h4>
+                <h4>${isEn ? 'Total Customers' : 'إجمالي العملاء'}</h4>
                 <p class="stat-value">${totalCustomers}</p>
             </div>
             <div class="stat-item">
-                <h4>إجمالي مشتريات العملاء</h4>
+                <h4>${isEn ? 'Total Customer Purchases' : 'إجمالي مشتريات العملاء'}</h4>
                 <p class="stat-value">${formatCurrency(totalCustomerPurchases)}</p>
             </div>
             <div class="stat-item">
-                <h4>متوسط المشتريات</h4>
+                <h4>${isEn ? 'Average Purchases' : 'متوسط المشتريات'}</h4>
                 <p class="stat-value">${formatCurrency(averagePurchase)}</p>
             </div>
             <div class="stat-item">
-                <h4>أفضل عميل</h4>
-                <p class="stat-value">${topCustomer ? topCustomer.name : 'لا يوجد'}</p>
+                <h4>${isEn ? 'Top Customer' : 'أفضل عميل'}</h4>
+                <p class="stat-value">${topCustomer ? topCustomer.name : (isEn ? 'N/A' : 'لا يوجد')}</p>
             </div>
         </div>
         
         <table class="report-table">
             <thead>
                 <tr>
-                    <th>اسم العميل</th>
-                    <th>البريد الإلكتروني</th>
-                    <th>الهاتف</th>
-                    <th>إجمالي المشتريات</th>
-                    <th>نقاط الولاء</th>
-                    <th>تاريخ الانضمام</th>
+                    <th>${isEn ? 'Customer Name' : 'اسم العميل'}</th>
+                    <th>${isEn ? 'Email' : 'البريد الإلكتروني'}</th>
+                    <th>${isEn ? 'Phone' : 'الهاتف'}</th>
+                    <th>${isEn ? 'Total Purchases' : 'إجمالي المشتريات'}</th>
+                    <th>${isEn ? 'Loyalty Points' : 'نقاط الولاء'}</th>
+                    <th>${isEn ? 'Join Date' : 'تاريخ الانضمام'}</th>
                 </tr>
             </thead>
             <tbody>
@@ -3953,7 +4472,8 @@ function showFinancialReport() {
     const reportContent = document.getElementById('reportContent');
     const reportTitle = document.getElementById('reportTitle');
     
-    reportTitle.textContent = 'التقرير المالي';
+    const isEn = (document.documentElement.lang || 'ar') === 'en';
+    reportTitle.textContent = isEn ? 'Financial Report' : 'التقرير المالي';
     const range = window.currentReportRange || getRangeByPreset('this_month');
     const filtered = sales.filter(s => new Date(s.date) >= range.from && new Date(s.date) <= range.to);
     const totalRevenue = filtered.reduce((sum, sale) => sum + sale.amount, 0);
@@ -3970,30 +4490,30 @@ function showFinancialReport() {
     const reportHTML = `
         <div class="report-stats">
             <div class="stat-item">
-                <h4>إجمالي الإيرادات</h4>
+                <h4>${isEn ? 'Total Revenue' : 'إجمالي الإيرادات'}</h4>
                 <p class="stat-value">${formatCurrency(totalRevenue)}</p>
             </div>
             <div class="stat-item">
-                <h4>إجمالي الضرائب</h4>
+                <h4>${isEn ? 'Total Taxes' : 'إجمالي الضرائب'}</h4>
                 <p class="stat-value">${formatCurrency(totalTax)}</p>
             </div>
             <div class="stat-item">
-                <h4>صافي الإيرادات</h4>
+                <h4>${isEn ? 'Net Revenue' : 'صافي الإيرادات'}</h4>
                 <p class="stat-value">${formatCurrency(netRevenue)}</p>
             </div>
             <div class="stat-item">
-                <h4>قيمة المخزون</h4>
+                <h4>${isEn ? 'Stock Value' : 'قيمة المخزون'}</h4>
                 <p class="stat-value">${formatCurrency(totalStockValue)}</p>
             </div>
         </div>
         
-        <h4>المبيعات حسب طريقة الدفع:</h4>
+        <h4>${isEn ? 'Sales by Payment Method:' : 'المبيعات حسب طريقة الدفع:'}</h4>
         <table class="report-table">
             <thead>
                 <tr>
-                    <th>طريقة الدفع</th>
-                    <th>المبلغ</th>
-                    <th>النسبة</th>
+                    <th>${isEn ? 'Payment Method' : 'طريقة الدفع'}</th>
+                    <th>${isEn ? 'Amount' : 'المبلغ'}</th>
+                    <th>${isEn ? 'Share' : 'النسبة'}</th>
                 </tr>
             </thead>
             <tbody>
@@ -4007,9 +4527,9 @@ function showFinancialReport() {
             </tbody>
         </table>
         
-        <h4>المبيعات الشهرية:</h4>
+        <h4>${isEn ? 'Monthly Sales:' : 'المبيعات الشهرية:'}</h4>
         <div class="monthly-sales">
-            <p>هذه الميزة قيد التطوير - ستتضمن رسوماً بيانية تفاعلية</p>
+            <p>${isEn ? 'This feature is under development - charts coming soon' : 'هذه الميزة قيد التطوير - ستتضمن رسوماً بيانية تفاعلية'}</p>
         </div>
     `;
     
@@ -4032,19 +4552,21 @@ document.getElementById('autoBackupCheckbox').addEventListener('change', functio
 // تصفية المبيعات بالتاريخ
 document.getElementById('filterSales').addEventListener('click', function() {
     const dateFrom = document.getElementById('dateFrom').value;
-    const dateTo = document.getElementById('dateTo').value;
+    const dateTo = document.getElementById('dateTo')?.value || '';
     const statusFilter = document.getElementById('statusFilter').value;
     
     let filteredSales = [...sales];
     
     // فلترة حسب التاريخ
-    if (dateFrom && dateTo) {
+    if (dateFrom) {
         filteredSales = filteredSales.filter(sale => {
             const saleDate = new Date(sale.date);
             const fromDate = new Date(dateFrom);
-            const toDate = new Date(dateTo);
-            
-            return saleDate >= fromDate && saleDate <= toDate;
+            if (dateTo) {
+                const toDate = new Date(dateTo);
+                return saleDate >= fromDate && saleDate <= toDate;
+            }
+            return saleDate >= fromDate;
         });
     }
     
@@ -4082,8 +4604,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetFilterBtn = document.getElementById('resetFilter');
     if (resetFilterBtn) {
         resetFilterBtn.addEventListener('click', function() {
-            document.getElementById('dateFrom').value = '';
-            document.getElementById('dateTo').value = '';
+            const df = document.getElementById('dateFrom');
+            const dt = document.getElementById('dateTo');
+            if (df) df.value = '';
+            if (dt) dt.value = '';
             document.getElementById('statusFilter').value = 'all';
             loadSales();
             showMessage('تم إعادة تعيين الفلترة');
@@ -4220,6 +4744,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // إعداد event listener للمنتجات
     setupProductClickHandlers();
 
+    // بحث سريع داخل الجداول/القوائم
+    const productsSearch = document.getElementById('productsSearch');
+    if (productsSearch) {
+        productsSearch.addEventListener('input', function() {
+            const term = this.value.trim().toLowerCase();
+            filterProductsTable(term);
+        });
+    }
+    const salesSearch = document.getElementById('salesSearch');
+    if (salesSearch) {
+        salesSearch.addEventListener('input', function() {
+            const term = this.value.trim().toLowerCase();
+            filterSalesTable(term);
+        });
+    }
+    const suppliersSearch = document.getElementById('suppliersSearch');
+    if (suppliersSearch) {
+        suppliersSearch.addEventListener('input', function() {
+            const term = this.value.trim().toLowerCase();
+            filterSuppliersTable(term);
+        });
+    }
+
 console.log('نظام إدارة المبيعات جاهز للاستخدام!');
 });
 
@@ -4329,7 +4876,6 @@ function updateCartNew() {
 function setupProductClickHandlers() {
     // لا نحتاج event delegation لأننا نستخدم event listeners مباشرة في displayProducts
 }
-
 // إضافة معالج للحساب التلقائي للأسعار
 function setupPriceCalculations() {
     const exchangeRate = settings.exchangeRate;
@@ -4529,8 +5075,8 @@ function initiateSaleReturn(saleId) {
     
     // عرض النافذة
     showModal('returnSaleModal');
+    try { translateReturnModalUI(); } catch(e) {}
 }
-
 function updateReturnSummary() {
     if (!currentSaleForReturn) return;
     
@@ -4561,7 +5107,7 @@ function updateReturnSummary() {
                 refundDisplayText = `${refundInOriginalCurrency.toLocaleString()} ل.ل`;
             }
         }
-        refundMethodText = 'نقدي';
+        refundMethodText = (document.documentElement.lang === 'en') ? 'Cash' : 'نقدي';
         
     } else if (currentSaleForReturn.partialDetails) {
         // مبيعة جزئية
@@ -4965,7 +5511,6 @@ if (menuToggle && sidebar) {
         }
     });
 }
-
 // تحسين الحسابات التلقائية
 function ensureCalculationsWork() {
     // التأكد من عمل الحسابات التلقائية
@@ -5015,7 +5560,6 @@ function ensureCalculationsWork() {
         }, 200);
     }
 }
-
 // تشغيل التحسينات
 setTimeout(ensureCalculationsWork, 1000);
 
@@ -5114,6 +5658,9 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             add_supplier: 'إضافة مورد',
             th_supplier_name: 'اسم المورد',
             th_contact_person: 'الشخص المسؤول',
+            // Search placeholders
+            products_search_placeholder: 'ابحث داخل المنتجات...',
+            suppliers_search_placeholder: 'ابحث داخل الموردين...',
             // Reports
             reports_title: 'التقارير',
             sales_report_card: 'تقرير المبيعات',
@@ -5237,6 +5784,9 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             add_supplier: 'Add Supplier',
             th_supplier_name: 'Supplier Name',
             th_contact_person: 'Contact Person',
+            // Search placeholders
+            products_search_placeholder: 'Search in products...',
+            suppliers_search_placeholder: 'Search in suppliers...',
             // Reports
             reports_title: 'Reports',
             sales_report_card: 'Sales Report',
@@ -5331,7 +5881,7 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
         if (posHeader) posHeader.textContent = t.pos_title;
         const currencyLabel = document.querySelector('#pos .currency-selector label:nth-of-type(1)');
         if (currencyLabel) currencyLabel.textContent = t.currency_label;
-        const priceTypeLabel = document.querySelector('#pos .currency-selector label:nth-of-type(2)');
+    const priceTypeLabel = document.querySelector('#pos .currency-selector label:nth-of-type(2)');
         if (priceTypeLabel) priceTypeLabel.textContent = t.price_type_label;
         const exchangeSpan = document.getElementById('exchangeRate');
         if (exchangeSpan) {
@@ -5352,13 +5902,14 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             totals[1].textContent = t.tax_11;
             totals[2].textContent = t.total_final;
         }
-        const pmLabel = document.querySelector('.payment-section > label');
-        if (pmLabel) pmLabel.textContent = t.payment_method;
-        const pmSelect = document.getElementById('paymentMethod');
-        if (pmSelect && pmSelect.options.length >= 2) {
-            pmSelect.options[0].textContent = t.payment_cash;
-            pmSelect.options[1].textContent = t.payment_partial;
-        }
+    const pmLabel = document.querySelector('.payment-section > label');
+    if (pmLabel) pmLabel.textContent = t.payment_method;
+    const pmSelect = document.getElementById('paymentMethod');
+    if (pmSelect && pmSelect.options.length >= 3) {
+        pmSelect.options[0].textContent = t.payment_cash;
+        pmSelect.options[1].textContent = t.credit_sale || (lang==='en' ? 'Credit Sale' : 'بيع بالدين');
+        pmSelect.options[2].textContent = t.payment_partial;
+    }
         const cashTitle = document.querySelector('#cashPaymentSection .cash-feature-highlight h3');
         if (cashTitle) cashTitle.textContent = t.cash_pay_smart;
         const cashDesc = document.querySelector('#cashPaymentSection .cash-feature-highlight p');
@@ -5369,10 +5920,12 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
         if (amtPaidLabel) amtPaidLabel.textContent = t.amount_paid;
         const changeCurLabel = document.querySelector('#cashPaymentSection .payment-input .input-group:nth-of-type(3) label');
         if (changeCurLabel) changeCurLabel.textContent = t.change_currency;
-        const changeCurSelect = document.getElementById('changeCurrency');
-        if (changeCurSelect && changeCurSelect.options.length >= 1) {
-            changeCurSelect.options[0].textContent = t.change_auto;
-        }
+    const changeCurSelect = document.getElementById('changeCurrency');
+    if (changeCurSelect && changeCurSelect.options.length >= 3) {
+        changeCurSelect.options[0].textContent = t.change_auto;
+        changeCurSelect.options[1].textContent = t['currency-usd'] || (lang==='en' ? 'US Dollar ($)' : 'دولار ($)');
+        changeCurSelect.options[2].textContent = t['currency-lbp'] || (lang==='en' ? 'Lebanese Pound (LBP)' : 'ليرة (ل.ل)');
+    }
         const calcBtn = document.getElementById('calculateChange');
         if (calcBtn) calcBtn.textContent = t.calc_change;
         const partialTitle = document.querySelector('#partialPaymentSection .credit-feature-highlight h3');
@@ -5438,6 +5991,9 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
             productsHead[7].textContent = t.th_stock;
             productsHead[8].textContent = t.th_actions;
         }
+        // Products page search input
+        const productsSearchInput = document.getElementById('productsSearch');
+        if (productsSearchInput) productsSearchInput.placeholder = t.products_search_placeholder;
 
         // Sales table head
         const salesHead = document.querySelectorAll('#sales thead th');
@@ -5472,6 +6028,8 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
         if (supHeader) { const icon = supHeader.querySelector('i'); supHeader.textContent = ' ' + (lang === 'ar' ? t.suppliers_manage : t.suppliers_manage); if (icon) supHeader.prepend(icon); }
         const addSupBtn = document.getElementById('addSupplierBtn');
         if (addSupBtn) { const icon = addSupBtn.querySelector('i'); addSupBtn.textContent = t.add_supplier; if (icon) addSupBtn.prepend(icon); }
+        const suppliersSearchInput = document.getElementById('suppliersSearch');
+        if (suppliersSearchInput) suppliersSearchInput.placeholder = t.suppliers_search_placeholder;
         const suppliersHead = document.querySelectorAll('#suppliers thead th');
         if (suppliersHead && suppliersHead.length >= 6) {
             suppliersHead[0].textContent = t.th_supplier_name;
@@ -5554,23 +6112,41 @@ console.log('نظام إدارة المبيعات المتطور جاهز للا
     }
 
     function setLanguage(lang) {
-        try {
-            localStorage.setItem('appLanguage', lang);
-        } catch(e) {}
+        // توحيد حالة اللغة مع النظام العام
+        try { localStorage.setItem('appLanguage', lang); } catch(e) {}
+        if (typeof window.changeLanguage === 'function') {
+            // هذا سيستدعي translateUI و applyTranslations أيضاً
+            try { window.changeLanguage(lang); return; } catch(e) {}
+        }
+        // احتياطي
         translateUI(lang);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         const saved = (function(){ try { return localStorage.getItem('appLanguage'); } catch(e) { return null; } })() || 'ar';
-        translateUI(saved);
+        // تحميل أولي موحد
+        if (typeof window.changeLanguage === 'function') {
+            try { window.changeLanguage(saved); } catch(e) { translateUI(saved); }
+        } else {
+            translateUI(saved);
+        }
         const langSelect = document.getElementById('languageSelect');
         if (langSelect) {
             langSelect.value = saved;
-            langSelect.addEventListener('change', function(){ setLanguage(this.value); });
+            // تفادي مستمع مزدوج: نستخدم changeLanguage واحد فقط
+            langSelect.addEventListener('change', function(){
+                if (typeof window.changeLanguage === 'function') {
+                    window.changeLanguage(this.value);
+                } else {
+                    setLanguage(this.value);
+                }
+            });
         }
     });
+    // تعريض الدوال عالمياً لندمج مع النظام الموجود
+    window.translateUI = translateUI;
+    window.setLanguage = setLanguage;
 })();
-
 // تحسينات الموبايل
 function setupMobileOptimizations() {
     // منع التكبير على iOS
@@ -5658,11 +6234,7 @@ function setupMobileOptimizations() {
     const searchInput = document.getElementById('productSearch');
     if (searchInput) {
         searchInput.addEventListener('focus', function() {
-            if (window.innerWidth <= 768) {
-                setTimeout(() => {
-                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300);
-            }
+            // لا تمرير تلقائي على الموبايل لتجنب رفع الصفحة
         });
     }
     
@@ -5695,8 +6267,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // إعداد واجهة الدفع
     setupPartialPaymentInterface();
     
-    // تطبيق الترجمات الافتراضية
-    applyTranslations();
+    // تحميل اللغة المحفوظة وتطبيق الترجمات مرة واحدة
+    const savedLang = (function(){ try { return localStorage.getItem('appLanguage'); } catch(e) { return null; } })() || currentLanguage || 'ar';
+    if (typeof window.changeLanguage === 'function') {
+        try { window.changeLanguage(savedLang); } catch(e) { try { window.translateUI && window.translateUI(savedLang); } catch(_) {} }
+    } else {
+        try { window.translateUI && window.translateUI(savedLang); } catch(_) {}
+        try { applyTranslations(); } catch(_) {}
+    }
     
     // تحديث قوائم العملاء
     setTimeout(() => {
@@ -5708,16 +6286,40 @@ document.addEventListener('DOMContentLoaded', function() {
         ensureToggleButtonWorks();
     }, 1000);
     
-    // التأكد من ظهور قسم الخصم
-    setTimeout(() => {
-        const discountSection = document.querySelector('.discount-section');
-        if (discountSection) {
-            console.log('✅ قسم الخصم موجود ويعمل');
-            discountSection.style.display = 'block';
-        } else {
-            console.log('❌ قسم الخصم غير موجود');
-        }
-    }, 500);
+    // زر إكمال الباقي بالليرة
+    const completeBtn = document.getElementById('completeRemainderLBP');
+    if (completeBtn) completeBtn.innerHTML = `<i class="fas fa-exchange-alt"></i> ${getText('complete-remainder')}`;
+    if (completeBtn) {
+        completeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const currency = document.getElementById('currency').value;
+            const paymentCurrency = document.getElementById('paymentCurrency').value;
+            const amountPaid = parseFloat(document.getElementById('amountPaid').value) || 0;
+            const finalTotalText = document.getElementById('finalTotal').textContent;
+            let totalDueUSD;
+            if (currency === 'USD') {
+                totalDueUSD = parseFloat(finalTotalText.replace(/[^0-9.-]+/g, '')) || 0;
+            } else {
+                const rawLBP = parseFloat(finalTotalText.replace(/[^0-9.-]+/g, '')) || 0;
+                totalDueUSD = rawLBP / (settings.exchangeRate || 1);
+            }
+            const paidUSD = paymentCurrency === 'USD' ? amountPaid : (amountPaid / (settings.exchangeRate || 1));
+            const remainingUSD = Math.max(0, totalDueUSD - paidUSD);
+            const remainderLBP = Math.round(remainingUSD * (settings.exchangeRate || 1));
+            const disp = document.getElementById('remainderLBPDisplay');
+            if (disp) {
+                if (remainderLBP > 0) {
+                    disp.style.display = 'inline-flex';
+                    disp.textContent = `${remainderLBP.toLocaleString()} ل.ل`;
+                } else {
+                    disp.style.display = 'none';
+                    disp.textContent = '';
+                }
+            }
+            window.__completeRemainderLBP__ = remainderLBP > 0;
+            showMessage(remainderLBP > 0 ? getText('will-complete-lbp') : getText('no-remainder'), remainderLBP > 0 ? 'success' : 'error');
+        });
+    }
 });
 
 // إعداد تبديل اللغة
@@ -5725,14 +6327,8 @@ function setupLanguageToggle() {
     const languageSelect = document.getElementById('languageSelect');
     
     if (languageSelect) {
-        // تعيين اللغة الافتراضية
+        // تعيين اللغة الافتراضية فقط (تفادي مستمع مزدوج، تمت معالجته في i18n IIFE)
         languageSelect.value = currentLanguage;
-        
-        // إضافة مستمع الحدث لتغيير اللغة
-        languageSelect.addEventListener('change', function() {
-            changeLanguage(this.value);
-        });
-        
         console.log('تم إعداد تبديل اللغة');
     }
 }
@@ -5813,7 +6409,6 @@ function showNavigationMenu() {
     // إظهار رسالة تأكيد
     showMessage(getText('menu-shown'), 'success');
 }
-
 // إخفاء القائمة
 function hideNavigationMenu() {
     const navToggleBtn = document.getElementById('navToggleBtn');
@@ -5991,75 +6586,103 @@ function updateCreditInfo(customerId) {
 
 // معالجة البيع بالدين
 function processCreditSale() {
-    const customerId = document.getElementById('creditCustomerSelect').value;
-    // قراءة قيمة الفاتورة حسب العملة المعروضة
-    const currency = (document.getElementById('currency')?.value) || 'USD';
-    const finalText = document.getElementById('finalTotal').textContent.trim();
-    let finalTotal = 0;
-    if (currency === 'USD') {
-        finalTotal = parseFloat(finalText.replace(/[^0-9.-]+/g, '')) || 0;
-    } else {
-        // إذا كانت بالليرة حوّل إلى USD باستخدام سعر الصرف المخزّن
-        const rawLBP = parseFloat(finalText.replace(/[^0-9.-]+/g, '')) || 0;
-        finalTotal = (rawLBP / (settings.exchangeRate || 1));
-    }
-    
-    if (!customerId) {
-        showMessage('يرجى اختيار عميل', 'error');
-        return;
-    }
-    
-    const customer = customers.find(c => c.id === parseInt(customerId));
-    if (!customer) {
-        showMessage('العميل غير موجود', 'error');
-        return;
-    }
-    
-    const existingDebt = (customer.currentDebt != null ? customer.currentDebt : (customer.creditBalance || 0));
-    const remainingCredit = (customer.creditLimit || 0) - existingDebt;
-    if (finalTotal > remainingCredit + 1e-6) {
-        showMessage(getText('credit-exceeded'), 'error');
-        return;
-    }
-    
-    if (confirm(getText('confirm-credit-sale'))) {
-        // تحديث دين العميل
-        customer.currentDebt = existingDebt + finalTotal;
-        customer.creditBalance = customer.currentDebt;
-        saveToStorage('customers', customers);
-        
-        // إنشاء فاتورة وإرجاعها
-        const newInvoice = createCreditSaleInvoice(customer, finalTotal);
-        saveToStorage('sales', sales);
-        // سجل دخول/خروج على حساب العميل
-        const logs = loadFromStorage('customerLogs', {});
-        if (!logs[customer.id]) logs[customer.id] = [];
-        logs[customer.id].push({
-            timestamp: new Date().toLocaleString(),
-            action: 'دين',
-            user: (currentUser || 'المستخدم'),
-            note: `فاتورة ${newInvoice.invoiceNumber} بقيمة ${finalTotal.toFixed(2)}$`
-        });
-        saveToStorage('customerLogs', logs);
-        
-        // مسح العربة وتحديث الواجهة
-        clearCart();
-        
-        // إشعار وطباعة اختيارية
-        showNotification(getText('credit-sale-success'), 'success', 3000);
-        if (settings.printAfterSale && newInvoice) {
-            setTimeout(() => {
-                showInvoice(newInvoice);
-            }, 500);
+    try {
+        const customerId = document.getElementById('creditCustomerSelect')?.value || '';
+        const currency = (document.getElementById('currency')?.value) || 'USD';
+        const finalText = (document.getElementById('finalTotal')?.textContent || '').trim();
+        let finalTotal = 0;
+        if (currency === 'USD') {
+            finalTotal = parseFloat(finalText.replace(/[^0-9.-]+/g, '')) || 0;
+        } else {
+            const rawLBP = parseFloat(finalText.replace(/[^0-9.-]+/g, '')) || 0;
+            finalTotal = (rawLBP / (settings.exchangeRate || 1));
         }
+        if (!customerId) {
+            showMessage('يرجى اختيار عميل', 'error');
+            return;
+        }
+        const customer = customers.find(c => c.id === parseInt(customerId));
+        if (!customer) {
+            showMessage('العميل غير موجود', 'error');
+            return;
+        }
+        const existingDebt = (customer.currentDebt != null ? customer.currentDebt : (customer.creditBalance || 0));
+        const remainingCredit = (customer.creditLimit || 0) - existingDebt;
+        if (finalTotal > remainingCredit + 1e-6) {
+            showMessage(getText('credit-exceeded'), 'error');
+            return;
+        }
+        if (finalTotal <= 0) {
+            showMessage('إجمالي الفاتورة غير صحيح', 'error');
+            return;
+        }
+        if (confirm(getText('confirm-credit-sale'))) {
+            customer.currentDebt = existingDebt + finalTotal;
+            customer.creditBalance = customer.currentDebt;
+            if (!Array.isArray(customer.creditHistory)) customer.creditHistory = [];
+            customer.creditHistory.push({ timestamp: new Date().toISOString(), type: 'creditSale', amount: finalTotal, description: 'بيع بالدين كامل', balanceAfter: customer.creditBalance });
+            saveToStorage('customers', customers);
+            const newInvoice = createCreditSaleInvoice(customer, finalTotal);
+            saveToStorage('sales', sales);
+            try { updateCreditInfo(customer.id); } catch(e) {}
+            try { updateCustomerSelectForCredit(); } catch(e) {}
+            const logs = loadFromStorage('customerLogs', {});
+            const key = String(customer.id);
+            if (!Array.isArray(logs[key])) logs[key] = [];
+            const logEntry = { timestamp: new Date().toLocaleString(), action: 'دين', user: (currentUser || 'المستخدم'), note: `فاتورة ${newInvoice.invoiceNumber} بقيمة ${finalTotal.toFixed(2)}$` };
+            logs[key].push(logEntry);
+            saveToStorage('customerLogs', logs);
+            console.log('Saved customerLogs entry:', key, logEntry);
+            clearCart();
+            updateCart();
+            lastCartFocusIndex = null;
+            try { loadCustomers(); } catch(e) {}
+            try {
+                const currencyNow = (document.getElementById('currency')?.value) || 'USD';
+                const subtotalEl = document.getElementById('subtotal');
+                const finalEl = document.getElementById('finalTotal');
+                if (subtotalEl) subtotalEl.textContent = formatCurrency(0, currencyNow);
+                if (finalEl) finalEl.textContent = formatCurrency(0, currencyNow);
+                const horiz = document.getElementById('cartItemsHorizontalPos');
+                if (horiz) horiz.innerHTML = '<div class="cart-empty-horizontal-pos">🛒 العربة فارغة - انقر على المنتجات لإضافتها</div>';
+            } catch(e) {}
+            try { openCustomerTransactions(customer.id); } catch(e) {}
+            showNotification(getText('credit-sale-success'), 'success', 3000);
+            const pm = document.getElementById('paymentMethod');
+            if (pm) {
+                pm.value = 'cash';
+                try { pm.dispatchEvent(new Event('change')); } catch(e) {}
+            }
+            const creditSectionEl = document.getElementById('creditSaleSection');
+            if (creditSectionEl) creditSectionEl.style.display = 'none';
+            const cashSectionEl = document.getElementById('cashPaymentSection');
+            if (cashSectionEl) cashSectionEl.style.display = 'block';
+            if (settings.printAfterSale && newInvoice) {
+                setTimeout(() => {
+                    showInvoice(newInvoice);
+                }, 500);
+            }
+        }
+    } catch (err) {
+        console.error('processCreditSale error:', err);
+        showMessage('حدث خطأ أثناء البيع بالدين: ' + (err?.message || err), 'error');
     }
 }
 
+
+// منشئ معرف فاتورة فريد
+function generateInvoiceId() {
+    const prefix = 'INV-';
+    const time = Date.now().toString(36);
+    const rand = Math.floor(Math.random() * 1e9).toString(36);
+    return prefix + time + '-' + rand;
+}
 
 // إنشاء فاتورة البيع بالدين
 function createCreditSaleInvoice(customer, amount) {
     const invoice = {
         id: generateInvoiceId(),
+        invoiceNumber: `CR-${(sales.length + 1).toString().padStart(3, '0')}`,
         customerId: customer.id,
         customerName: customer.name,
         amount: amount,
@@ -6085,7 +6708,3 @@ function createCreditSaleInvoice(customer, amount) {
     saveToStorage('salesLogs', salesLogs);
     return invoice;
 }
-
-
-
-
